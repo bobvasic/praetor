@@ -4,15 +4,15 @@ import { Header } from "@/components/Brand";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Praetor | Onchain Ops Firewall for Solana Protocols",
+  title: "PRAETOR | Onchain Ops Firewall for Solana Protocols",
   description:
     "Detect, attest, challenge, and block high-risk privileged actions for Solana protocols.",
   metadataBase: new URL("https://praetores.com"),
   openGraph: {
-    title: "Praetor",
+    title: "PRAETOR",
     description: "Onchain Ops Firewall for Solana Protocols",
     url: "https://praetores.com",
-    siteName: "Praetor",
+    siteName: "PRAETOR",
     type: "website",
   },
 };

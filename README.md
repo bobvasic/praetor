@@ -2,7 +2,7 @@
 
 **Onchain Ops Firewall for Solana Protocols**
 
-Praetor is a demo-ready Colosseum hackathon MVP for monitoring privileged Solana protocol operations. It presents a polished security profile, an interactive guided incident flow, deterministic local API responses, and deployable Next.js infrastructure for DigitalOcean App Platform.
+Praetor is a demo-ready Colosseum MVP for monitoring and stopping high-risk Solana protocol operations. It presents a premium dark security console, an interactive guided incident flow, deterministic local API responses, and deployable Next.js infrastructure for DigitalOcean App Platform.
 
 ```txt
 Detect → Attest → Challenge → Block
@@ -10,28 +10,84 @@ Detect → Attest → Challenge → Block
 
 Domain: **praetores.com**
 
-## Demo Pages
+## Live Demo Routes
 
-- `/` — premium landing page with dark cybersecurity positioning, problem/solution, and CTA to the guided demo.
-- `/demo` — interactive flow that simulates a suspicious treasury withdrawal, creates a critical incident with risk score `91`, creates an attestation, opens a guardian challenge, and blocks execution.
-- `/dashboard` — clean command center with protected addresses, incidents, risk score, monitoring status, and a public profile preview.
+- `/` — premium landing page with PRAETOR branding, institutional Solana security positioning, and CTA to the guided demo.
+- `/demo` — interactive guided demo that simulates a suspicious treasury withdrawal, creates a critical incident with risk score `91`, prepares an attestation, submits a guardian challenge, and blocks execution.
+- `/dashboard` — security command center with monitoring status, protected address count, critical incident preview, latest incident, and CTA to `/demo`.
 
 ## API Routes
 
-- `GET /api/health` returns:
+- `GET /api/health` returns service health:
 
 ```json
 { "ok": true, "service": "praetor-api" }
 ```
 
-- `POST /api/incidents/simulate` returns deterministic demo incident data:
-  - `riskScore: 91`
-  - `riskLevel: critical`
-  - `actionType: treasury_withdrawal`
-  - `status: detected`
-  - reasons for the suspicious action
+- `GET /api/incidents/simulate` and `POST /api/incidents/simulate` return deterministic demo incident data:
 
-- `POST /api/webhooks/quicknode` accepts QuickNode webhook payloads. If `QUICKNODE_WEBHOOK_SECRET` is configured, the endpoint validates the optional `x-quicknode-secret` header before accepting the payload.
+```json
+{
+  "ok": true,
+  "incident": {
+    "id": "inc_demo_001",
+    "protocolName": "DemoDAO Treasury",
+    "actionType": "treasury_withdrawal",
+    "amount": "25 SOL",
+    "threshold": "10 SOL",
+    "signer": "Unknown signer",
+    "destination": "Non-allowlisted wallet",
+    "riskScore": 91,
+    "riskLevel": "critical",
+    "status": "detected",
+    "reasons": [
+      "Treasury transfer above threshold",
+      "Unknown signer",
+      "Destination not allowlisted",
+      "Policy mismatch"
+    ],
+    "createdAt": "ISO timestamp"
+  }
+}
+```
+
+- `POST /api/webhooks/quicknode` accepts QuickNode webhook payloads. If `QUICKNODE_WEBHOOK_SECRET` is configured, the endpoint validates the `x-quicknode-secret` header. Without a configured secret, it stays in demo mode and returns:
+
+```json
+{
+  "ok": true,
+  "accepted": true,
+  "source": "quicknode",
+  "mode": "demo"
+}
+```
+
+## Risk Engine
+
+`lib/risk-engine.ts` contains deterministic local scoring for demo incidents:
+
+- treasury transfer above threshold: `+30`
+- unknown signer: `+25`
+- non-allowlisted destination: `+25`
+- upgrade authority interaction: `+40`
+- policy mismatch: `+20`
+- repeated suspicious attempt: `+15`
+
+Risk levels:
+
+- `0-29` low
+- `30-59` medium
+- `60-79` high
+- `80-100` critical
+
+## Visual Identity
+
+Praetor uses a premium, institutional dark-mode brand system: obsidian and graphite panels, titanium copy, sovereign blue and arctic cyan active states, sentinel gold assurance accents, secure teal verified states, and alert red critical badges only. The UI is designed to feel like a high-end Solana security console rather than a generic dashboard.
+
+Created local brand assets:
+
+- `public/brand/praetor-mark.svg`
+- `public/brand/praetor-wordmark.svg`
 
 ## Local Development
 
@@ -63,7 +119,7 @@ Do not commit real secrets.
 
 1. Push this repository to GitHub on the `main` branch.
 2. In DigitalOcean, create a new **App Platform** app from GitHub.
-3. Select repository `bobbasic/praetor` and branch `main`.
+3. Select repository `bobvasic/praetor` and branch `main`.
 4. Use these settings:
    - Type: **Web Service**
    - Source directory: `/`

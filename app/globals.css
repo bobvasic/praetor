@@ -16,19 +16,28 @@ html {
 
 body {
   margin: 0;
-  background: #020617;
-  color: #e2e8f0;
+  background: #090b10;
+  color: #bcc6d3;
 }
 
 ::selection {
-  background: rgba(22, 242, 208, 0.35);
+  background: rgba(44, 82, 255, 0.48);
   color: white;
 }
 
 .grid-mask {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, black, transparent 78%);
+    linear-gradient(rgba(188, 198, 211, 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(188, 198, 211, 0.052) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+
+.audit-scanline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(152, 233, 255, 0.18),
+    transparent
+  );
 }

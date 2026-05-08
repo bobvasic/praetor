@@ -9,17 +9,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#020617",
-        cyanfire: "#16f2d0",
-        vault: "#082f49",
+        obsidian: "#090B10",
+        graphite: "#141A22",
+        titanium: "#BCC6D3",
+        sovereign: "#2C52FF",
+        arctic: "#98E9FF",
+        gold: "#C7A15B",
+        secure: "#1C8E86",
+        alert: "#FF5B6E",
+        ink: "#090B10",
+        cyanfire: "#98E9FF",
+        vault: "#141A22",
       },
       boxShadow: {
-        glow: "0 0 50px rgba(22, 242, 208, 0.18)",
-        card: "0 24px 80px rgba(0, 0, 0, 0.35)",
+        glow: "0 0 48px rgba(152, 233, 255, 0.16)",
+        card: "0 24px 90px rgba(0, 0, 0, 0.42)",
+        gold: "0 0 54px rgba(199, 161, 91, 0.18)",
       },
       backgroundImage: {
         "radial-grid":
-          "radial-gradient(circle at top left, rgba(22,242,208,0.18), transparent 32rem), radial-gradient(circle at bottom right, rgba(14,165,233,0.16), transparent 36rem)",
+          "radial-gradient(circle at 16% 0%, rgba(44,82,255,0.23), transparent 30rem), radial-gradient(circle at 82% 16%, rgba(152,233,255,0.13), transparent 28rem), radial-gradient(circle at 50% 100%, rgba(199,161,91,0.08), transparent 34rem)",
+        "panel-gradient":
+          "linear-gradient(135deg, rgba(20,26,34,0.92), rgba(9,11,16,0.82))",
       },
     },
   },
