@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, type Transition } from "framer-motion";
-import { AlertTriangle, BadgeCheck, Ban, FileCheck2, KeyRound, LockKeyhole, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
+import { BadgeCheck, Ban, FileCheck2, KeyRound, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Badge, Card } from "@/components/UI";
 import { Button } from "@/src/components/ui/button";
@@ -42,6 +42,7 @@ const stepDetail: Record<DemoStep, string> = {
 };
 
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
+const perimeterAddresses = protectedAddresses.slice(0, 3);
 
 const demoActions: Array<{ label: string; helper: string; lockedLabel: string }> = [
   {
@@ -162,71 +163,74 @@ export default function DemoPage() {
           </div>
         </motion.div>
 
-        <section className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="mt-10 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...defaultTransition, delay: 0.08 }}
-            className="space-y-6"
+            className="order-2 space-y-4 lg:order-1"
           >
-            <Card>
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Protocol Security Profile</p>
-              <h2 className="mt-4 text-3xl font-black text-white">DemoDAO Treasury</h2>
-              <div className="mt-6 grid gap-3 text-sm">
-                <Card variant="subtle" className="rounded-xl px-4 py-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-titanium/[0.58]">Project Type</span>
-                    <span className="font-bold text-white">DAO / Treasury</span>
-                  </div>
-                </Card>
-                <Card variant="subtle" className="rounded-xl px-4 py-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-titanium/[0.58]">Monitoring status</span>
-                    <span className="font-bold text-teal-100">Active</span>
-                  </div>
-                </Card>
-                <Card variant="subtle" className="rounded-xl px-4 py-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-titanium/[0.58]">Policy mode</span>
-                    <span className="font-bold text-amber-100">Challenge before execution</span>
-                  </div>
-                </Card>
-              </div>
-            </Card>
-
-            <Card variant="subtle">
-              <Tooltip content="Protected Addresses are monitored Solana addresses where Praetor evaluates privileged activity and treasury movement.">
+            <Card className="p-5 shadow-none hover:shadow-none">
+              <Tooltip content="Protocol perimeter combines the protected protocol profile with the treasury rules Praetor enforces before funds can move.">
                 <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                  Protected Addresses
+                  Protocol perimeter
                 </p>
               </Tooltip>
-              <div className="mt-5 space-y-3">
-                {protectedAddresses.map((address) => (
-                  <Card key={address.label} variant="subtle" className="rounded-xl p-4">
-                    <div className="flex items-center justify-between gap-3">
+              <div className="mt-4 flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-black tracking-[-0.025em] text-white">DemoDAO Treasury</h2>
+                  <p className="mt-1 text-sm text-titanium/[0.62]">DAO / Treasury</p>
+                </div>
+                <Badge tone="green">Active</Badge>
+              </div>
+              <div className="mt-5 grid gap-2 text-sm">
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.45] px-3 py-2.5">
+                  <span className="text-titanium/[0.58]">Policy mode</span>
+                  <span className="text-right font-bold text-amber-100">Challenge first</span>
+                </div>
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.45] px-3 py-2.5">
+                  <span className="text-titanium/[0.58]">Withdrawal review</span>
+                  <span className="font-bold text-white">10 SOL+</span>
+                </div>
+              </div>
+              <Tooltip content="Treasury Policy defines transaction limits and review rules for protected protocol funds.">
+                <p tabIndex={0} className="mt-5 inline-flex rounded-md font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-titanium/[0.62] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                  Enforced rules
+                </p>
+              </Tooltip>
+              <ul className="mt-3 grid gap-2">
+                {policyRules.map((rule) => (
+                  <li key={rule} className="flex gap-2 text-sm leading-5 text-titanium/[0.72]">
+                    <span className="mt-1 text-[10px] text-gold">◆</span>
+                    <span>{rule}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card className="p-5 shadow-none hover:shadow-none">
+              <Tooltip content="Protected Addresses are monitored Solana addresses where Praetor evaluates privileged activity and treasury movement. Showing the primary operational perimeter keeps the demo scannable.">
+                <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                  Protected addresses
+                </p>
+              </Tooltip>
+              <div className="mt-4 divide-y divide-titanium/[0.08] rounded-xl border border-titanium/[0.10] bg-obsidian/[0.42]">
+                {perimeterAddresses.map((address) => (
+                  <div key={address.label} className="grid gap-1 px-3 py-3 text-sm sm:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] sm:items-center">
+                    <div className="flex items-center justify-between gap-2">
                       <p className="font-bold text-white">{address.label}</p>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal-100">{address.status}</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-teal-100 sm:hidden">{address.status}</span>
                     </div>
-                    <p className="mt-2 break-all font-mono text-xs text-arctic/[0.76]">{address.address}</p>
-                  </Card>
+                    <p className="truncate font-mono text-xs text-arctic/[0.70]" title={address.address}>{address.address}</p>
+                  </div>
                 ))}
               </div>
-            </Card>
-
-            <Card variant="subtle">
-              <Tooltip content="Treasury Policy defines transaction limits and review rules for protected protocol funds.">
-                <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                  Treasury Policy
-                </p>
-              </Tooltip>
-              <ul className="mt-5 space-y-3">
-                {policyRules.map((rule) => <li key={rule} className="flex gap-3 text-titanium/[0.78]"><span className="text-gold">◆</span>{rule}</li>)}
-              </ul>
+              <p className="mt-3 text-xs leading-5 text-titanium/[0.56]">+ Guardian wallet monitored; surfaced during challenge state.</p>
             </Card>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ ...defaultTransition, delay: 0.14 }}>
-            <Card variant="hero" className="min-h-[720px]">
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ ...defaultTransition, delay: 0.14 }} className="order-1 lg:order-2">
+            <Card className="border-arctic/[0.18] p-5 shadow-glow sm:p-6 lg:min-h-[640px]">
               <div className="flex flex-wrap items-start justify-between gap-5">
                 <div>
                   <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Live Incident Console</p>
