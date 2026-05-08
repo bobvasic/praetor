@@ -191,7 +191,7 @@ export default function Home() {
               const Icon = icons[index];
               return (
                 <HoverLift key={step} delay={index * 0.05}>
-                  <Card className="min-h-64 hover:border-arctic/[0.28]">
+                  <Card variant="subtle" className="min-h-64 hover:border-arctic/[0.28]">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-arctic/[0.20] bg-arctic/[0.08]">
                       <Icon className="h-5 w-5 text-arctic" aria-hidden />
                     </div>

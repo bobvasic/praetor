@@ -41,6 +41,70 @@ const signals = [
   },
 ];
 
+const metrics = [
+  {
+    label: "Monitoring",
+    value: "Active",
+    status: "Live perimeter",
+    icon: Radar,
+    tone: "green",
+    description: "Webhook intake and signer telemetry are streaming.",
+  },
+  {
+    label: "Protected Addresses",
+    value: "4",
+    status: "Covered",
+    icon: ShieldCheck,
+    tone: "cyan",
+    description: "Privileged treasury and authority routes under policy.",
+    tip: "Protected Addresses are monitored Solana addresses where privileged or treasury actions are evaluated by Praetor policy.",
+  },
+  {
+    label: "Critical Incidents",
+    value: "1",
+    status: "Review now",
+    icon: AlertTriangle,
+    tone: "red",
+    description: "One high-risk event is awaiting investigation.",
+  },
+  {
+    label: "Latest Risk",
+    value: "91",
+    status: "Severe",
+    icon: Activity,
+    tone: "gold",
+    description: "Deterministic score across signer and policy signals.",
+    tip: "Risk Score is a deterministic severity signal based on threshold breach, signer reputation, destination allowlist status, and policy context.",
+  },
+];
+
+const metricTone = {
+  cyan: {
+    border: "border-arctic/[0.18]",
+    bg: "bg-arctic/[0.075]",
+    icon: "text-arctic",
+    value: "text-arctic",
+  },
+  red: {
+    border: "border-alert/[0.30]",
+    bg: "bg-alert/[0.10]",
+    icon: "text-alert",
+    value: "text-red-100",
+  },
+  green: {
+    border: "border-secure/[0.28]",
+    bg: "bg-secure/[0.10]",
+    icon: "text-teal-100",
+    value: "text-teal-100",
+  },
+  gold: {
+    border: "border-gold/[0.28]",
+    bg: "bg-gold/[0.10]",
+    icon: "text-amber-100",
+    value: "text-amber-100",
+  },
+};
+
 export default function DashboardPage() {
   return (
     <TooltipProvider>

@@ -78,6 +78,30 @@ const stepDetail: Record<DemoStep, string> = {
 };
 
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
+const perimeterAddresses = protectedAddresses.slice(0, 3);
+
+const demoActions: Array<{ label: string; helper: string; lockedLabel: string }> = [
+  {
+    label: "Trigger Suspicious Withdrawal",
+    helper: "Start by simulating a privileged treasury withdrawal against the local incident endpoint.",
+    lockedLabel: "Incident simulation",
+  },
+  {
+    label: "Create Attestation",
+    helper: "Evidence is ready. Package the finding into a signed security record.",
+    lockedLabel: "Attestation",
+  },
+  {
+    label: "Guardian Challenge",
+    helper: "Escalate the attested incident to guardian review before execution can proceed.",
+    lockedLabel: "Guardian review",
+  },
+  {
+    label: "Attempt Execution",
+    helper: "Attempt the risky operation so Praetor can enforce the policy block.",
+    lockedLabel: "Policy enforcement",
+  },
+];
 
 function CountUp({ value, active }: { value: number; active: boolean }) {
   const reduced = useReducedMotion();
