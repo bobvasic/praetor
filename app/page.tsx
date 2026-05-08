@@ -42,8 +42,8 @@ export default function Home() {
               </p>
             </FadeUp>
             <FadeUp delay={0.22} className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <ButtonLink href="/demo" size="lg">Run Guided Demo</ButtonLink>
-              <ButtonLink href="/dashboard" variant="secondary" size="lg">View Command Center</ButtonLink>
+              <ButtonLink href="/demo" variant="hero" size="hero">Run Guided Demo</ButtonLink>
+              <ButtonLink href="/dashboard" variant="command" size="hero">View Command Center</ButtonLink>
             </FadeUp>
             <FadeUp delay={0.28} className="mt-8 flex flex-wrap gap-3">
               {trustSignals.map((signal) => (
@@ -158,7 +158,7 @@ export default function Home() {
                   <CircuitBoard className="h-9 w-9 text-arctic" aria-hidden />
                   <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-arctic">Start here</p>
                   <p className="mt-4 text-3xl font-black text-white">Trigger the incident, then block it.</p>
-                  <ButtonLink href="/demo" variant="white" className="mt-7">Open /demo</ButtonLink>
+                  <ButtonLink href="/demo" variant="white" size="command" className="mt-7">Open /demo</ButtonLink>
                 </div>
               </div>
             </Card>

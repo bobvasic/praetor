@@ -26,7 +26,7 @@ export default function DashboardPage() {
               Institutional operations view for protected addresses, critical incidents, risk posture, and guided demo readiness.
             </p>
           </div>
-          <ButtonLink href="/demo">Open Guided Demo</ButtonLink>
+          <ButtonLink href="/demo" variant="command" size="compact">Open Guided Demo</ButtonLink>
         </FadeUp>
 
         <section className="mt-10 grid gap-4 md:grid-cols-4">
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                     {demoIncident.amount} requested by {demoIncident.signer.toLowerCase()} to a {demoIncident.destination.toLowerCase()}.
                   </p>
                 </div>
-                <ButtonLink href="/demo" variant="danger" className="mt-6 w-full">Investigate in Demo</ButtonLink>
+                <ButtonLink href="/demo" variant="danger" size="command" className="mt-6 w-full">Investigate in Demo</ButtonLink>
               </Card>
             </FadeUp>
 

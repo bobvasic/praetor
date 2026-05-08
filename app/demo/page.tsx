@@ -311,12 +311,12 @@ export default function DemoPage() {
               {error && <div role="alert" className="mt-5 rounded-xl border border-alert/[0.35] bg-alert/[0.10] px-4 py-3 text-red-100">{error}</div>}
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" className="py-4">
+                <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" size="command">
                   {isLoading ? "Simulating..." : "Trigger Suspicious Withdrawal"}
                 </Button>
-                <Button disabled={activeIndex < 1} onClick={() => setStep("attested")} className="py-4">Create Attestation</Button>
-                <Button disabled={activeIndex < 2} onClick={() => setStep("challenged")} variant="outline" className="py-4">Guardian Challenge</Button>
-                <Button disabled={activeIndex < 3} onClick={() => setStep("blocked")} variant="gold" className="py-4">Attempt Execution</Button>
+                <Button disabled={activeIndex < 1} onClick={() => setStep("attested")} size="command">Create Attestation</Button>
+                <Button disabled={activeIndex < 2} onClick={() => setStep("challenged")} variant="outline" size="command">Guardian Challenge</Button>
+                <Button disabled={activeIndex < 3} onClick={() => setStep("blocked")} variant="gold" size="command">Attempt Execution</Button>
               </div>
             </Card>
           </motion.div>
