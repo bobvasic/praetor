@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, type Transition } from "framer-motion";
-import { AlertTriangle, BadgeCheck, Ban, FileCheck2, KeyRound, LockKeyhole, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
+import { BadgeCheck, Ban, FileCheck2, KeyRound, Radar, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Badge, Card } from "@/components/UI";
 import { Button } from "@/src/components/ui/button";
@@ -42,6 +42,30 @@ const stepDetail: Record<DemoStep, string> = {
 };
 
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
+const perimeterAddresses = protectedAddresses.slice(0, 3);
+
+const demoActions: Array<{ label: string; helper: string; lockedLabel: string }> = [
+  {
+    label: "Trigger Suspicious Withdrawal",
+    helper: "Start by simulating a privileged treasury withdrawal against the local incident endpoint.",
+    lockedLabel: "Incident simulation",
+  },
+  {
+    label: "Create Attestation",
+    helper: "Evidence is ready. Package the finding into a signed security record.",
+    lockedLabel: "Attestation",
+  },
+  {
+    label: "Guardian Challenge",
+    helper: "Escalate the attested incident to guardian review before execution can proceed.",
+    lockedLabel: "Guardian review",
+  },
+  {
+    label: "Attempt Execution",
+    helper: "Attempt the risky operation so Praetor can enforce the policy block.",
+    lockedLabel: "Policy enforcement",
+  },
+];
 
 function CountUp({ value, active }: { value: number; active: boolean }) {
   const reduced = useReducedMotion();
@@ -78,6 +102,7 @@ export default function DemoPage() {
   const activeIndex = useMemo(() => orderedStates.indexOf(step), [step]);
   const visibleIncident = incident ?? demoIncident;
   const progress = Math.max(0, (activeIndex / (orderedStates.length - 1)) * 100);
+  const activeAction = activeIndex < demoActions.length ? demoActions[activeIndex] : null;
 
   async function triggerSuspiciousWithdrawal() {
     setIsLoading(true);
@@ -138,65 +163,74 @@ export default function DemoPage() {
           </div>
         </motion.div>
 
-        <section className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="mt-10 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...defaultTransition, delay: 0.08 }}
-            className="space-y-6"
+            className="order-2 space-y-4 lg:order-1"
           >
-            <Card>
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Protocol Security Profile</p>
-              <h2 className="mt-4 text-3xl font-black text-white">DemoDAO Treasury</h2>
-              <div className="mt-6 grid gap-3 text-sm">
-                <div className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                  <span className="text-titanium/[0.58]">Project Type</span>
-                  <span className="font-bold text-white">DAO / Treasury</span>
-                </div>
-                <div className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                  <span className="text-titanium/[0.58]">Monitoring status</span>
-                  <span className="font-bold text-teal-100">Active</span>
-                </div>
-                <div className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                  <span className="text-titanium/[0.58]">Policy mode</span>
-                  <span className="font-bold text-amber-100">Challenge before execution</span>
-                </div>
-              </div>
-            </Card>
-
-            <Card>
-              <Tooltip content="Protected Addresses are monitored Solana addresses where Praetor evaluates privileged activity and treasury movement.">
+            <Card className="p-5 shadow-none hover:shadow-none">
+              <Tooltip content="Protocol perimeter combines the protected protocol profile with the treasury rules Praetor enforces before funds can move.">
                 <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                  Protected Addresses
+                  Protocol perimeter
                 </p>
               </Tooltip>
-              <div className="mt-5 space-y-3">
-                {protectedAddresses.map((address) => (
-                  <div key={address.label} className="rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] p-4 transition hover:border-arctic/[0.20]">
-                    <div className="flex items-center justify-between gap-3">
+              <div className="mt-4 flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-black tracking-[-0.025em] text-white">DemoDAO Treasury</h2>
+                  <p className="mt-1 text-sm text-titanium/[0.62]">DAO / Treasury</p>
+                </div>
+                <Badge tone="green">Active</Badge>
+              </div>
+              <div className="mt-5 grid gap-2 text-sm">
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.45] px-3 py-2.5">
+                  <span className="text-titanium/[0.58]">Policy mode</span>
+                  <span className="text-right font-bold text-amber-100">Challenge first</span>
+                </div>
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.45] px-3 py-2.5">
+                  <span className="text-titanium/[0.58]">Withdrawal review</span>
+                  <span className="font-bold text-white">10 SOL+</span>
+                </div>
+              </div>
+              <Tooltip content="Treasury Policy defines transaction limits and review rules for protected protocol funds.">
+                <p tabIndex={0} className="mt-5 inline-flex rounded-md font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-titanium/[0.62] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                  Enforced rules
+                </p>
+              </Tooltip>
+              <ul className="mt-3 grid gap-2">
+                {policyRules.map((rule) => (
+                  <li key={rule} className="flex gap-2 text-sm leading-5 text-titanium/[0.72]">
+                    <span className="mt-1 text-[10px] text-gold">◆</span>
+                    <span>{rule}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card className="p-5 shadow-none hover:shadow-none">
+              <Tooltip content="Protected Addresses are monitored Solana addresses where Praetor evaluates privileged activity and treasury movement. Showing the primary operational perimeter keeps the demo scannable.">
+                <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                  Protected addresses
+                </p>
+              </Tooltip>
+              <div className="mt-4 divide-y divide-titanium/[0.08] rounded-xl border border-titanium/[0.10] bg-obsidian/[0.42]">
+                {perimeterAddresses.map((address) => (
+                  <div key={address.label} className="grid gap-1 px-3 py-3 text-sm sm:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] sm:items-center">
+                    <div className="flex items-center justify-between gap-2">
                       <p className="font-bold text-white">{address.label}</p>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal-100">{address.status}</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-teal-100 sm:hidden">{address.status}</span>
                     </div>
-                    <p className="mt-2 break-all font-mono text-xs text-arctic/[0.76]">{address.address}</p>
+                    <p className="truncate font-mono text-xs text-arctic/[0.70]" title={address.address}>{address.address}</p>
                   </div>
                 ))}
               </div>
-            </Card>
-
-            <Card>
-              <Tooltip content="Treasury Policy defines transaction limits and review rules for protected protocol funds.">
-                <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                  Treasury Policy
-                </p>
-              </Tooltip>
-              <ul className="mt-5 space-y-3">
-                {policyRules.map((rule) => <li key={rule} className="flex gap-3 text-titanium/[0.78]"><span className="text-gold">◆</span>{rule}</li>)}
-              </ul>
+              <p className="mt-3 text-xs leading-5 text-titanium/[0.56]">+ Guardian wallet monitored; surfaced during challenge state.</p>
             </Card>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ ...defaultTransition, delay: 0.14 }}>
-            <Card className="min-h-[720px]">
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ ...defaultTransition, delay: 0.14 }} className="order-1 lg:order-2">
+            <Card className="border-arctic/[0.18] p-5 shadow-glow sm:p-6 lg:min-h-[640px]">
               <div className="flex flex-wrap items-start justify-between gap-5">
                 <div>
                   <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Live Incident Console</p>
@@ -216,9 +250,17 @@ export default function DemoPage() {
                   <p className="mt-3 max-w-2xl text-sm leading-6 text-titanium/[0.68]">{stepDetail[step]}</p>
                 </div>
                 <Tooltip content="Risk Score is Praetor's severity signal for a privileged action, combining amount, signer, destination, and policy context.">
-                  <div tabIndex={0} className="rounded-2xl border border-alert/[0.30] bg-alert/[0.10] p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red-100">Risk Score</p>
-                    <p className="mt-1 text-5xl font-black text-red-100"><CountUp value={visibleIncident.riskScore} active={activeIndex >= 1} /></p>
+                  <div
+                    tabIndex={0}
+                    className={cn(
+                      "rounded-2xl border p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70",
+                      activeIndex >= 1
+                        ? "border-alert/[0.30] bg-alert/[0.10]"
+                        : "border-gold/[0.28] bg-gold/[0.10]",
+                    )}
+                  >
+                    <p className={cn("font-mono text-[10px] font-bold uppercase tracking-[0.22em]", activeIndex >= 1 ? "text-red-100" : "text-amber-100")}>Risk Score</p>
+                    <p className={cn("mt-1 text-5xl font-black", activeIndex >= 1 ? "text-red-100" : "text-amber-100")}><CountUp value={visibleIncident.riskScore} active={activeIndex >= 1} /></p>
                   </div>
                 </Tooltip>
               </div>
@@ -257,7 +299,14 @@ export default function DemoPage() {
                 </div>
               </div>
 
-              <motion.div layout aria-live="polite" className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5">
+              <motion.div
+                layout
+                aria-live="polite"
+                className={cn(
+                  "mt-8 rounded-2xl border p-5",
+                  activeIndex >= 1 ? "border-alert/[0.24] bg-alert/[0.08]" : "border-titanium/[0.10] bg-obsidian/[0.62]",
+                )}
+              >
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <p className="text-sm text-titanium/[0.58]">Action type</p>
@@ -299,10 +348,37 @@ export default function DemoPage() {
                     </motion.div>
                   )}
                   {step === "blocked" && (
-                    <motion.div key="blocked" initial={{ opacity: 0, y: 12, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0 }} transition={defaultTransition} className="mt-6 rounded-2xl border border-gold/[0.45] bg-gold/[0.10] p-6 shadow-gold">
-                      <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-amber-100">Final security state</p>
-                      <p className="mt-3 text-4xl font-black tracking-[-0.03em] text-white">Execution blocked by Praetor policy.</p>
-                      <p className="mt-3 flex items-center gap-2 text-sm text-titanium/[0.74]"><ShieldCheck className="h-5 w-5 text-teal-100" aria-hidden /> Funds and authority remain inside the protected perimeter.</p>
+                    <motion.div
+                      key="blocked"
+                      initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={defaultTransition}
+                      className="mt-6 overflow-hidden rounded-[1.75rem] border border-gold/[0.34] bg-[linear-gradient(135deg,rgba(245,183,73,0.14),rgba(21,190,179,0.08)_42%,rgba(5,7,12,0.84)_100%)] p-px shadow-gold"
+                    >
+                      <div className="relative rounded-[1.70rem] border border-white/[0.06] bg-obsidian/[0.78] p-6">
+                        <div className="absolute right-6 top-6 h-20 w-20 rounded-full bg-arctic/[0.10] blur-2xl" aria-hidden />
+                        <div className="relative flex flex-wrap items-start justify-between gap-5">
+                          <div className="inline-flex items-center gap-2 rounded-full border border-teal-100/[0.22] bg-teal-100/[0.08] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-teal-100">
+                            <ShieldCheck className="h-4 w-4" aria-hidden />
+                            Secured outcome
+                          </div>
+                          <div className="rounded-full border border-gold/[0.28] bg-gold/[0.10] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-amber-100">
+                            Policy enforced
+                          </div>
+                        </div>
+                        <p className="relative mt-5 text-4xl font-black tracking-[-0.04em] text-white md:text-5xl">Execution blocked.</p>
+                        <p className="relative mt-3 max-w-2xl text-sm leading-6 text-titanium/[0.78]">
+                          Praetor denied the high-risk path after detection, attestation, and guardian escalation. Funds and authority remain inside the protected perimeter.
+                        </p>
+                        <div className="relative mt-5 grid gap-3 sm:grid-cols-3">
+                          {["Treasury intact", "Signer contained", "Incident recorded"].map((item) => (
+                            <div key={item} className="rounded-2xl border border-titanium/[0.10] bg-white/[0.035] px-4 py-3 text-sm font-bold text-white">
+                              <span className="mr-2 text-arctic">•</span>{item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

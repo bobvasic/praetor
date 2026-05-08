@@ -27,10 +27,13 @@ body {
 
 .grid-mask {
   background-image:
-    linear-gradient(rgba(188, 198, 211, 0.052) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(188, 198, 211, 0.052) 1px, transparent 1px);
+    linear-gradient(rgba(188, 198, 211, 0.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(188, 198, 211, 0.038) 1px, transparent 1px);
   background-size: 54px 54px;
-  mask-image: linear-gradient(to bottom, black, transparent 82%);
+  mask-image:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.78), transparent 78%),
+    radial-gradient(circle at 48% 14%, transparent 0 16rem, black 34rem);
+  mask-composite: intersect;
 }
 
 .audit-scanline {
@@ -76,7 +79,7 @@ body {
 }
 
 .security-orb {
-  position: absolute;
+  position: fixed;
   width: 34rem;
   height: 34rem;
   border-radius: 9999px;
@@ -106,6 +109,44 @@ body {
   animation-duration: 26s;
 }
 
+.security-depth-field {
+  opacity: 0.56;
+  background:
+    radial-gradient(circle at 16% 20%, rgba(44, 82, 255, 0.22), transparent 31rem),
+    radial-gradient(circle at 84% 34%, rgba(152, 233, 255, 0.15), transparent 28rem),
+    radial-gradient(circle at 56% 78%, rgba(44, 82, 255, 0.11), transparent 34rem);
+  filter: blur(22px) saturate(1.16);
+  transform: translate3d(0, 0, 0) scale(1.04);
+  animation: security-depth-drift 24s ease-in-out infinite alternate;
+}
+
+.cinematic-sweep {
+  opacity: 0.26;
+  background:
+    linear-gradient(108deg, transparent 0 28%, rgba(152, 233, 255, 0.105) 42%, transparent 56% 100%),
+    linear-gradient(113deg, transparent 0 42%, rgba(44, 82, 255, 0.09) 49%, rgba(199, 161, 91, 0.045) 54%, transparent 68% 100%);
+  background-size: 170% 100%, 220% 100%;
+  background-position: -90% 0, -140% 0;
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 70%, transparent 100%);
+  animation: cinematic-light-sweep 31s cubic-bezier(0.42, 0, 0.24, 1) infinite;
+}
+
+.command-grid-drift {
+  opacity: 0.20;
+  background-image:
+    linear-gradient(135deg, rgba(152, 233, 255, 0.13) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 42px, rgba(44, 82, 255, 0.11) 42px 43px, transparent 43px 96px),
+    radial-gradient(circle at center, rgba(152, 233, 255, 0.13) 0 1px, transparent 1.8px);
+  background-position: 0 0, 0 0, 0 0;
+  background-size: 96px 96px, 192px 192px, 96px 96px;
+  mask-image:
+    linear-gradient(to bottom, transparent 0, black 16%, black 64%, transparent 100%),
+    radial-gradient(circle at 46% 18%, transparent 0 18rem, black 40rem);
+  mask-composite: intersect;
+  transform: translate3d(0, 0, 0) rotate(-0.001deg);
+  animation: command-grid-drift 42s linear infinite;
+}
+
 .hex-mesh {
   background-image:
     linear-gradient(30deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
@@ -119,14 +160,15 @@ body {
 
 .circuit-board {
   background-image:
-    linear-gradient(90deg, transparent 0 12%, rgba(152, 233, 255, 0.20) 12% 12.35%, transparent 12.35% 100%),
-    linear-gradient(0deg, transparent 0 18%, rgba(44, 82, 255, 0.18) 18% 18.35%, transparent 18.35% 100%);
+    linear-gradient(90deg, transparent 0 12%, rgba(152, 233, 255, 0.13) 12% 12.35%, transparent 12.35% 100%),
+    linear-gradient(0deg, transparent 0 18%, rgba(44, 82, 255, 0.12) 18% 18.35%, transparent 18.35% 100%);
   background-size: 180px 140px;
+  mask-image: radial-gradient(circle at 50% 20%, transparent 0 14rem, black 38rem);
 }
 
 .scanline {
-  background: linear-gradient(180deg, transparent, rgba(152, 233, 255, 0.14), transparent);
-  animation: audit-sweep 9s linear infinite;
+  background: linear-gradient(180deg, transparent, rgba(152, 233, 255, 0.10), transparent);
+  animation: audit-sweep 12s linear infinite;
 }
 
 .command-card::before {
@@ -143,7 +185,33 @@ body {
   to { transform: translate3d(3rem, -2rem, 0) scale(1.08); }
 }
 
+@keyframes security-depth-drift {
+  0% { transform: translate3d(-1.8rem, -0.8rem, 0) scale(1.04); }
+  50% { transform: translate3d(1.3rem, 1.5rem, 0) scale(1.08); }
+  100% { transform: translate3d(2.4rem, -1.2rem, 0) scale(1.05); }
+}
+
+@keyframes cinematic-light-sweep {
+  0% { background-position: -100% 0, -140% 0; }
+  42%, 100% { background-position: 150% 0, 145% 0; }
+}
+
+@keyframes command-grid-drift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 96px 96px, 192px 192px, 48px 48px; }
+}
+
 @keyframes audit-sweep {
   from { transform: translateY(-18rem); }
   to { transform: translateY(calc(100vh + 18rem)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .security-orb,
+  .security-depth-field,
+  .cinematic-sweep,
+  .command-grid-drift,
+  .scanline {
+    animation: none !important;
+  }
 }

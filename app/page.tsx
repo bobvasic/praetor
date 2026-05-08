@@ -1,4 +1,4 @@
-import { Activity, BadgeCheck, Ban, CircuitBoard, LockKeyhole, ShieldCheck, Swords } from "lucide-react";
+import { Activity, BadgeCheck, Ban, CircuitBoard, LockKeyhole, Radar, ShieldCheck, SignalHigh, Swords } from "lucide-react";
 import { Wordmark } from "@/components/Brand";
 import { Badge, Card, SectionTitle } from "@/components/UI";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
@@ -72,37 +72,46 @@ export default function Home() {
           </div>
 
           <FadeUp delay={0.2}>
-            <Card className="p-0">
+            <Card variant="hero" className="p-0">
               <div className="border-b border-titanium/[0.10] p-5">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="font-mono text-xs uppercase tracking-[0.24em] text-arctic">Live Security Console</p>
                     <p className="mt-2 text-2xl font-black text-white">DemoDAO Treasury</p>
                   </div>
-                  <Badge tone="green">Monitoring Active</Badge>
                 </div>
-              </div>
-              <div className="grid gap-5 p-5 md:grid-cols-[0.82fr_1.18fr]">
-                <div className="relative min-h-64 overflow-hidden rounded-2xl border border-arctic/[0.18] bg-obsidian/[0.72] p-5">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(152,233,255,0.20),transparent_38%)]" />
-                  <div className="absolute inset-8 rounded-[2rem] border border-arctic/[0.14]" />
-                  <div className="absolute inset-14 rounded-full border border-gold/[0.18]" />
-                  <div className="relative flex h-full flex-col items-center justify-center text-center">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-arctic/[0.28] bg-arctic/[0.08] shadow-glow">
-                      <LockKeyhole className="h-11 w-11 text-arctic" aria-hidden />
+                <div className="grid gap-5 p-5 md:grid-cols-[0.76fr_1.24fr] md:p-6">
+                  <div className="relative min-h-72 overflow-hidden rounded-2xl border border-arctic/[0.18] bg-obsidian/[0.74] p-5">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(152,233,255,0.22),transparent_36%),linear-gradient(180deg,rgba(250,204,21,0.10),transparent_55%)]" />
+                    <div className="absolute left-5 top-5 bottom-5 w-1 rounded-full bg-titanium/[0.10]">
+                      <div className="absolute bottom-0 h-[91%] w-full rounded-full bg-gradient-to-t from-alert via-gold to-arctic shadow-glow" />
                     </div>
-                    <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-titanium/[0.58]">Policy perimeter</p>
-                    <p className="mt-2 text-3xl font-black text-white">91 risk</p>
+                    <div className="absolute inset-8 rounded-[2rem] border border-arctic/[0.14]" />
+                    <div className="absolute inset-14 rounded-full border border-gold/[0.18]" />
+                    <div className="absolute right-5 top-5 flex items-center gap-2 rounded-full border border-alert/[0.28] bg-alert/[0.10] px-3 py-1 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-red-100">
+                      <Radar className="h-3.5 w-3.5" aria-hidden />
+                      Risk spike
+                    </div>
+                    <div className="relative flex h-full min-h-60 flex-col items-center justify-center text-center">
+                      <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-arctic/[0.28] bg-arctic/[0.08] shadow-glow">
+                        <LockKeyhole className="h-11 w-11 text-arctic" aria-hidden />
+                      </div>
+                      <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-titanium/[0.58]">Policy perimeter</p>
+                      <p className="mt-2 text-5xl font-black tracking-[-0.06em] text-white">91</p>
+                      <p className="mt-1 font-mono text-xs uppercase tracking-[0.22em] text-alert">Critical risk score</p>
+                    </div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   {consoleRows.map(([kind, value, status], index) => (
                     <FadeUp key={kind} delay={0.28 + index * 0.04}>
-                      <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition hover:border-arctic/[0.22]">
-                        <span className="text-titanium/[0.48]">{kind}</span>
-                        <span className="text-titanium">{value}</span>
-                        <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
-                      </div>
+                      <Card variant="subtle" className="rounded-xl px-4 py-3 font-mono text-xs">
+                        <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4">
+                          <span className="text-titanium/[0.48]">{kind}</span>
+                          <span className="text-titanium">{value}</span>
+                          <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
+                        </div>
+                      </Card>
                     </FadeUp>
                   ))}
                   <div className="rounded-xl border border-gold/[0.25] bg-gold/[0.10] p-5 shadow-gold">
@@ -110,9 +119,9 @@ export default function Home() {
                     <p className="mt-3 text-3xl font-black tracking-tight text-white">Execution blocked by Praetor policy.</p>
                   </div>
                 </div>
-              </div>
-            </Card>
-          </FadeUp>
+              </Card>
+            </FadeUp>
+          </div>
         </section>
 
         <section id="flow" className="border-y border-titanium/[0.10] bg-graphite/[0.22] px-6 py-24 backdrop-blur-sm">
@@ -127,7 +136,7 @@ export default function Home() {
               const Icon = icons[index];
               return (
                 <HoverLift key={step} delay={index * 0.05}>
-                  <Card className="min-h-64 hover:border-arctic/[0.28]">
+                  <Card variant="subtle" className="min-h-64 hover:border-arctic/[0.28]">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-arctic/[0.20] bg-arctic/[0.08]">
                       <Icon className="h-5 w-5 text-arctic" aria-hidden />
                     </div>
