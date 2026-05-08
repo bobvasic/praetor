@@ -72,7 +72,7 @@ export default function Home() {
           </div>
 
           <FadeUp delay={0.2}>
-            <Card className="p-0">
+            <Card variant="hero" className="p-0">
               <div className="border-b border-titanium/[0.10] p-5">
                 <div className="flex items-center justify-between gap-4">
                   <div>
@@ -98,11 +98,13 @@ export default function Home() {
                 <div className="space-y-3">
                   {consoleRows.map(([kind, value, status], index) => (
                     <FadeUp key={kind} delay={0.28 + index * 0.04}>
-                      <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition hover:border-arctic/[0.22]">
-                        <span className="text-titanium/[0.48]">{kind}</span>
-                        <span className="text-titanium">{value}</span>
-                        <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
-                      </div>
+                      <Card variant="subtle" className="rounded-xl px-4 py-3 font-mono text-xs">
+                        <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4">
+                          <span className="text-titanium/[0.48]">{kind}</span>
+                          <span className="text-titanium">{value}</span>
+                          <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
+                        </div>
+                      </Card>
                     </FadeUp>
                   ))}
                   <div className="rounded-xl border border-gold/[0.25] bg-gold/[0.10] p-5 shadow-gold">
@@ -127,7 +129,7 @@ export default function Home() {
               const Icon = icons[index];
               return (
                 <HoverLift key={step} delay={index * 0.05}>
-                  <Card className="min-h-64 hover:border-arctic/[0.28]">
+                  <Card variant="subtle" className="min-h-64 hover:border-arctic/[0.28]">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-arctic/[0.20] bg-arctic/[0.08]">
                       <Icon className="h-5 w-5 text-arctic" aria-hidden />
                     </div>

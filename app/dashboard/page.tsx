@@ -32,19 +32,19 @@ export default function DashboardPage() {
         <section className="mt-10 grid gap-4 md:grid-cols-4">
           {[0, 1, 2, 3].map((i) => (
             <HoverLift key={i} delay={i * 0.05}>
-              {i === 0 && <MetricCard label="Monitoring" value="Active" tone="green" />}
+              {i === 0 && <MetricCard label="Monitoring" value="Active" tone="green" icon={<Radar className="h-5 w-5" aria-hidden />} description="Webhook intake and policy scoring are online." trend="Live" status="Healthy" />}
               {i === 1 && (
                 <Tooltip content="Protected Addresses are monitored Solana addresses where privileged or treasury actions are evaluated by Praetor policy.">
                   <div tabIndex={0} className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                    <MetricCard label="Protected Addresses" value="4" tone="cyan" />
+                    <MetricCard label="Protected Addresses" value="4" tone="cyan" icon={<ShieldCheck className="h-5 w-5" aria-hidden />} description="Treasury and authority accounts under policy." trend="All covered" status="Perimeter" />
                   </div>
                 </Tooltip>
               )}
-              {i === 2 && <MetricCard label="Critical Incidents" value="1" tone="red" />}
+              {i === 2 && <MetricCard label="Critical Incidents" value="1" tone="red" variant="incident" icon={<AlertTriangle className="h-5 w-5" aria-hidden />} description="True incident requiring guardian review." trend="Critical" status="Open" />}
               {i === 3 && (
                 <Tooltip content="Risk Score is a deterministic severity signal based on threshold breach, signer reputation, destination allowlist status, and policy context.">
                   <div tabIndex={0} className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                    <MetricCard label="Latest Risk" value="91" tone="gold" />
+                    <MetricCard label="Latest Risk" value="91" tone="gold" icon={<Activity className="h-5 w-5" aria-hidden />} description="Deterministic severity for latest event." trend="Above threshold" status="Policy" />
                   </div>
                 </Tooltip>
               )}
@@ -71,7 +71,7 @@ export default function DashboardPage() {
                   <div className="space-y-4">
                     {protectedAddresses.map((item, index) => (
                       <FadeUp key={item.address} delay={index * 0.04}>
-                        <div className="rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.58] p-5 transition hover:border-arctic/[0.22] hover:bg-arctic/[0.045]">
+                        <Card variant="subtle" className="p-5">
                           <div className="flex flex-wrap items-center justify-between gap-3">
                             <div className="flex items-center gap-3">
                               <ShieldCheck className="h-5 w-5 text-arctic" aria-hidden />
@@ -83,7 +83,7 @@ export default function DashboardPage() {
                           </div>
                           <p className="mt-3 break-all font-mono text-sm text-arctic/[0.78]">{item.address}</p>
                           <p className="mt-3 text-sm text-titanium/[0.68]">{item.policy}</p>
-                        </div>
+                        </Card>
                       </FadeUp>
                     ))}
                   </div>
@@ -94,11 +94,11 @@ export default function DashboardPage() {
                       const Icon = signal.icon;
                       return (
                         <Tooltip key={signal.label} content={signal.tip}>
-                          <div tabIndex={0} className="rounded-2xl border border-arctic/[0.16] bg-arctic/[0.08] p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                          <Card variant="subtle" tabIndex={0} className="p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
                             <Icon className="h-5 w-5 text-arctic" aria-hidden />
                             <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-titanium/[0.58]">{signal.label}</p>
                             <p className="mt-2 text-xl font-black text-white">{signal.value}</p>
-                          </div>
+                          </Card>
                         </Tooltip>
                       );
                     })}
@@ -110,7 +110,7 @@ export default function DashboardPage() {
 
           <div className="space-y-6">
             <FadeUp delay={0.12}>
-              <Card>
+              <Card variant="incident">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-mono text-xs uppercase tracking-[0.22em] text-alert">Latest Incident</p>
@@ -142,10 +142,12 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-6 space-y-3">
                   {["Webhooks receiving", "Policy engine armed", "Guardian challenge ready"].map((row) => (
-                    <div key={row} className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
+                    <Card key={row} variant="subtle" className="rounded-xl px-4 py-3">
+                      <div className="flex items-center justify-between">
                       <span className="text-titanium/[0.78]">{row}</span>
                       <Badge tone="green">OK</Badge>
-                    </div>
+                      </div>
+                    </Card>
                   ))}
                 </div>
               </Card>
@@ -154,7 +156,7 @@ export default function DashboardPage() {
         </section>
 
         <FadeUp delay={0.22} className="mt-6">
-          <Card className="p-7">
+          <Card variant="subtle" className="p-7">
             <div className="grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
               <div>
                 <Badge tone="blue">Operational assurance</Badge>
@@ -162,10 +164,10 @@ export default function DashboardPage() {
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
                 {["Detect", "Attest", "Block"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.52] p-4">
+                  <Card key={item} variant="subtle" className="p-4">
                     <Activity className="h-5 w-5 text-arctic" aria-hidden />
                     <p className="mt-4 font-black text-white">{item}</p>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>
