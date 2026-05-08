@@ -43,6 +43,29 @@ const stepDetail: Record<DemoStep, string> = {
 
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
 
+const demoActions: Array<{ label: string; helper: string; lockedLabel: string }> = [
+  {
+    label: "Trigger Suspicious Withdrawal",
+    helper: "Start by simulating a privileged treasury withdrawal against the local incident endpoint.",
+    lockedLabel: "Incident simulation",
+  },
+  {
+    label: "Create Attestation",
+    helper: "Evidence is ready. Package the finding into a signed security record.",
+    lockedLabel: "Attestation",
+  },
+  {
+    label: "Guardian Challenge",
+    helper: "Escalate the attested incident to guardian review before execution can proceed.",
+    lockedLabel: "Guardian review",
+  },
+  {
+    label: "Attempt Execution",
+    helper: "Attempt the risky operation so Praetor can enforce the policy block.",
+    lockedLabel: "Policy enforcement",
+  },
+];
+
 function CountUp({ value, active }: { value: number; active: boolean }) {
   const reduced = useReducedMotion();
   const [display, setDisplay] = useState(active ? value : 0);
@@ -78,6 +101,7 @@ export default function DemoPage() {
   const activeIndex = useMemo(() => orderedStates.indexOf(step), [step]);
   const visibleIncident = incident ?? demoIncident;
   const progress = Math.max(0, (activeIndex / (orderedStates.length - 1)) * 100);
+  const activeAction = activeIndex < demoActions.length ? demoActions[activeIndex] : null;
 
   async function triggerSuspiciousWithdrawal() {
     setIsLoading(true);
@@ -299,10 +323,37 @@ export default function DemoPage() {
                     </motion.div>
                   )}
                   {step === "blocked" && (
-                    <motion.div key="blocked" initial={{ opacity: 0, y: 12, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0 }} transition={defaultTransition} className="mt-6 rounded-2xl border border-gold/[0.45] bg-gold/[0.10] p-6 shadow-gold">
-                      <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-amber-100">Final security state</p>
-                      <p className="mt-3 text-4xl font-black tracking-[-0.03em] text-white">Execution blocked by Praetor policy.</p>
-                      <p className="mt-3 flex items-center gap-2 text-sm text-titanium/[0.74]"><ShieldCheck className="h-5 w-5 text-teal-100" aria-hidden /> Funds and authority remain inside the protected perimeter.</p>
+                    <motion.div
+                      key="blocked"
+                      initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={defaultTransition}
+                      className="mt-6 overflow-hidden rounded-[1.75rem] border border-gold/[0.34] bg-[linear-gradient(135deg,rgba(245,183,73,0.14),rgba(21,190,179,0.08)_42%,rgba(5,7,12,0.84)_100%)] p-px shadow-gold"
+                    >
+                      <div className="relative rounded-[1.70rem] border border-white/[0.06] bg-obsidian/[0.78] p-6">
+                        <div className="absolute right-6 top-6 h-20 w-20 rounded-full bg-arctic/[0.10] blur-2xl" aria-hidden />
+                        <div className="relative flex flex-wrap items-start justify-between gap-5">
+                          <div className="inline-flex items-center gap-2 rounded-full border border-teal-100/[0.22] bg-teal-100/[0.08] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-teal-100">
+                            <ShieldCheck className="h-4 w-4" aria-hidden />
+                            Secured outcome
+                          </div>
+                          <div className="rounded-full border border-gold/[0.28] bg-gold/[0.10] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-amber-100">
+                            Policy enforced
+                          </div>
+                        </div>
+                        <p className="relative mt-5 text-4xl font-black tracking-[-0.04em] text-white md:text-5xl">Execution blocked.</p>
+                        <p className="relative mt-3 max-w-2xl text-sm leading-6 text-titanium/[0.78]">
+                          Praetor denied the high-risk path after detection, attestation, and guardian escalation. Funds and authority remain inside the protected perimeter.
+                        </p>
+                        <div className="relative mt-5 grid gap-3 sm:grid-cols-3">
+                          {["Treasury intact", "Signer contained", "Incident recorded"].map((item) => (
+                            <div key={item} className="rounded-2xl border border-titanium/[0.10] bg-white/[0.035] px-4 py-3 text-sm font-bold text-white">
+                              <span className="mr-2 text-arctic">•</span>{item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -310,13 +361,56 @@ export default function DemoPage() {
 
               {error && <div role="alert" className="mt-5 rounded-xl border border-alert/[0.35] bg-alert/[0.10] px-4 py-3 text-red-100">{error}</div>}
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" className="py-4">
-                  {isLoading ? "Simulating..." : "Trigger Suspicious Withdrawal"}
-                </Button>
-                <Button disabled={activeIndex < 1} onClick={() => setStep("attested")} className="py-4">Create Attestation</Button>
-                <Button disabled={activeIndex < 2} onClick={() => setStep("challenged")} variant="outline" className="py-4">Guardian Challenge</Button>
-                <Button disabled={activeIndex < 3} onClick={() => setStep("blocked")} variant="gold" className="py-4">Attempt Execution</Button>
+              <div className="mt-8 rounded-[1.75rem] border border-titanium/[0.12] bg-obsidian/[0.52] p-4 shadow-[0_18px_80px_rgba(0,0,0,0.20)]">
+                {activeAction ? (
+                  <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+                    <div className="rounded-2xl border border-arctic/[0.18] bg-arctic/[0.07] p-4">
+                      <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-arctic">Next guided action</p>
+                      <p className="mt-2 text-lg font-black tracking-[-0.02em] text-white">{activeAction.label}</p>
+                      <p className="mt-1 text-sm leading-6 text-titanium/[0.78]">{activeAction.helper}</p>
+                    </div>
+                    {step === "ready" && (
+                      <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" size="lg" className="min-h-16 px-8 shadow-[0_0_44px_rgba(255,65,85,0.18)]">
+                        {isLoading ? "Simulating..." : "Trigger Suspicious Withdrawal"}
+                      </Button>
+                    )}
+                    {step === "detected" && (
+                      <Button onClick={() => setStep("attested")} size="lg" className="min-h-16 px-8">
+                        Create Attestation
+                      </Button>
+                    )}
+                    {step === "attested" && (
+                      <Button onClick={() => setStep("challenged")} variant="outline" size="lg" className="min-h-16 px-8">
+                        Guardian Challenge
+                      </Button>
+                    )}
+                    {step === "challenged" && (
+                      <Button onClick={() => setStep("blocked")} variant="gold" size="lg" className="min-h-16 px-8">
+                        Attempt Execution
+                      </Button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="rounded-2xl border border-teal-100/[0.20] bg-teal-100/[0.07] p-4">
+                    <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-teal-100">Guided sequence complete</p>
+                    <p className="mt-2 text-sm leading-6 text-titanium/[0.78]">All demo controls have been exercised and the protected action is blocked.</p>
+                  </div>
+                )}
+
+                <div className="mt-4 grid gap-2 sm:grid-cols-4">
+                  <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" size="sm" className={cn("justify-center py-3", step !== "ready" && "border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62]")}>
+                    {isLoading ? "Simulating..." : demoActions[0].lockedLabel}
+                  </Button>
+                  <Button disabled={activeIndex < 1} onClick={() => setStep("attested")} size="sm" className={cn("justify-center py-3", step !== "detected" && "border border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62] shadow-none")}>
+                    {demoActions[1].lockedLabel}
+                  </Button>
+                  <Button disabled={activeIndex < 2} onClick={() => setStep("challenged")} variant="outline" size="sm" className={cn("justify-center py-3", step !== "attested" && "border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62]")}>
+                    {demoActions[2].lockedLabel}
+                  </Button>
+                  <Button disabled={activeIndex < 3} onClick={() => setStep("blocked")} variant="gold" size="sm" className={cn("justify-center py-3", step !== "challenged" && "border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62]")}>
+                    {demoActions[3].lockedLabel}
+                  </Button>
+                </div>
               </div>
             </Card>
           </motion.div>
