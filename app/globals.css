@@ -215,3 +215,92 @@ body {
     animation: none !important;
   }
 }
+
+.praetor-particle-field {
+  contain: strict;
+  mask-image: radial-gradient(circle at 50% 18%, black 0 34rem, rgba(0, 0, 0, 0.72) 54rem, transparent 86%);
+}
+
+.praetor-particle {
+  position: absolute;
+  left: var(--particle-x);
+  top: var(--particle-y);
+  width: var(--particle-size);
+  height: var(--particle-size);
+  border-radius: 9999px;
+  background: rgba(152, 233, 255, var(--particle-opacity));
+  box-shadow:
+    0 0 10px rgba(152, 233, 255, 0.35),
+    0 0 24px rgba(44, 82, 255, 0.18);
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.praetor-particle:nth-child(5n) {
+  background: rgba(199, 161, 91, 0.18);
+  box-shadow: 0 0 18px rgba(199, 161, 91, 0.20);
+}
+
+.praetor-particle:nth-child(7n) {
+  width: calc(var(--particle-size) + 2px);
+  height: 1px;
+  border-radius: 0;
+  opacity: 0.36;
+}
+
+.praetor-beam-stack {
+  opacity: 0.28;
+  background:
+    linear-gradient(103deg, transparent 0 18%, rgba(152, 233, 255, 0.12) 18.4%, transparent 19.7% 100%),
+    linear-gradient(96deg, transparent 0 62%, rgba(44, 82, 255, 0.10) 62.4%, rgba(199, 161, 91, 0.035) 63.3%, transparent 65% 100%),
+    linear-gradient(180deg, transparent 0 28%, rgba(152, 233, 255, 0.045) 28.2%, transparent 28.8% 100%);
+  background-size: 240% 100%, 210% 100%, 100% 170%;
+  background-position: -160% 0, 180% 0, 0 -120%;
+  mask-image: linear-gradient(to bottom, transparent 0, black 10%, black 76%, transparent 100%);
+  animation: praetor-beam-travel 37s cubic-bezier(0.42, 0, 0.18, 1) infinite;
+}
+
+.praetor-depth-vignette {
+  background:
+    radial-gradient(circle at 50% 8%, transparent 0 18rem, rgba(9, 11, 16, 0.28) 48rem, rgba(9, 11, 16, 0.92) 100%),
+    radial-gradient(circle at 50% 110%, rgba(44, 82, 255, 0.11), transparent 34rem),
+    linear-gradient(180deg, rgba(9, 11, 16, 0.10), rgba(9, 11, 16, 0.48) 72%, #090b10 100%);
+}
+
+@keyframes praetor-beam-travel {
+  0% { background-position: -170% 0, 185% 0, 0 -125%; opacity: 0.08; }
+  12% { opacity: 0.3; }
+  46% { background-position: 150% 0, -150% 0, 0 130%; opacity: 0.22; }
+  100% { background-position: 150% 0, -150% 0, 0 130%; opacity: 0.08; }
+}
+
+@media (max-width: 767px) {
+  .security-orb {
+    width: 24rem;
+    height: 24rem;
+    filter: blur(60px);
+    opacity: 0.24;
+  }
+
+  .praetor-particle-field {
+    opacity: 0.48;
+  }
+
+  .command-grid-drift,
+  .hex-mesh,
+  .circuit-board {
+    opacity: 0.08 !important;
+  }
+
+  .praetor-beam-stack,
+  .cinematic-sweep {
+    opacity: 0.14 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .praetor-beam-stack,
+  .praetor-particle {
+    animation: none !important;
+  }
+}
