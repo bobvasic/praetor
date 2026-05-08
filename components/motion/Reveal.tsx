@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import type { Transition } from "framer-motion";
 import type { ReactNode } from "react";
 
 type FadeUpProps = {
@@ -10,12 +11,21 @@ type FadeUpProps = {
   as?: "div" | "section" | "main";
 };
 
-const fadeUpMotion = (reduced: boolean | null, delay: number) => ({
-  initial: reduced ? false : { opacity: 0, y: 14 },
-  whileInView: reduced ? undefined : { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-40px" },
-  transition: { duration: 0.38, ease: "easeOut", delay },
-});
+const defaultTransition: Transition = {
+  duration: 0.45,
+  ease: [0.22, 1, 0.36, 1],
+};
+
+const fadeUpMotion = (reduced: boolean | null, delay: number) => {
+  const transition: Transition = { ...defaultTransition, duration: 0.38, delay };
+
+  return {
+    initial: reduced ? false : { opacity: 0, y: 14 },
+    whileInView: reduced ? undefined : { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-40px" },
+    transition,
+  };
+};
 
 export function FadeUp({ children, className = "", delay = 0, as = "div" }: FadeUpProps) {
   const reduced = useReducedMotion();
@@ -34,6 +44,8 @@ export function FadeUp({ children, className = "", delay = 0, as = "div" }: Fade
 
 export function HoverLift({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const reduced = useReducedMotion();
+  const transition: Transition = { ...defaultTransition, duration: 0.32, delay };
+
   return (
     <motion.div
       className={className}
@@ -41,7 +53,7 @@ export function HoverLift({ children, className = "", delay = 0 }: { children: R
       whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
       whileHover={reduced ? undefined : { y: -3 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.32, ease: "easeOut", delay }}
+      transition={transition}
     >
       {children}
     </motion.div>

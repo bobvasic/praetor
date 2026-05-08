@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import type { Transition } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { Badge, Card } from "@/components/UI";
 import { Button } from "@/src/components/ui/button";
@@ -12,6 +13,11 @@ import type { Incident } from "@/lib/risk-engine";
 type DemoStep = "ready" | "detected" | "attested" | "challenged" | "blocked";
 
 const orderedStates: DemoStep[] = ["ready", "detected", "attested", "challenged", "blocked"];
+
+const demoIntroTransition: Transition = {
+  duration: 0.35,
+  ease: [0.22, 1, 0.36, 1],
+};
 
 const statusCopy: Record<DemoStep, string> = {
   ready: "Protocol profile armed. Trigger the simulated withdrawal to begin.",
@@ -86,7 +92,7 @@ export default function DemoPage() {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
+          transition={demoIntroTransition}
           className="flex flex-col justify-between gap-6 md:flex-row md:items-end"
         >
           <div>
