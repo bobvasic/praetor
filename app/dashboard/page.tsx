@@ -106,29 +106,22 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-titanium/[0.12] bg-obsidian/[0.58] p-4 lg:min-w-[20rem]">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-titanium/[0.62]">Action cluster</p>
-                <div className="mt-4 flex flex-col gap-3 sm:flex-row lg:flex-col">
-                  <ButtonLink href="/demo" size="lg" className="w-full">Open Guided Demo</ButtonLink>
-                  <div className="flex items-center gap-3 rounded-xl border border-arctic/[0.12] bg-arctic/[0.06] px-4 py-3">
-                    <BadgeCheck className="h-5 w-5 text-arctic" aria-hidden />
-                    <span className="text-sm font-semibold text-titanium/[0.78]">Demo path includes detect, attest, and block steps.</span>
+        <section className="mt-10 grid gap-4 md:grid-cols-4">
+          {[0, 1, 2, 3].map((i) => (
+            <HoverLift key={i} delay={i * 0.05}>
+              {i === 0 && <MetricCard label="Monitoring" value="Active" tone="green" icon={<Radar className="h-5 w-5" aria-hidden />} description="Webhook intake and policy scoring are online." trend="Live" status="Healthy" />}
+              {i === 1 && (
+                <Tooltip content="Protected Addresses are monitored Solana addresses where privileged or treasury actions are evaluated by Praetor policy.">
+                  <div tabIndex={0} className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                    <MetricCard label="Protected Addresses" value="4" tone="cyan" icon={<ShieldCheck className="h-5 w-5" aria-hidden />} description="Treasury and authority accounts under policy." trend="All covered" status="Perimeter" />
                   </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </FadeUp>
-
-        <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon;
-            const tones = metricTone[metric.tone as keyof typeof metricTone];
-            const card = (
-              <Card className={`flex min-h-[13.5rem] flex-col justify-between border ${tones.border}`}>
-                <div className="flex items-start justify-between gap-4">
-                  <div className={`rounded-2xl border ${tones.border} ${tones.bg} p-3`}>
-                    <Icon className={`h-5 w-5 ${tones.icon}`} aria-hidden />
+                </Tooltip>
+              )}
+              {i === 2 && <MetricCard label="Critical Incidents" value="1" tone="red" variant="incident" icon={<AlertTriangle className="h-5 w-5" aria-hidden />} description="True incident requiring guardian review." trend="Critical" status="Open" />}
+              {i === 3 && (
+                <Tooltip content="Risk Score is a deterministic severity signal based on threshold breach, signer reputation, destination allowlist status, and policy context.">
+                  <div tabIndex={0} className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                    <MetricCard label="Latest Risk" value="91" tone="gold" icon={<Activity className="h-5 w-5" aria-hidden />} description="Deterministic severity for latest event." trend="Above threshold" status="Policy" />
                   </div>
                   <span className="rounded-full border border-titanium/[0.12] bg-titanium/[0.06] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-titanium/[0.70]">
                     {metric.status}
@@ -213,23 +206,19 @@ export default function DashboardPage() {
                   <div className="space-y-4">
                     {protectedAddresses.map((item, index) => (
                       <FadeUp key={item.address} delay={index * 0.04}>
-                        <div className="rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.58] p-5 transition hover:border-arctic/[0.22] hover:bg-arctic/[0.045]">
-                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                            <div className="flex min-w-0 items-start gap-3">
-                              <div className="mt-0.5 shrink-0 rounded-xl border border-arctic/[0.18] bg-arctic/[0.08] p-2">
-                                <ShieldCheck className="h-4 w-4 text-arctic" aria-hidden />
-                              </div>
-                              <div className="min-w-0">
-                                <p className="font-black text-white">{item.label}</p>
-                                <p className="mt-2 break-words [overflow-wrap:anywhere] font-mono text-sm leading-6 text-arctic/[0.78]">{item.address}</p>
-                              </div>
+                        <Card variant="subtle" className="p-5">
+                          <div className="flex flex-wrap items-center justify-between gap-3">
+                            <div className="flex items-center gap-3">
+                              <ShieldCheck className="h-5 w-5 text-arctic" aria-hidden />
+                              <p className="font-black text-white">{item.label}</p>
                             </div>
                             <span className="shrink-0 rounded-md border border-secure/[0.35] bg-secure/[0.15] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-teal-100">
                               {item.status}
                             </span>
                           </div>
-                          <p className="mt-4 text-sm leading-6 text-titanium/[0.68]">{item.policy}</p>
-                        </div>
+                          <p className="mt-3 break-all font-mono text-sm text-arctic/[0.78]">{item.address}</p>
+                          <p className="mt-3 text-sm text-titanium/[0.68]">{item.policy}</p>
+                        </Card>
                       </FadeUp>
                     ))}
                   </div>
@@ -240,11 +229,11 @@ export default function DashboardPage() {
                       const Icon = signal.icon;
                       return (
                         <Tooltip key={signal.label} content={signal.tip}>
-                          <div tabIndex={0} className="rounded-2xl border border-arctic/[0.16] bg-arctic/[0.08] p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                          <Card variant="subtle" tabIndex={0} className="p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
                             <Icon className="h-5 w-5 text-arctic" aria-hidden />
                             <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-titanium/[0.58]">{signal.label}</p>
                             <p className="mt-2 text-xl font-black text-white">{signal.value}</p>
-                          </div>
+                          </Card>
                         </Tooltip>
                       );
                     })}
@@ -255,18 +244,23 @@ export default function DashboardPage() {
           </FadeUp>
         </section>
 
-        <section className="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <FadeUp delay={0.18}>
-            <Card>
-              <div className="flex items-center gap-3">
-                <Radar className="h-5 w-5 text-arctic" aria-hidden />
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-arctic">Monitoring Status</p>
-              </div>
-              <div className="mt-6 space-y-3">
-                {["Webhooks receiving", "Policy engine armed", "Guardian challenge ready"].map((row) => (
-                  <div key={row} className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                    <span className="text-titanium/[0.78]">{row}</span>
-                    <Badge tone="green">OK</Badge>
+          <div className="space-y-6">
+            <FadeUp delay={0.12}>
+              <Card variant="incident">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-alert">Latest Incident</p>
+                    <h2 className="mt-3 text-2xl font-black text-white">Treasury withdrawal above threshold</h2>
+                  </div>
+                  <Badge tone="red" pulse>Critical</Badge>
+                </div>
+                <div className="mt-6 rounded-2xl border border-alert/[0.30] bg-alert/[0.10] p-5">
+                  <div className="flex items-end justify-between gap-4">
+                    <div>
+                      <p className="text-sm text-titanium/[0.62]">{demoIncident.protocolName}</p>
+                      <p className="mt-2 text-4xl font-black text-red-100">{demoIncident.riskScore}</p>
+                    </div>
+                    <AlertTriangle className="h-10 w-10 text-alert" aria-hidden />
                   </div>
                 ))}
               </div>
@@ -280,18 +274,39 @@ export default function DashboardPage() {
                   <Badge tone="blue">Operational assurance</Badge>
                   <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-white">Command-center readiness for treasury and authority events.</h2>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {["Detect", "Attest", "Block"].map((item) => (
-                    <div key={item} className="rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.52] p-4">
-                      <Activity className="h-5 w-5 text-arctic" aria-hidden />
-                      <p className="mt-4 font-black text-white">{item}</p>
-                    </div>
+                <div className="mt-6 space-y-3">
+                  {["Webhooks receiving", "Policy engine armed", "Guardian challenge ready"].map((row) => (
+                    <Card key={row} variant="subtle" className="rounded-xl px-4 py-3">
+                      <div className="flex items-center justify-between">
+                      <span className="text-titanium/[0.78]">{row}</span>
+                      <Badge tone="green">OK</Badge>
+                      </div>
+                    </Card>
                   ))}
                 </div>
-              </div>
-            </Card>
-          </FadeUp>
+              </Card>
+            </FadeUp>
+          </div>
         </section>
+
+        <FadeUp delay={0.22} className="mt-6">
+          <Card variant="subtle" className="p-7">
+            <div className="grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
+              <div>
+                <Badge tone="blue">Operational assurance</Badge>
+                <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-white">Command-center readiness for treasury and authority events.</h2>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {["Detect", "Attest", "Block"].map((item) => (
+                  <Card key={item} variant="subtle" className="p-4">
+                    <Activity className="h-5 w-5 text-arctic" aria-hidden />
+                    <p className="mt-4 font-black text-white">{item}</p>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </FadeUp>
       </main>
     </TooltipProvider>
   );

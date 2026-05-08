@@ -73,19 +73,13 @@ export default function Home() {
               </FadeUp>
             </div>
 
-            <FadeUp delay={0.2}>
-              <Card className="overflow-hidden p-0 shadow-[0_28px_100px_rgba(0,0,0,0.38)]">
-                <div className="border-b border-titanium/[0.10] bg-gradient-to-r from-arctic/[0.12] via-titanium/[0.04] to-gold/[0.10] p-5 md:p-6">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.24em] text-arctic">
-                        <SignalHigh className="h-4 w-4" aria-hidden />
-                        Live Security Console
-                      </div>
-                      <p className="mt-3 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">DemoDAO Treasury</p>
-                      <p className="mt-2 text-sm leading-6 text-titanium/[0.70]">Guardian policy is actively simulating privileged execution paths.</p>
-                    </div>
-                    <Badge tone="green">Monitoring Active</Badge>
+          <FadeUp delay={0.2}>
+            <Card variant="hero" className="p-0">
+              <div className="border-b border-titanium/[0.10] p-5">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.24em] text-arctic">Live Security Console</p>
+                    <p className="mt-2 text-2xl font-black text-white">DemoDAO Treasury</p>
                   </div>
                 </div>
                 <div className="grid gap-5 p-5 md:grid-cols-[0.76fr_1.24fr] md:p-6">
@@ -109,23 +103,22 @@ export default function Home() {
                       <p className="mt-1 font-mono text-xs uppercase tracking-[0.22em] text-alert">Critical risk score</p>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-3">
-                    {consoleRows.map(([kind, value, status], index) => (
-                      <FadeUp key={kind} delay={0.28 + index * 0.04}>
-                        <div className="grid grid-cols-[minmax(5.7rem,0.62fr)_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition hover:border-arctic/[0.22] sm:gap-4">
+                </div>
+                <div className="space-y-3">
+                  {consoleRows.map(([kind, value, status], index) => (
+                    <FadeUp key={kind} delay={0.28 + index * 0.04}>
+                      <Card variant="subtle" className="rounded-xl px-4 py-3 font-mono text-xs">
+                        <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4">
                           <span className="text-titanium/[0.48]">{kind}</span>
-                          <span className="truncate text-titanium">{value}</span>
+                          <span className="text-titanium">{value}</span>
                           <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
                         </div>
-                      </FadeUp>
-                    ))}
-                    <div className="mt-auto rounded-xl border border-gold/[0.25] bg-gold/[0.10] p-5 shadow-gold">
-                      <div className="flex items-center justify-between gap-4">
-                        <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-100">Firewall outcome</p>
-                        <span className="rounded-full bg-obsidian/[0.55] px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-gold">Blocked</span>
-                      </div>
-                      <p className="mt-3 text-3xl font-black tracking-tight text-white">Execution blocked by Praetor policy.</p>
-                    </div>
+                      </Card>
+                    </FadeUp>
+                  ))}
+                  <div className="rounded-xl border border-gold/[0.25] bg-gold/[0.10] p-5 shadow-gold">
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-100">Firewall outcome</p>
+                    <p className="mt-3 text-3xl font-black tracking-tight text-white">Execution blocked by Praetor policy.</p>
                   </div>
                 </div>
               </Card>
@@ -145,7 +138,7 @@ export default function Home() {
               const Icon = icons[index];
               return (
                 <HoverLift key={step} delay={index * 0.05}>
-                  <Card className="min-h-64 hover:border-arctic/[0.28]">
+                  <Card variant="subtle" className="min-h-64 hover:border-arctic/[0.28]">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-arctic/[0.20] bg-arctic/[0.08]">
                       <Icon className="h-5 w-5 text-arctic" aria-hidden />
                     </div>

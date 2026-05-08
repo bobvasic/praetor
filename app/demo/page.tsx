@@ -149,22 +149,28 @@ export default function DemoPage() {
               <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Protocol Security Profile</p>
               <h2 className="mt-4 text-3xl font-black text-white">DemoDAO Treasury</h2>
               <div className="mt-6 grid gap-3 text-sm">
-                <div className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                  <span className="text-titanium/[0.58]">Project Type</span>
-                  <span className="font-bold text-white">DAO / Treasury</span>
-                </div>
-                <div className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                  <span className="text-titanium/[0.58]">Monitoring status</span>
-                  <span className="font-bold text-teal-100">Active</span>
-                </div>
-                <div className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3">
-                  <span className="text-titanium/[0.58]">Policy mode</span>
-                  <span className="font-bold text-amber-100">Challenge before execution</span>
-                </div>
+                <Card variant="subtle" className="rounded-xl px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-titanium/[0.58]">Project Type</span>
+                    <span className="font-bold text-white">DAO / Treasury</span>
+                  </div>
+                </Card>
+                <Card variant="subtle" className="rounded-xl px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-titanium/[0.58]">Monitoring status</span>
+                    <span className="font-bold text-teal-100">Active</span>
+                  </div>
+                </Card>
+                <Card variant="subtle" className="rounded-xl px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-titanium/[0.58]">Policy mode</span>
+                    <span className="font-bold text-amber-100">Challenge before execution</span>
+                  </div>
+                </Card>
               </div>
             </Card>
 
-            <Card>
+            <Card variant="subtle">
               <Tooltip content="Protected Addresses are monitored Solana addresses where Praetor evaluates privileged activity and treasury movement.">
                 <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
                   Protected Addresses
@@ -172,18 +178,18 @@ export default function DemoPage() {
               </Tooltip>
               <div className="mt-5 space-y-3">
                 {protectedAddresses.map((address) => (
-                  <div key={address.label} className="rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] p-4 transition hover:border-arctic/[0.20]">
+                  <Card key={address.label} variant="subtle" className="rounded-xl p-4">
                     <div className="flex items-center justify-between gap-3">
                       <p className="font-bold text-white">{address.label}</p>
                       <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal-100">{address.status}</span>
                     </div>
                     <p className="mt-2 break-all font-mono text-xs text-arctic/[0.76]">{address.address}</p>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </Card>
 
-            <Card>
+            <Card variant="subtle">
               <Tooltip content="Treasury Policy defines transaction limits and review rules for protected protocol funds.">
                 <p tabIndex={0} className="inline-flex rounded-md font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
                   Treasury Policy
@@ -196,7 +202,7 @@ export default function DemoPage() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ ...defaultTransition, delay: 0.14 }}>
-            <Card className="min-h-[720px]">
+            <Card variant="hero" className="min-h-[720px]">
               <div className="flex flex-wrap items-start justify-between gap-5">
                 <div>
                   <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Live Incident Console</p>
@@ -216,9 +222,17 @@ export default function DemoPage() {
                   <p className="mt-3 max-w-2xl text-sm leading-6 text-titanium/[0.68]">{stepDetail[step]}</p>
                 </div>
                 <Tooltip content="Risk Score is Praetor's severity signal for a privileged action, combining amount, signer, destination, and policy context.">
-                  <div tabIndex={0} className="rounded-2xl border border-alert/[0.30] bg-alert/[0.10] p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red-100">Risk Score</p>
-                    <p className="mt-1 text-5xl font-black text-red-100"><CountUp value={visibleIncident.riskScore} active={activeIndex >= 1} /></p>
+                  <div
+                    tabIndex={0}
+                    className={cn(
+                      "rounded-2xl border p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70",
+                      activeIndex >= 1
+                        ? "border-alert/[0.30] bg-alert/[0.10]"
+                        : "border-gold/[0.28] bg-gold/[0.10]",
+                    )}
+                  >
+                    <p className={cn("font-mono text-[10px] font-bold uppercase tracking-[0.22em]", activeIndex >= 1 ? "text-red-100" : "text-amber-100")}>Risk Score</p>
+                    <p className={cn("mt-1 text-5xl font-black", activeIndex >= 1 ? "text-red-100" : "text-amber-100")}><CountUp value={visibleIncident.riskScore} active={activeIndex >= 1} /></p>
                   </div>
                 </Tooltip>
               </div>
@@ -257,7 +271,14 @@ export default function DemoPage() {
                 </div>
               </div>
 
-              <motion.div layout aria-live="polite" className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5">
+              <motion.div
+                layout
+                aria-live="polite"
+                className={cn(
+                  "mt-8 rounded-2xl border p-5",
+                  activeIndex >= 1 ? "border-alert/[0.24] bg-alert/[0.08]" : "border-titanium/[0.10] bg-obsidian/[0.62]",
+                )}
+              >
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <p className="text-sm text-titanium/[0.58]">Action type</p>
