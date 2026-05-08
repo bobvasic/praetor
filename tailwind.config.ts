@@ -5,6 +5,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -24,6 +25,7 @@ const config: Config = {
       boxShadow: {
         glow: "0 0 48px rgba(152, 233, 255, 0.16)",
         card: "0 24px 90px rgba(0, 0, 0, 0.42)",
+        command: "inset 0 1px 0 rgba(255,255,255,0.05), 0 30px 120px rgba(0,0,0,0.55)",
         gold: "0 0 54px rgba(199, 161, 91, 0.18)",
       },
       backgroundImage: {

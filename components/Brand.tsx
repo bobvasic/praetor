@@ -5,7 +5,7 @@ import { ButtonLink } from "@/src/components/ui/button";
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`relative flex h-11 w-11 items-center justify-center rounded-xl border border-arctic/[0.25] bg-graphite/[0.80] shadow-glow transition duration-200 ${className}`}
+      className={`relative flex h-11 w-11 items-center justify-center rounded-xl border border-arctic/[0.28] bg-graphite/[0.84] shadow-glow transition duration-200 hover:border-arctic/[0.48] ${className}`}
     >
       <Image
         src="/brand/praetor-mark.svg"
@@ -33,7 +33,7 @@ export function Wordmark({ className = "" }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-titanium/[0.10] bg-obsidian/[0.80] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-titanium/[0.10] bg-obsidian/[0.72] backdrop-blur-2xl supports-[backdrop-filter]:bg-obsidian/[0.62]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian">
           <LogoMark />
@@ -55,7 +55,7 @@ export function Header() {
             Flow
           </a>
         </nav>
-        <ButtonLink href="/demo" variant="outline" size="sm">
+        <ButtonLink href="/demo" variant="outline" size="sm" className="hidden sm:inline-flex">
           Launch demo
         </ButtonLink>
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Header } from "@/components/Brand";
+import { SecurityBackground } from "@/src/components/background/security-background";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,8 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-ink text-slate-100 antialiased">
-        <div className="fixed inset-0 -z-10 bg-radial-grid" />
-        <div className="grid-mask fixed inset-0 -z-10 opacity-70" />
+        <SecurityBackground />
         <Header />
         {children}
       </body>
