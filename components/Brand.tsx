@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ButtonLink } from "@/src/components/ui/button";
 
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`relative flex h-11 w-11 items-center justify-center rounded-xl border border-arctic/[0.25] bg-graphite/[0.80] shadow-glow ${className}`}
+      className={`relative flex h-11 w-11 items-center justify-center rounded-xl border border-arctic/[0.25] bg-graphite/[0.80] shadow-glow transition duration-200 ${className}`}
     >
       <Image
         src="/brand/praetor-mark.svg"
@@ -34,7 +35,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-titanium/[0.10] bg-obsidian/[0.80] backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian">
           <LogoMark />
           <div>
             <p className="text-base font-black tracking-[0.24em] text-white">
@@ -44,22 +45,19 @@ export function Header() {
           </div>
         </Link>
         <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-titanium/[0.72] md:flex">
-          <Link className="transition hover:text-arctic" href="/demo">
+          <Link className="rounded-md transition hover:text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
             Demo
           </Link>
-          <Link className="transition hover:text-arctic" href="/dashboard">
+          <Link className="rounded-md transition hover:text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/dashboard">
             Dashboard
           </Link>
-          <a className="transition hover:text-arctic" href="/#flow">
+          <a className="rounded-md transition hover:text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/#flow">
             Flow
           </a>
         </nav>
-        <Link
-          href="/demo"
-          className="rounded-md border border-arctic/[0.35] bg-arctic/[0.10] px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.16em] text-arctic transition hover:border-arctic/[0.60] hover:bg-arctic/[0.15]"
-        >
+        <ButtonLink href="/demo" variant="outline" size="sm">
           Launch demo
-        </Link>
+        </ButtonLink>
       </div>
     </header>
   );
