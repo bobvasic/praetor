@@ -175,6 +175,7 @@ export default function DemoPage() {
                   <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">Live Incident Console</p>
                   <AnimatePresence mode="wait">
                     <motion.h2
+                      aria-live="polite"
                       key={step}
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -205,6 +206,7 @@ export default function DemoPage() {
                     return (
                       <motion.div
                         key={label}
+                        aria-current={active || final ? "step" : undefined}
                         animate={{ scale: active || final ? 1.02 : 1 }}
                         transition={{ duration: 0.22 }}
                         className={`rounded-2xl border p-4 transition ${
@@ -226,7 +228,7 @@ export default function DemoPage() {
                 </div>
               </div>
 
-              <motion.div layout className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5">
+              <motion.div layout aria-live="polite" className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <p className="text-sm text-titanium/[0.58]">Action type</p>
@@ -276,7 +278,7 @@ export default function DemoPage() {
                 </AnimatePresence>
               </motion.div>
 
-              {error && <div className="mt-5 rounded-xl border border-alert/[0.35] bg-alert/[0.10] px-4 py-3 text-red-100">{error}</div>}
+              {error && <div role="alert" className="mt-5 rounded-xl border border-alert/[0.35] bg-alert/[0.10] px-4 py-3 text-red-100">{error}</div>}
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" className="py-4">

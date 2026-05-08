@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Badge } from "./badge";
+import { cn } from "@/src/lib/utils";
 
 export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title: string; body: string }) {
   return (
@@ -12,5 +13,5 @@ export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title:
 }
 
 export function Section({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <section className={className}>{children}</section>;
+  return <section className={cn(className)}>{children}</section>;
 }
