@@ -14,18 +14,17 @@ export async function POST(request: NextRequest) {
 
   if (configuredSecret && suppliedSecret !== configuredSecret) {
     return NextResponse.json(
-      { ok: false, error: "unauthorized" },
+      { ok: false, accepted: false, source: "quicknode" },
       { status: 401 },
     );
   }
 
-  const payload = await readJsonSafely(request);
-  const eventCount = Array.isArray(payload) ? payload.length : payload ? 1 : 0;
+  await readJsonSafely(request);
 
   return NextResponse.json({
     ok: true,
     accepted: true,
     source: "quicknode",
-    eventCount,
+    mode: configuredSecret ? "verified" : "demo",
   });
 }

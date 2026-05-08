@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
-import { demoIncident } from "@/lib/demo-data";
+import { createDemoIncident } from "@/lib/demo-data";
+
+function simulatedIncidentResponse() {
+  return NextResponse.json({
+    ok: true,
+    incident: createDemoIncident(),
+  });
+}
+
+export async function GET() {
+  return simulatedIncidentResponse();
+}
 
 export async function POST() {
-  return NextResponse.json({
-    riskScore: demoIncident.riskScore,
-    riskLevel: demoIncident.riskLevel,
-    actionType: demoIncident.actionType,
-    status: demoIncident.status,
-    reasons: demoIncident.reasons,
-  });
+  return simulatedIncidentResponse();
 }
