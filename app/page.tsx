@@ -1,4 +1,4 @@
-import { Activity, BadgeCheck, Ban, CircuitBoard, LockKeyhole, ShieldCheck, Swords } from "lucide-react";
+import { Activity, BadgeCheck, Ban, CircuitBoard, LockKeyhole, Radar, ShieldCheck, SignalHigh, Swords } from "lucide-react";
 import { Wordmark } from "@/components/Brand";
 import { Badge, Card, SectionTitle } from "@/components/UI";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
@@ -27,92 +27,110 @@ export default function Home() {
   return (
     <TooltipProvider>
       <main>
-        <section className="mx-auto grid max-w-7xl gap-12 px-6 pb-24 pt-16 md:pt-24 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <div>
-            <FadeUp><Badge tone="gold">Institutional onchain ops firewall</Badge></FadeUp>
-            <FadeUp delay={0.05} className="mt-8 max-w-md"><Wordmark /></FadeUp>
-            <FadeUp delay={0.1}>
-              <h1 className="mt-8 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">
-                Institutional onchain ops firewall for Solana protocols.
-              </h1>
-            </FadeUp>
-            <FadeUp delay={0.16}>
-              <p className="mt-7 max-w-2xl text-xl leading-9 text-titanium/[0.82]">
-                PRAETOR detects risky privileged actions, attests evidence, enables guardian challenges, and blocks unsafe execution before protocol operations become incidents.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.22} className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <ButtonLink href="/demo" size="lg">Run Guided Demo</ButtonLink>
-              <ButtonLink href="/dashboard" variant="secondary" size="lg">View Command Center</ButtonLink>
-            </FadeUp>
-            <FadeUp delay={0.28} className="mt-8 flex flex-wrap gap-3">
-              {trustSignals.map((signal) => (
-                <span key={signal} className="inline-flex items-center gap-2 rounded-full border border-titanium/[0.12] bg-titanium/[0.05] px-3 py-2 text-sm text-titanium/[0.74]">
-                  <ShieldCheck className="h-4 w-4 text-arctic" aria-hidden />
-                  {signal}
-                </span>
-              ))}
-            </FadeUp>
-            <FadeUp delay={0.34} className="mt-7">
-              <Dialog>
-                <DialogTrigger className="font-mono text-xs uppercase tracking-[0.18em] text-arctic underline decoration-arctic/[0.35] underline-offset-4 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                  What is a protocol?
-                </DialogTrigger>
-                <DialogContent>
-                  <Badge tone="blue">Praetor glossary</Badge>
-                  <DialogTitle className="mt-5 text-3xl font-black tracking-[-0.03em] text-white">
-                    What Praetor protects
-                  </DialogTitle>
-                  <DialogDescription className="mt-4 text-base leading-7 text-titanium/[0.82]">
-                    In Praetor, a protocol means the Solana project, DAO, treasury, app, or smart contract system you want to protect.
-                  </DialogDescription>
-                </DialogContent>
-              </Dialog>
+        <section>
+          <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:py-28 lg:grid-cols-[0.96fr_1.04fr] lg:items-center lg:gap-14">
+            <div>
+              <FadeUp><Badge tone="gold">Institutional onchain ops firewall</Badge></FadeUp>
+              <FadeUp delay={0.05} className="mt-8 max-w-sm md:max-w-md"><Wordmark /></FadeUp>
+              <FadeUp delay={0.1}>
+                <h1 className="mt-8 max-w-4xl text-4xl font-black tracking-[-0.055em] text-white sm:text-5xl md:text-6xl lg:text-[4rem] lg:leading-[0.92] xl:text-7xl">
+                  Institutional onchain ops firewall for Solana protocols.
+                </h1>
+              </FadeUp>
+              <FadeUp delay={0.16}>
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-titanium/[0.82] md:text-xl md:leading-9">
+                  PRAETOR detects risky privileged actions, attests evidence, enables guardian challenges, and blocks unsafe execution before protocol operations become incidents.
+                </p>
+              </FadeUp>
+              <FadeUp delay={0.22} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <ButtonLink href="/demo" size="lg" className="w-full sm:w-auto sm:min-w-52">Run Guided Demo</ButtonLink>
+                <ButtonLink href="/dashboard" variant="secondary" size="lg" className="w-full sm:w-auto sm:min-w-52">View Command Center</ButtonLink>
+              </FadeUp>
+              <FadeUp delay={0.28} className="mt-7">
+                <Dialog>
+                  <div className="flex flex-wrap items-center gap-3">
+                    {trustSignals.map((signal) => (
+                      <span key={signal} className="inline-flex items-center gap-2 rounded-full border border-titanium/[0.12] bg-titanium/[0.05] px-3 py-2 text-sm text-titanium/[0.74]">
+                        <ShieldCheck className="h-4 w-4 text-arctic" aria-hidden />
+                        {signal}
+                      </span>
+                    ))}
+                    <DialogTrigger className="inline-flex items-center gap-2 rounded-full border border-arctic/[0.18] bg-arctic/[0.07] px-3 py-2 font-mono text-xs uppercase tracking-[0.18em] text-arctic transition hover:border-arctic/[0.38] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                      <span className="h-1.5 w-1.5 rounded-full bg-arctic shadow-glow" aria-hidden />
+                      What is a protocol?
+                    </DialogTrigger>
+                  </div>
+                  <DialogContent>
+                    <Badge tone="blue">Praetor glossary</Badge>
+                    <DialogTitle className="mt-5 text-3xl font-black tracking-[-0.03em] text-white">
+                      What Praetor protects
+                    </DialogTitle>
+                    <DialogDescription className="mt-4 text-base leading-7 text-titanium/[0.82]">
+                      In Praetor, a protocol means the Solana project, DAO, treasury, app, or smart contract system you want to protect.
+                    </DialogDescription>
+                  </DialogContent>
+                </Dialog>
+              </FadeUp>
+            </div>
+
+            <FadeUp delay={0.2}>
+              <Card className="overflow-hidden p-0 shadow-[0_28px_100px_rgba(0,0,0,0.38)]">
+                <div className="border-b border-titanium/[0.10] bg-gradient-to-r from-arctic/[0.12] via-titanium/[0.04] to-gold/[0.10] p-5 md:p-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.24em] text-arctic">
+                        <SignalHigh className="h-4 w-4" aria-hidden />
+                        Live Security Console
+                      </div>
+                      <p className="mt-3 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">DemoDAO Treasury</p>
+                      <p className="mt-2 text-sm leading-6 text-titanium/[0.70]">Guardian policy is actively simulating privileged execution paths.</p>
+                    </div>
+                    <Badge tone="green">Monitoring Active</Badge>
+                  </div>
+                </div>
+                <div className="grid gap-5 p-5 md:grid-cols-[0.76fr_1.24fr] md:p-6">
+                  <div className="relative min-h-72 overflow-hidden rounded-2xl border border-arctic/[0.18] bg-obsidian/[0.74] p-5">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(152,233,255,0.22),transparent_36%),linear-gradient(180deg,rgba(250,204,21,0.10),transparent_55%)]" />
+                    <div className="absolute left-5 top-5 bottom-5 w-1 rounded-full bg-titanium/[0.10]">
+                      <div className="absolute bottom-0 h-[91%] w-full rounded-full bg-gradient-to-t from-alert via-gold to-arctic shadow-glow" />
+                    </div>
+                    <div className="absolute inset-8 rounded-[2rem] border border-arctic/[0.14]" />
+                    <div className="absolute inset-14 rounded-full border border-gold/[0.18]" />
+                    <div className="absolute right-5 top-5 flex items-center gap-2 rounded-full border border-alert/[0.28] bg-alert/[0.10] px-3 py-1 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-red-100">
+                      <Radar className="h-3.5 w-3.5" aria-hidden />
+                      Risk spike
+                    </div>
+                    <div className="relative flex h-full min-h-60 flex-col items-center justify-center text-center">
+                      <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-arctic/[0.28] bg-arctic/[0.08] shadow-glow">
+                        <LockKeyhole className="h-11 w-11 text-arctic" aria-hidden />
+                      </div>
+                      <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-titanium/[0.58]">Policy perimeter</p>
+                      <p className="mt-2 text-5xl font-black tracking-[-0.06em] text-white">91</p>
+                      <p className="mt-1 font-mono text-xs uppercase tracking-[0.22em] text-alert">Critical risk score</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    {consoleRows.map(([kind, value, status], index) => (
+                      <FadeUp key={kind} delay={0.28 + index * 0.04}>
+                        <div className="grid grid-cols-[minmax(5.7rem,0.62fr)_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition hover:border-arctic/[0.22] sm:gap-4">
+                          <span className="text-titanium/[0.48]">{kind}</span>
+                          <span className="truncate text-titanium">{value}</span>
+                          <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
+                        </div>
+                      </FadeUp>
+                    ))}
+                    <div className="mt-auto rounded-xl border border-gold/[0.25] bg-gold/[0.10] p-5 shadow-gold">
+                      <div className="flex items-center justify-between gap-4">
+                        <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-100">Firewall outcome</p>
+                        <span className="rounded-full bg-obsidian/[0.55] px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-gold">Blocked</span>
+                      </div>
+                      <p className="mt-3 text-3xl font-black tracking-tight text-white">Execution blocked by Praetor policy.</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
             </FadeUp>
           </div>
-
-          <FadeUp delay={0.2}>
-            <Card className="p-0">
-              <div className="border-b border-titanium/[0.10] p-5">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-xs uppercase tracking-[0.24em] text-arctic">Live Security Console</p>
-                    <p className="mt-2 text-2xl font-black text-white">DemoDAO Treasury</p>
-                  </div>
-                  <Badge tone="green">Monitoring Active</Badge>
-                </div>
-              </div>
-              <div className="grid gap-5 p-5 md:grid-cols-[0.82fr_1.18fr]">
-                <div className="relative min-h-64 overflow-hidden rounded-2xl border border-arctic/[0.18] bg-obsidian/[0.72] p-5">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(152,233,255,0.20),transparent_38%)]" />
-                  <div className="absolute inset-8 rounded-[2rem] border border-arctic/[0.14]" />
-                  <div className="absolute inset-14 rounded-full border border-gold/[0.18]" />
-                  <div className="relative flex h-full flex-col items-center justify-center text-center">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-arctic/[0.28] bg-arctic/[0.08] shadow-glow">
-                      <LockKeyhole className="h-11 w-11 text-arctic" aria-hidden />
-                    </div>
-                    <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-titanium/[0.58]">Policy perimeter</p>
-                    <p className="mt-2 text-3xl font-black text-white">91 risk</p>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {consoleRows.map(([kind, value, status], index) => (
-                    <FadeUp key={kind} delay={0.28 + index * 0.04}>
-                      <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition hover:border-arctic/[0.22]">
-                        <span className="text-titanium/[0.48]">{kind}</span>
-                        <span className="text-titanium">{value}</span>
-                        <span className={status === "CRITICAL" ? "text-alert" : "text-arctic"}>{status}</span>
-                      </div>
-                    </FadeUp>
-                  ))}
-                  <div className="rounded-xl border border-gold/[0.25] bg-gold/[0.10] p-5 shadow-gold">
-                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-100">Firewall outcome</p>
-                    <p className="mt-3 text-3xl font-black tracking-tight text-white">Execution blocked by Praetor policy.</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </FadeUp>
         </section>
 
         <section id="flow" className="border-y border-titanium/[0.10] bg-graphite/[0.22] px-6 py-24 backdrop-blur-sm">
