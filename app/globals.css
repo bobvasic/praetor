@@ -74,3 +74,76 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+.security-orb {
+  position: absolute;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: 0.34;
+  transform: translate3d(0, 0, 0);
+  animation: drift-orb 18s ease-in-out infinite alternate;
+}
+
+.security-orb-blue {
+  left: -10rem;
+  top: 2rem;
+  background: rgba(44, 82, 255, 0.34);
+}
+
+.security-orb-cyan {
+  right: -12rem;
+  top: 12rem;
+  background: rgba(152, 233, 255, 0.20);
+  animation-duration: 22s;
+}
+
+.security-orb-gold {
+  bottom: -18rem;
+  left: 30%;
+  background: rgba(199, 161, 91, 0.13);
+  animation-duration: 26s;
+}
+
+.hex-mesh {
+  background-image:
+    linear-gradient(30deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
+    linear-gradient(150deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
+    linear-gradient(30deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
+    linear-gradient(150deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09));
+  background-position: 0 0, 0 0, 28px 49px, 28px 49px;
+  background-size: 56px 98px;
+  mask-image: radial-gradient(circle at 50% 20%, black, transparent 72%);
+}
+
+.circuit-board {
+  background-image:
+    linear-gradient(90deg, transparent 0 12%, rgba(152, 233, 255, 0.20) 12% 12.35%, transparent 12.35% 100%),
+    linear-gradient(0deg, transparent 0 18%, rgba(44, 82, 255, 0.18) 18% 18.35%, transparent 18.35% 100%);
+  background-size: 180px 140px;
+}
+
+.scanline {
+  background: linear-gradient(180deg, transparent, rgba(152, 233, 255, 0.14), transparent);
+  animation: audit-sweep 9s linear infinite;
+}
+
+.command-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(152,233,255,0.09), transparent 34%, rgba(199,161,91,0.06));
+  opacity: 0.8;
+}
+
+@keyframes drift-orb {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(3rem, -2rem, 0) scale(1.08); }
+}
+
+@keyframes audit-sweep {
+  from { transform: translateY(-18rem); }
+  to { transform: translateY(calc(100vh + 18rem)); }
+}
