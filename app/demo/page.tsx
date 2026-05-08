@@ -386,56 +386,13 @@ export default function DemoPage() {
 
               {error && <div role="alert" className="mt-5 rounded-xl border border-alert/[0.35] bg-alert/[0.10] px-4 py-3 text-red-100">{error}</div>}
 
-              <div className="mt-8 rounded-[1.75rem] border border-titanium/[0.12] bg-obsidian/[0.52] p-4 shadow-[0_18px_80px_rgba(0,0,0,0.20)]">
-                {activeAction ? (
-                  <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
-                    <div className="rounded-2xl border border-arctic/[0.18] bg-arctic/[0.07] p-4">
-                      <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-arctic">Next guided action</p>
-                      <p className="mt-2 text-lg font-black tracking-[-0.02em] text-white">{activeAction.label}</p>
-                      <p className="mt-1 text-sm leading-6 text-titanium/[0.78]">{activeAction.helper}</p>
-                    </div>
-                    {step === "ready" && (
-                      <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" size="lg" className="min-h-16 px-8 shadow-[0_0_44px_rgba(255,65,85,0.18)]">
-                        {isLoading ? "Simulating..." : "Trigger Suspicious Withdrawal"}
-                      </Button>
-                    )}
-                    {step === "detected" && (
-                      <Button onClick={() => setStep("attested")} size="lg" className="min-h-16 px-8">
-                        Create Attestation
-                      </Button>
-                    )}
-                    {step === "attested" && (
-                      <Button onClick={() => setStep("challenged")} variant="outline" size="lg" className="min-h-16 px-8">
-                        Guardian Challenge
-                      </Button>
-                    )}
-                    {step === "challenged" && (
-                      <Button onClick={() => setStep("blocked")} variant="gold" size="lg" className="min-h-16 px-8">
-                        Attempt Execution
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="rounded-2xl border border-teal-100/[0.20] bg-teal-100/[0.07] p-4">
-                    <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-teal-100">Guided sequence complete</p>
-                    <p className="mt-2 text-sm leading-6 text-titanium/[0.78]">All demo controls have been exercised and the protected action is blocked.</p>
-                  </div>
-                )}
-
-                <div className="mt-4 grid gap-2 sm:grid-cols-4">
-                  <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" size="sm" className={cn("justify-center py-3", step !== "ready" && "border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62]")}>
-                    {isLoading ? "Simulating..." : demoActions[0].lockedLabel}
-                  </Button>
-                  <Button disabled={activeIndex < 1} onClick={() => setStep("attested")} size="sm" className={cn("justify-center py-3", step !== "detected" && "border border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62] shadow-none")}>
-                    {demoActions[1].lockedLabel}
-                  </Button>
-                  <Button disabled={activeIndex < 2} onClick={() => setStep("challenged")} variant="outline" size="sm" className={cn("justify-center py-3", step !== "attested" && "border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62]")}>
-                    {demoActions[2].lockedLabel}
-                  </Button>
-                  <Button disabled={activeIndex < 3} onClick={() => setStep("blocked")} variant="gold" size="sm" className={cn("justify-center py-3", step !== "challenged" && "border-titanium/[0.14] bg-titanium/[0.05] text-titanium/[0.62]")}>
-                    {demoActions[3].lockedLabel}
-                  </Button>
-                </div>
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <Button onClick={triggerSuspiciousWithdrawal} disabled={isLoading} variant="danger" size="command">
+                  {isLoading ? "Simulating..." : "Trigger Suspicious Withdrawal"}
+                </Button>
+                <Button disabled={activeIndex < 1} onClick={() => setStep("attested")} size="command">Create Attestation</Button>
+                <Button disabled={activeIndex < 2} onClick={() => setStep("challenged")} variant="outline" size="command">Guardian Challenge</Button>
+                <Button disabled={activeIndex < 3} onClick={() => setStep("blocked")} variant="gold" size="command">Attempt Execution</Button>
               </div>
             </Card>
           </motion.div>

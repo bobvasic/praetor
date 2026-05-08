@@ -89,22 +89,18 @@ export default function DashboardPage() {
   return (
     <TooltipProvider>
       <main className="mx-auto max-w-7xl px-6 py-10 md:py-16">
-        <FadeUp>
-          <section className="rounded-[2rem] border border-arctic/[0.14] bg-[linear-gradient(135deg,rgba(152,233,255,0.09),rgba(8,11,18,0.84)_48%,rgba(255,197,92,0.07))] p-6 shadow-[0_24px_90px_rgba(0,0,0,0.28)] md:p-8">
-            <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
-              <div className="max-w-3xl">
-                <div className="flex flex-wrap items-center gap-3">
-                  <Badge>Security command center</Badge>
-                  <Badge tone="green">Monitoring Active</Badge>
-                  <Badge tone="gold">1 Critical</Badge>
-                </div>
-                <h1 className="mt-5 text-4xl font-black tracking-[-0.045em] text-white md:text-6xl">
-                  PRAETOR command center
-                </h1>
-                <p className="mt-4 max-w-3xl text-lg leading-8 text-titanium/[0.78]">
-                  Institutional operations view for protected addresses, critical incidents, risk posture, and guided demo readiness.
-                </p>
-              </div>
+        <FadeUp className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <Badge>Security command center</Badge>
+            <h1 className="mt-5 text-4xl font-black tracking-[-0.045em] text-white md:text-6xl">
+              PRAETOR monitoring console
+            </h1>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-titanium/[0.78]">
+              Institutional operations view for protected addresses, critical incidents, risk posture, and guided demo readiness.
+            </p>
+          </div>
+          <ButtonLink href="/demo" variant="command" size="compact">Open Guided Demo</ButtonLink>
+        </FadeUp>
 
         <section className="mt-10 grid gap-4 md:grid-cols-4">
           {[0, 1, 2, 3].map((i) => (
@@ -262,10 +258,13 @@ export default function DashboardPage() {
                     </div>
                     <AlertTriangle className="h-10 w-10 text-alert" aria-hidden />
                   </div>
-                ))}
-              </div>
-            </Card>
-          </FadeUp>
+                  <p className="mt-4 text-sm leading-6 text-red-50/80">
+                    {demoIncident.amount} requested by {demoIncident.signer.toLowerCase()} to a {demoIncident.destination.toLowerCase()}.
+                  </p>
+                </div>
+                <ButtonLink href="/demo" variant="danger" size="command" className="mt-6 w-full">Investigate in Demo</ButtonLink>
+              </Card>
+            </FadeUp>
 
           <FadeUp delay={0.22}>
             <Card className="p-7">

@@ -27,51 +27,49 @@ export default function Home() {
   return (
     <TooltipProvider>
       <main>
-        <section>
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:py-28 lg:grid-cols-[0.96fr_1.04fr] lg:items-center lg:gap-14">
-            <div>
-              <FadeUp><Badge tone="gold">Institutional onchain ops firewall</Badge></FadeUp>
-              <FadeUp delay={0.05} className="mt-8 max-w-sm md:max-w-md"><Wordmark /></FadeUp>
-              <FadeUp delay={0.1}>
-                <h1 className="mt-8 max-w-4xl text-4xl font-black tracking-[-0.055em] text-white sm:text-5xl md:text-6xl lg:text-[4rem] lg:leading-[0.92] xl:text-7xl">
-                  Institutional onchain ops firewall for Solana protocols.
-                </h1>
-              </FadeUp>
-              <FadeUp delay={0.16}>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-titanium/[0.82] md:text-xl md:leading-9">
-                  PRAETOR detects risky privileged actions, attests evidence, enables guardian challenges, and blocks unsafe execution before protocol operations become incidents.
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.22} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <ButtonLink href="/demo" size="lg" className="w-full sm:w-auto sm:min-w-52">Run Guided Demo</ButtonLink>
-                <ButtonLink href="/dashboard" variant="secondary" size="lg" className="w-full sm:w-auto sm:min-w-52">View Command Center</ButtonLink>
-              </FadeUp>
-              <FadeUp delay={0.28} className="mt-7">
-                <Dialog>
-                  <div className="flex flex-wrap items-center gap-3">
-                    {trustSignals.map((signal) => (
-                      <span key={signal} className="inline-flex items-center gap-2 rounded-full border border-titanium/[0.12] bg-titanium/[0.05] px-3 py-2 text-sm text-titanium/[0.74]">
-                        <ShieldCheck className="h-4 w-4 text-arctic" aria-hidden />
-                        {signal}
-                      </span>
-                    ))}
-                    <DialogTrigger className="inline-flex items-center gap-2 rounded-full border border-arctic/[0.18] bg-arctic/[0.07] px-3 py-2 font-mono text-xs uppercase tracking-[0.18em] text-arctic transition hover:border-arctic/[0.38] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                      <span className="h-1.5 w-1.5 rounded-full bg-arctic shadow-glow" aria-hidden />
-                      What is a protocol?
-                    </DialogTrigger>
-                  </div>
-                  <DialogContent>
-                    <Badge tone="blue">Praetor glossary</Badge>
-                    <DialogTitle className="mt-5 text-3xl font-black tracking-[-0.03em] text-white">
-                      What Praetor protects
-                    </DialogTitle>
-                    <DialogDescription className="mt-4 text-base leading-7 text-titanium/[0.82]">
-                      In Praetor, a protocol means the Solana project, DAO, treasury, app, or smart contract system you want to protect.
-                    </DialogDescription>
-                  </DialogContent>
-                </Dialog>
-              </FadeUp>
-            </div>
+        <section className="mx-auto grid max-w-7xl gap-12 px-6 pb-24 pt-16 md:pt-24 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+          <div>
+            <FadeUp><Badge tone="gold">Institutional onchain ops firewall</Badge></FadeUp>
+            <FadeUp delay={0.05} className="mt-8 max-w-md"><Wordmark /></FadeUp>
+            <FadeUp delay={0.1}>
+              <h1 className="mt-8 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">
+                Institutional onchain ops firewall for Solana protocols.
+              </h1>
+            </FadeUp>
+            <FadeUp delay={0.16}>
+              <p className="mt-7 max-w-2xl text-xl leading-9 text-titanium/[0.82]">
+                PRAETOR detects risky privileged actions, attests evidence, enables guardian challenges, and blocks unsafe execution before protocol operations become incidents.
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.22} className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <ButtonLink href="/demo" variant="hero" size="hero">Run Guided Demo</ButtonLink>
+              <ButtonLink href="/dashboard" variant="command" size="hero">View Command Center</ButtonLink>
+            </FadeUp>
+            <FadeUp delay={0.28} className="mt-8 flex flex-wrap gap-3">
+              {trustSignals.map((signal) => (
+                <span key={signal} className="inline-flex items-center gap-2 rounded-full border border-titanium/[0.12] bg-titanium/[0.05] px-3 py-2 text-sm text-titanium/[0.74]">
+                  <ShieldCheck className="h-4 w-4 text-arctic" aria-hidden />
+                  {signal}
+                </span>
+              ))}
+            </FadeUp>
+            <FadeUp delay={0.34} className="mt-7">
+              <Dialog>
+                <DialogTrigger className="font-mono text-xs uppercase tracking-[0.18em] text-arctic underline decoration-arctic/[0.35] underline-offset-4 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
+                  What is a protocol?
+                </DialogTrigger>
+                <DialogContent>
+                  <Badge tone="blue">Praetor glossary</Badge>
+                  <DialogTitle className="mt-5 text-3xl font-black tracking-[-0.03em] text-white">
+                    What Praetor protects
+                  </DialogTitle>
+                  <DialogDescription className="mt-4 text-base leading-7 text-titanium/[0.82]">
+                    In Praetor, a protocol means the Solana project, DAO, treasury, app, or smart contract system you want to protect.
+                  </DialogDescription>
+                </DialogContent>
+              </Dialog>
+            </FadeUp>
+          </div>
 
           <FadeUp delay={0.2}>
             <Card variant="hero" className="p-0">
@@ -169,7 +167,7 @@ export default function Home() {
                   <CircuitBoard className="h-9 w-9 text-arctic" aria-hidden />
                   <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-arctic">Start here</p>
                   <p className="mt-4 text-3xl font-black text-white">Trigger the incident, then block it.</p>
-                  <ButtonLink href="/demo" variant="white" className="mt-7">Open /demo</ButtonLink>
+                  <ButtonLink href="/demo" variant="white" size="command" className="mt-7">Open /demo</ButtonLink>
                 </div>
               </div>
             </Card>
