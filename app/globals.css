@@ -46,31 +46,60 @@ body {
 }
 
 @keyframes subtle-pulse {
-  0%, 100% { box-shadow: 0 0 0 rgba(255, 91, 110, 0); }
-  50% { box-shadow: 0 0 22px rgba(255, 91, 110, 0.18); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(255, 91, 110, 0);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 91, 110, 0.18);
+  }
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes dialog-in {
-  from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 @keyframes tooltip-in {
-  from { opacity: 0; transform: translateY(2px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(2px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.animate-fade-in { animation: fade-in 180ms ease-out; }
-.animate-dialog-in { animation: dialog-in 220ms ease-out; }
-.animate-tooltip-in { animation: tooltip-in 160ms ease-out; }
+.animate-fade-in {
+  animation: fade-in 180ms ease-out;
+}
+.animate-dialog-in {
+  animation: dialog-in 220ms ease-out;
+}
+.animate-tooltip-in {
+  animation: tooltip-in 160ms ease-out;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
@@ -98,7 +127,7 @@ body {
 .security-orb-cyan {
   right: -12rem;
   top: 12rem;
-  background: rgba(152, 233, 255, 0.20);
+  background: rgba(152, 233, 255, 0.2);
   animation-duration: 22s;
 }
 
@@ -109,12 +138,37 @@ body {
   animation-duration: 26s;
 }
 
+.security-orb-solana {
+  left: 48%;
+  top: 8rem;
+  width: 30rem;
+  height: 30rem;
+  background: linear-gradient(
+    135deg,
+    rgba(153, 69, 255, 0.18),
+    rgba(20, 241, 149, 0.14)
+  );
+  animation-duration: 28s;
+}
+
 .security-depth-field {
   opacity: 0.56;
   background:
-    radial-gradient(circle at 16% 20%, rgba(44, 82, 255, 0.22), transparent 31rem),
-    radial-gradient(circle at 84% 34%, rgba(152, 233, 255, 0.15), transparent 28rem),
-    radial-gradient(circle at 56% 78%, rgba(44, 82, 255, 0.11), transparent 34rem);
+    radial-gradient(
+      circle at 16% 20%,
+      rgba(44, 82, 255, 0.22),
+      transparent 31rem
+    ),
+    radial-gradient(
+      circle at 84% 34%,
+      rgba(152, 233, 255, 0.15),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 56% 78%,
+      rgba(44, 82, 255, 0.11),
+      transparent 34rem
+    );
   filter: blur(22px) saturate(1.16);
   transform: translate3d(0, 0, 0) scale(1.04);
   animation: security-depth-drift 24s ease-in-out infinite alternate;
@@ -123,24 +177,66 @@ body {
 .cinematic-sweep {
   opacity: 0.26;
   background:
-    linear-gradient(108deg, transparent 0 28%, rgba(152, 233, 255, 0.105) 42%, transparent 56% 100%),
-    linear-gradient(113deg, transparent 0 42%, rgba(44, 82, 255, 0.09) 49%, rgba(199, 161, 91, 0.045) 54%, transparent 68% 100%);
-  background-size: 170% 100%, 220% 100%;
-  background-position: -90% 0, -140% 0;
-  mask-image: linear-gradient(to bottom, transparent, black 12%, black 70%, transparent 100%);
+    linear-gradient(
+      108deg,
+      transparent 0 28%,
+      rgba(152, 233, 255, 0.105) 42%,
+      transparent 56% 100%
+    ),
+    linear-gradient(
+      113deg,
+      transparent 0 42%,
+      rgba(44, 82, 255, 0.09) 49%,
+      rgba(199, 161, 91, 0.045) 54%,
+      transparent 68% 100%
+    );
+  background-size:
+    170% 100%,
+    220% 100%;
+  background-position:
+    -90% 0,
+    -140% 0;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 70%,
+    transparent 100%
+  );
   animation: cinematic-light-sweep 31s cubic-bezier(0.42, 0, 0.24, 1) infinite;
 }
 
 .command-grid-drift {
-  opacity: 0.20;
+  opacity: 0.2;
   background-image:
     linear-gradient(135deg, rgba(152, 233, 255, 0.13) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0 42px, rgba(44, 82, 255, 0.11) 42px 43px, transparent 43px 96px),
-    radial-gradient(circle at center, rgba(152, 233, 255, 0.13) 0 1px, transparent 1.8px);
-  background-position: 0 0, 0 0, 0 0;
-  background-size: 96px 96px, 192px 192px, 96px 96px;
+    linear-gradient(
+      135deg,
+      transparent 0 42px,
+      rgba(44, 82, 255, 0.11) 42px 43px,
+      transparent 43px 96px
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(152, 233, 255, 0.13) 0 1px,
+      transparent 1.8px
+    );
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+  background-size:
+    96px 96px,
+    192px 192px,
+    96px 96px;
   mask-image:
-    linear-gradient(to bottom, transparent 0, black 16%, black 64%, transparent 100%),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      black 16%,
+      black 64%,
+      transparent 100%
+    ),
     radial-gradient(circle at 46% 18%, transparent 0 18rem, black 40rem);
   mask-composite: intersect;
   transform: translate3d(0, 0, 0) rotate(-0.001deg);
@@ -149,25 +245,76 @@ body {
 
 .hex-mesh {
   background-image:
-    linear-gradient(30deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
-    linear-gradient(150deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
-    linear-gradient(30deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09)),
-    linear-gradient(150deg, rgba(152, 233, 255, 0.09) 12%, transparent 12.5%, transparent 87%, rgba(152, 233, 255, 0.09) 87.5%, rgba(152, 233, 255, 0.09));
-  background-position: 0 0, 0 0, 28px 49px, 28px 49px;
+    linear-gradient(
+      30deg,
+      rgba(152, 233, 255, 0.09) 12%,
+      transparent 12.5%,
+      transparent 87%,
+      rgba(152, 233, 255, 0.09) 87.5%,
+      rgba(152, 233, 255, 0.09)
+    ),
+    linear-gradient(
+      150deg,
+      rgba(152, 233, 255, 0.09) 12%,
+      transparent 12.5%,
+      transparent 87%,
+      rgba(152, 233, 255, 0.09) 87.5%,
+      rgba(152, 233, 255, 0.09)
+    ),
+    linear-gradient(
+      30deg,
+      rgba(152, 233, 255, 0.09) 12%,
+      transparent 12.5%,
+      transparent 87%,
+      rgba(152, 233, 255, 0.09) 87.5%,
+      rgba(152, 233, 255, 0.09)
+    ),
+    linear-gradient(
+      150deg,
+      rgba(152, 233, 255, 0.09) 12%,
+      transparent 12.5%,
+      transparent 87%,
+      rgba(152, 233, 255, 0.09) 87.5%,
+      rgba(152, 233, 255, 0.09)
+    );
+  background-position:
+    0 0,
+    0 0,
+    28px 49px,
+    28px 49px;
   background-size: 56px 98px;
   mask-image: radial-gradient(circle at 50% 20%, black, transparent 72%);
 }
 
 .circuit-board {
   background-image:
-    linear-gradient(90deg, transparent 0 12%, rgba(152, 233, 255, 0.13) 12% 12.35%, transparent 12.35% 100%),
-    linear-gradient(0deg, transparent 0 18%, rgba(44, 82, 255, 0.12) 18% 18.35%, transparent 18.35% 100%);
+    linear-gradient(
+      90deg,
+      transparent 0 12%,
+      rgba(152, 233, 255, 0.13) 12% 12.35%,
+      transparent 12.35% 100%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 0 18%,
+      rgba(44, 82, 255, 0.12) 18% 18.35%,
+      transparent 18.35% 100%
+    );
   background-size: 180px 140px;
-  mask-image: radial-gradient(circle at 50% 20%, transparent 0 14rem, black 38rem);
+  mask-image: radial-gradient(
+    circle at 50% 20%,
+    transparent 0 14rem,
+    black 38rem
+  );
 }
 
 .scanline {
-  background: linear-gradient(180deg, transparent, rgba(152, 233, 255, 0.10), transparent);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(152, 233, 255, 0.1),
+    transparent
+  );
   animation: audit-sweep 12s linear infinite;
 }
 
@@ -176,34 +323,79 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(152,233,255,0.09), transparent 34%, rgba(199,161,91,0.06));
-  opacity: 0.8;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.105),
+      transparent 24%,
+      rgba(20, 241, 149, 0.05) 62%,
+      rgba(153, 69, 255, 0.055)
+    ),
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(152, 233, 255, 0.1),
+      transparent 20rem
+    );
+  opacity: 0.82;
 }
 
 @keyframes drift-orb {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(3rem, -2rem, 0) scale(1.08); }
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3rem, -2rem, 0) scale(1.08);
+  }
 }
 
 @keyframes security-depth-drift {
-  0% { transform: translate3d(-1.8rem, -0.8rem, 0) scale(1.04); }
-  50% { transform: translate3d(1.3rem, 1.5rem, 0) scale(1.08); }
-  100% { transform: translate3d(2.4rem, -1.2rem, 0) scale(1.05); }
+  0% {
+    transform: translate3d(-1.8rem, -0.8rem, 0) scale(1.04);
+  }
+  50% {
+    transform: translate3d(1.3rem, 1.5rem, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(2.4rem, -1.2rem, 0) scale(1.05);
+  }
 }
 
 @keyframes cinematic-light-sweep {
-  0% { background-position: -100% 0, -140% 0; }
-  42%, 100% { background-position: 150% 0, 145% 0; }
+  0% {
+    background-position:
+      -100% 0,
+      -140% 0;
+  }
+  42%,
+  100% {
+    background-position:
+      150% 0,
+      145% 0;
+  }
 }
 
 @keyframes command-grid-drift {
-  from { background-position: 0 0, 0 0, 0 0; }
-  to { background-position: 96px 96px, 192px 192px, 48px 48px; }
+  from {
+    background-position:
+      0 0,
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      96px 96px,
+      192px 192px,
+      48px 48px;
+  }
 }
 
 @keyframes audit-sweep {
-  from { transform: translateY(-18rem); }
-  to { transform: translateY(calc(100vh + 18rem)); }
+  from {
+    transform: translateY(-18rem);
+  }
+  to {
+    transform: translateY(calc(100vh + 18rem));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -218,7 +410,12 @@ body {
 
 .praetor-particle-field {
   contain: strict;
-  mask-image: radial-gradient(circle at 50% 18%, black 0 34rem, rgba(0, 0, 0, 0.72) 54rem, transparent 86%);
+  mask-image: radial-gradient(
+    circle at 50% 18%,
+    black 0 34rem,
+    rgba(0, 0, 0, 0.72) 54rem,
+    transparent 86%
+  );
 }
 
 .praetor-particle {
@@ -238,7 +435,7 @@ body {
 
 .praetor-particle:nth-child(5n) {
   background: rgba(199, 161, 91, 0.18);
-  box-shadow: 0 0 18px rgba(199, 161, 91, 0.20);
+  box-shadow: 0 0 18px rgba(199, 161, 91, 0.2);
 }
 
 .praetor-particle:nth-child(7n) {
@@ -251,27 +448,89 @@ body {
 .praetor-beam-stack {
   opacity: 0.28;
   background:
-    linear-gradient(103deg, transparent 0 18%, rgba(152, 233, 255, 0.12) 18.4%, transparent 19.7% 100%),
-    linear-gradient(96deg, transparent 0 62%, rgba(44, 82, 255, 0.10) 62.4%, rgba(199, 161, 91, 0.035) 63.3%, transparent 65% 100%),
-    linear-gradient(180deg, transparent 0 28%, rgba(152, 233, 255, 0.045) 28.2%, transparent 28.8% 100%);
-  background-size: 240% 100%, 210% 100%, 100% 170%;
-  background-position: -160% 0, 180% 0, 0 -120%;
-  mask-image: linear-gradient(to bottom, transparent 0, black 10%, black 76%, transparent 100%);
+    linear-gradient(
+      103deg,
+      transparent 0 18%,
+      rgba(152, 233, 255, 0.12) 18.4%,
+      transparent 19.7% 100%
+    ),
+    linear-gradient(
+      96deg,
+      transparent 0 62%,
+      rgba(44, 82, 255, 0.1) 62.4%,
+      rgba(199, 161, 91, 0.035) 63.3%,
+      transparent 65% 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0 28%,
+      rgba(152, 233, 255, 0.045) 28.2%,
+      transparent 28.8% 100%
+    );
+  background-size:
+    240% 100%,
+    210% 100%,
+    100% 170%;
+  background-position:
+    -160% 0,
+    180% 0,
+    0 -120%;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 10%,
+    black 76%,
+    transparent 100%
+  );
   animation: praetor-beam-travel 37s cubic-bezier(0.42, 0, 0.18, 1) infinite;
 }
 
 .praetor-depth-vignette {
   background:
-    radial-gradient(circle at 50% 8%, transparent 0 18rem, rgba(9, 11, 16, 0.28) 48rem, rgba(9, 11, 16, 0.92) 100%),
-    radial-gradient(circle at 50% 110%, rgba(44, 82, 255, 0.11), transparent 34rem),
-    linear-gradient(180deg, rgba(9, 11, 16, 0.10), rgba(9, 11, 16, 0.48) 72%, #090b10 100%);
+    radial-gradient(
+      circle at 50% 8%,
+      transparent 0 18rem,
+      rgba(9, 11, 16, 0.28) 48rem,
+      rgba(9, 11, 16, 0.92) 100%
+    ),
+    radial-gradient(
+      circle at 50% 110%,
+      rgba(44, 82, 255, 0.11),
+      transparent 34rem
+    ),
+    linear-gradient(
+      180deg,
+      rgba(9, 11, 16, 0.1),
+      rgba(9, 11, 16, 0.48) 72%,
+      #090b10 100%
+    );
 }
 
 @keyframes praetor-beam-travel {
-  0% { background-position: -170% 0, 185% 0, 0 -125%; opacity: 0.08; }
-  12% { opacity: 0.3; }
-  46% { background-position: 150% 0, -150% 0, 0 130%; opacity: 0.22; }
-  100% { background-position: 150% 0, -150% 0, 0 130%; opacity: 0.08; }
+  0% {
+    background-position:
+      -170% 0,
+      185% 0,
+      0 -125%;
+    opacity: 0.08;
+  }
+  12% {
+    opacity: 0.3;
+  }
+  46% {
+    background-position:
+      150% 0,
+      -150% 0,
+      0 130%;
+    opacity: 0.22;
+  }
+  100% {
+    background-position:
+      150% 0,
+      -150% 0,
+      0 130%;
+    opacity: 0.08;
+  }
 }
 
 @media (max-width: 767px) {
@@ -317,18 +576,52 @@ body {
 .audit-reticle {
   opacity: 0.18;
   background:
-    radial-gradient(circle at 68% 20%, transparent 0 7rem, rgba(152, 233, 255, 0.18) 7.08rem 7.16rem, transparent 7.25rem 13rem, rgba(199, 161, 91, 0.10) 13.08rem 13.15rem, transparent 13.24rem),
-    linear-gradient(90deg, transparent 0 49.9%, rgba(152, 233, 255, 0.12) 50%, transparent 50.1% 100%),
-    linear-gradient(0deg, transparent 0 49.9%, rgba(44, 82, 255, 0.10) 50%, transparent 50.1% 100%);
-  background-size: 100% 100%, 14rem 14rem, 14rem 14rem;
-  mask-image: radial-gradient(circle at 68% 20%, black 0 21rem, transparent 35rem);
+    radial-gradient(
+      circle at 68% 20%,
+      transparent 0 7rem,
+      rgba(152, 233, 255, 0.18) 7.08rem 7.16rem,
+      transparent 7.25rem 13rem,
+      rgba(199, 161, 91, 0.1) 13.08rem 13.15rem,
+      transparent 13.24rem
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0 49.9%,
+      rgba(152, 233, 255, 0.12) 50%,
+      transparent 50.1% 100%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 0 49.9%,
+      rgba(44, 82, 255, 0.1) 50%,
+      transparent 50.1% 100%
+    );
+  background-size:
+    100% 100%,
+    14rem 14rem,
+    14rem 14rem;
+  mask-image: radial-gradient(
+    circle at 68% 20%,
+    black 0 21rem,
+    transparent 35rem
+  );
   animation: audit-reticle-breathe 16s ease-in-out infinite;
 }
 
 .radar-sweep {
   opacity: 0.22;
-  background: conic-gradient(from 225deg at 64% 18%, transparent 0deg, rgba(152, 233, 255, 0.16) 18deg, transparent 42deg, transparent 360deg);
-  mask-image: radial-gradient(circle at 64% 18%, black 0 24rem, transparent 39rem);
+  background: conic-gradient(
+    from 225deg at 64% 18%,
+    transparent 0deg,
+    rgba(152, 233, 255, 0.16) 18deg,
+    transparent 42deg,
+    transparent 360deg
+  );
+  mask-image: radial-gradient(
+    circle at 64% 18%,
+    black 0 24rem,
+    transparent 39rem
+  );
   transform-origin: 64% 18%;
   animation: radar-sweep-rotate 18s linear infinite;
 }
@@ -336,9 +629,21 @@ body {
 .hero-energy-well {
   opacity: 0.48;
   background:
-    radial-gradient(circle at 76% 28%, rgba(152, 233, 255, 0.15), transparent 18rem),
-    radial-gradient(circle at 35% 34%, rgba(44, 82, 255, 0.15), transparent 24rem),
-    radial-gradient(ellipse at 50% 0%, rgba(152, 233, 255, 0.08), transparent 42rem);
+    radial-gradient(
+      circle at 76% 28%,
+      rgba(152, 233, 255, 0.15),
+      transparent 18rem
+    ),
+    radial-gradient(
+      circle at 35% 34%,
+      rgba(44, 82, 255, 0.15),
+      transparent 24rem
+    ),
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(152, 233, 255, 0.08),
+      transparent 42rem
+    );
   filter: blur(10px);
   animation: hero-energy-drift 20s ease-in-out infinite alternate;
 }
@@ -348,10 +653,26 @@ body {
   overflow: hidden;
   border: 1px solid rgba(152, 233, 255, 0.16);
   background:
-    linear-gradient(145deg, rgba(9, 11, 16, 0.82), rgba(20, 26, 34, 0.62) 48%, rgba(9, 11, 16, 0.86)),
-    radial-gradient(circle at 15% 0%, rgba(44, 82, 255, 0.16), transparent 22rem),
-    radial-gradient(circle at 90% 20%, rgba(152, 233, 255, 0.10), transparent 20rem);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 32px 130px rgba(0,0,0,0.52), 0 0 60px rgba(44,82,255,0.10);
+    linear-gradient(
+      145deg,
+      rgba(9, 11, 16, 0.82),
+      rgba(20, 26, 34, 0.62) 48%,
+      rgba(9, 11, 16, 0.86)
+    ),
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(44, 82, 255, 0.16),
+      transparent 22rem
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(152, 233, 255, 0.1),
+      transparent 20rem
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 32px 130px rgba(0, 0, 0, 0.52),
+    0 0 60px rgba(44, 82, 255, 0.1);
 }
 
 .premium-shell::before {
@@ -360,8 +681,19 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(120deg, transparent 0 22%, rgba(152, 233, 255, 0.10) 36%, transparent 52% 100%),
-    linear-gradient(90deg, rgba(152, 233, 255, 0.12), transparent 16%, transparent 84%, rgba(199, 161, 91, 0.10));
+    linear-gradient(
+      120deg,
+      transparent 0 22%,
+      rgba(152, 233, 255, 0.1) 36%,
+      transparent 52% 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(152, 233, 255, 0.12),
+      transparent 16%,
+      transparent 84%,
+      rgba(199, 161, 91, 0.1)
+    );
   opacity: 0.65;
 }
 
@@ -371,7 +703,9 @@ body {
   inset: 1px;
   pointer-events: none;
   border-radius: inherit;
-  background-image: linear-gradient(rgba(152, 233, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(152, 233, 255, 0.035) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(152, 233, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(152, 233, 255, 0.035) 1px, transparent 1px);
   background-size: 34px 34px;
   mask-image: linear-gradient(to bottom, black, transparent 72%);
 }
@@ -394,43 +728,83 @@ body {
 }
 
 .risk-glow {
-  text-shadow: 0 0 28px rgba(255, 91, 110, 0.30), 0 0 60px rgba(199, 161, 91, 0.18);
+  text-shadow:
+    0 0 28px rgba(255, 91, 110, 0.3),
+    0 0 60px rgba(199, 161, 91, 0.18);
 }
 
 .flow-connector {
-  background: linear-gradient(90deg, rgba(152, 233, 255, 0.10), rgba(152, 233, 255, 0.60), rgba(199, 161, 91, 0.45), rgba(152, 233, 255, 0.10));
+  background: linear-gradient(
+    90deg,
+    rgba(152, 233, 255, 0.1),
+    rgba(152, 233, 255, 0.6),
+    rgba(199, 161, 91, 0.45),
+    rgba(152, 233, 255, 0.1)
+  );
   background-size: 180% 100%;
   animation: flow-energy 5.6s ease-in-out infinite;
 }
 
 @keyframes audit-reticle-breathe {
-  0%, 100% { opacity: 0.12; transform: scale(1); }
-  50% { opacity: 0.24; transform: scale(1.02); }
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.24;
+    transform: scale(1.02);
+  }
 }
 
 @keyframes radar-sweep-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes hero-energy-drift {
-  from { transform: translate3d(-1rem, -0.5rem, 0) scale(1); }
-  to { transform: translate3d(1.4rem, 1rem, 0) scale(1.04); }
+  from {
+    transform: translate3d(-1rem, -0.5rem, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1.4rem, 1rem, 0) scale(1.04);
+  }
 }
 
 @keyframes console-orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes live-pulse {
-  from { opacity: 0.9; transform: scale(0.72); }
-  to { opacity: 0; transform: scale(1.7); }
+  from {
+    opacity: 0.9;
+    transform: scale(0.72);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.7);
+  }
 }
 
 @keyframes flow-energy {
-  0%, 100% { background-position: 0% 50%; opacity: 0.55; }
-  50% { background-position: 100% 50%; opacity: 1; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.55;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -440,6 +814,195 @@ body {
   .console-orbit,
   .live-pulse-dot::after,
   .flow-connector {
+    animation: none !important;
+  }
+}
+
+.praetor-network {
+  filter: drop-shadow(0 0 22px rgba(152, 233, 255, 0.16))
+    drop-shadow(0 0 46px rgba(44, 82, 255, 0.1));
+  mask-image:
+    radial-gradient(
+      ellipse at 54% 34%,
+      black 0 36rem,
+      rgba(0, 0, 0, 0.62) 56rem,
+      transparent 82rem
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      black 10%,
+      black 74%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.solana-gradient-ribbon {
+  opacity: 0.42;
+  background:
+    linear-gradient(
+      105deg,
+      transparent 0 12%,
+      rgba(153, 69, 255, 0.08) 22%,
+      rgba(20, 241, 149, 0.09) 38%,
+      rgba(152, 233, 255, 0.055) 54%,
+      transparent 72% 100%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 0 46%,
+      rgba(20, 241, 149, 0.055) 50%,
+      rgba(153, 69, 255, 0.07) 56%,
+      transparent 68% 100%
+    );
+  background-size:
+    180% 100%,
+    220% 100%;
+  background-position:
+    -40% 0,
+    100% 0;
+  filter: blur(0.2px);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 13%,
+    rgba(0, 0, 0, 0.72) 62%,
+    transparent 100%
+  );
+  animation: solana-ribbon-flow 26s cubic-bezier(0.42, 0, 0.18, 1) infinite;
+}
+
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.095),
+      rgba(255, 255, 255, 0.035) 34%,
+      rgba(152, 233, 255, 0.045)
+    ),
+    rgba(9, 11, 16, 0.56);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.035),
+    0 24px 80px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(24px) saturate(1.25);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.18),
+    transparent 18%,
+    transparent 54%,
+    rgba(152, 233, 255, 0.08)
+  );
+  opacity: 0.64;
+}
+
+.status-badge-premium {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.045)
+    ),
+    rgba(9, 11, 16, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 14px 44px rgba(0, 0, 0, 0.3),
+    0 0 34px rgba(152, 233, 255, 0.09);
+  backdrop-filter: blur(20px) saturate(1.3);
+}
+
+.solana-pill {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(153, 69, 255, 0.18),
+      rgba(20, 241, 149, 0.13),
+      rgba(152, 233, 255, 0.1)
+    ),
+    rgba(9, 11, 16, 0.58);
+  border-color: rgba(20, 241, 149, 0.28);
+}
+
+.hero-title-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #eaf7ff 48%, #98e9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.demo-theater {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(152, 233, 255, 0.12),
+      transparent 24rem
+    ),
+    radial-gradient(
+      circle at 84% 22%,
+      rgba(153, 69, 255, 0.12),
+      transparent 22rem
+    ),
+    linear-gradient(
+      145deg,
+      rgba(9, 11, 16, 0.86),
+      rgba(20, 26, 34, 0.58) 48%,
+      rgba(4, 18, 24, 0.72)
+    );
+}
+
+.demo-step-card {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 18px 54px rgba(0, 0, 0, 0.25);
+}
+
+.demo-step-card[data-active="true"] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(152, 233, 255, 0.16),
+    0 22px 80px rgba(44, 82, 255, 0.2),
+    0 0 48px rgba(152, 233, 255, 0.12);
+}
+
+@keyframes solana-ribbon-flow {
+  0% {
+    background-position:
+      -80% 0,
+      140% 0;
+    opacity: 0.2;
+  }
+  18% {
+    opacity: 0.46;
+  }
+  58% {
+    background-position:
+      130% 0,
+      -120% 0;
+    opacity: 0.34;
+  }
+  100% {
+    background-position:
+      130% 0,
+      -120% 0;
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solana-gradient-ribbon {
     animation: none !important;
   }
 }

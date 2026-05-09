@@ -80,25 +80,33 @@ const stepDetail: Record<DemoStep, string> = {
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
 const perimeterAddresses = protectedAddresses.slice(0, 3);
 
-const demoActions: Array<{ label: string; helper: string; lockedLabel: string }> = [
+const demoActions: Array<{
+  label: string;
+  helper: string;
+  lockedLabel: string;
+}> = [
   {
     label: "Trigger Suspicious Withdrawal",
-    helper: "Start by simulating a privileged treasury withdrawal against the local incident endpoint.",
+    helper:
+      "Start by simulating a privileged treasury withdrawal against the local incident endpoint.",
     lockedLabel: "Incident simulation",
   },
   {
     label: "Create Attestation",
-    helper: "Evidence is ready. Package the finding into a signed security record.",
+    helper:
+      "Evidence is ready. Package the finding into a signed security record.",
     lockedLabel: "Attestation",
   },
   {
     label: "Guardian Challenge",
-    helper: "Escalate the attested incident to guardian review before execution can proceed.",
+    helper:
+      "Escalate the attested incident to guardian review before execution can proceed.",
     lockedLabel: "Guardian review",
   },
   {
     label: "Attempt Execution",
-    helper: "Attempt the risky operation so Praetor can enforce the policy block.",
+    helper:
+      "Attempt the risky operation so Praetor can enforce the policy block.",
     lockedLabel: "Policy enforcement",
   },
 ];
@@ -178,20 +186,33 @@ export default function DemoPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={defaultTransition}
-              className="premium-shell rounded-[2rem] p-6 md:p-8 flex flex-col justify-between gap-6 md:flex-row md:items-end"
+              className="premium-shell demo-theater rounded-[2rem] p-6 md:p-8 flex flex-col justify-between gap-6 md:flex-row md:items-end"
             >
               <div>
-                <Badge>Interactive guided demo</Badge>
+                <div className="flex flex-wrap gap-3">
+                  <Badge>Interactive guided demo</Badge>
+                  <span className="status-badge-premium inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-teal-100">
+                    <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
+                    All Systems Online
+                  </span>
+                  <span className="status-badge-premium solana-pill inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-arctic">
+                    Solana Devnet
+                  </span>
+                </div>
                 <h1 className="mt-5 text-4xl font-black tracking-[-0.045em] text-white md:text-6xl">
                   PRAETOR protocol firewall simulation
                 </h1>
                 <p className="mt-4 max-w-3xl text-lg leading-8 text-titanium/[0.78]">
-                  Walk a DemoDAO treasury action through Detect, Attest,
-                  Challenge, and Block with deterministic local demo data.
+                  Enter a premium command-center walkthrough for a DemoDAO
+                  treasury action. Follow the exact security narrative: Detect →
+                  Attest → Challenge → Block.
                 </p>
               </div>
               <div className="flex flex-col items-start gap-3 md:items-end">
-                <Badge tone="green" pulse><span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />Monitoring status: Active</Badge>
+                <Badge tone="green" pulse>
+                  <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
+                  Monitoring status: Active
+                </Badge>
                 <Dialog>
                   <DialogTrigger className="font-mono text-xs uppercase tracking-[0.18em] text-arctic underline decoration-arctic/[0.35] underline-offset-4 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
                     How Praetor works
@@ -306,7 +327,7 @@ export default function DemoPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...defaultTransition, delay: 0.14 }}
               >
-                <Card variant="hero" className="min-h-[720px]">
+                <Card variant="hero" className="demo-theater min-h-[760px]">
                   <div className="flex flex-wrap items-start justify-between gap-5">
                     <div>
                       <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">
@@ -332,7 +353,7 @@ export default function DemoPage() {
                     <Tooltip content="Risk Score is Praetor's severity signal for a privileged action, combining amount, signer, destination, and policy context.">
                       <div
                         tabIndex={0}
-                        className="rounded-2xl border border-alert/[0.30] bg-alert/[0.10] p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70"
+                        className="liquid-glass rounded-2xl border-alert/[0.30] p-4 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70"
                       >
                         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red-100">
                           Risk Score
@@ -366,8 +387,9 @@ export default function DemoPage() {
                             aria-current={active || final ? "step" : undefined}
                             animate={{ scale: active || final ? 1.02 : 1 }}
                             transition={quickTransition}
+                            data-active={active || final}
                             className={cn(
-                              "rounded-2xl border p-4 transition duration-300",
+                              "demo-step-card rounded-2xl border p-4 transition duration-300",
                               completed || final
                                 ? "border-secure/[0.45] bg-secure/[0.15]"
                                 : active
@@ -408,7 +430,7 @@ export default function DemoPage() {
                   <motion.div
                     layout
                     aria-live="polite"
-                    className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                    className="liquid-glass mt-8 rounded-[1.75rem] p-5"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <div>
@@ -553,39 +575,54 @@ export default function DemoPage() {
                   )}
 
                   <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                    <Button
-                      onClick={triggerSuspiciousWithdrawal}
-                      disabled={isLoading}
-                      variant="danger"
-                      className="py-4"
-                    >
-                      {isLoading
-                        ? "Simulating..."
-                        : "Trigger Suspicious Withdrawal"}
-                    </Button>
-                    <Button
-                      disabled={activeIndex < 1}
-                      onClick={() => setStep("attested")}
-                      className="py-4"
-                    >
-                      Create Attestation
-                    </Button>
-                    <Button
-                      disabled={activeIndex < 2}
-                      onClick={() => setStep("challenged")}
-                      variant="outline"
-                      className="py-4"
-                    >
-                      Guardian Challenge
-                    </Button>
-                    <Button
-                      disabled={activeIndex < 3}
-                      onClick={() => setStep("blocked")}
-                      variant="gold"
-                      className="py-4"
-                    >
-                      Attempt Execution
-                    </Button>
+                    {demoActions.map((action, index) => {
+                      const disabled =
+                        index === 0 ? isLoading : activeIndex < index;
+                      const onClick =
+                        index === 0
+                          ? triggerSuspiciousWithdrawal
+                          : index === 1
+                            ? () => setStep("attested")
+                            : index === 2
+                              ? () => setStep("challenged")
+                              : () => setStep("blocked");
+                      const variant =
+                        index === 0
+                          ? "danger"
+                          : index === 2
+                            ? "outline"
+                            : index === 3
+                              ? "gold"
+                              : "primary";
+
+                      return (
+                        <div
+                          key={action.label}
+                          className="liquid-glass rounded-2xl p-3"
+                        >
+                          <div className="relative z-10 flex h-full flex-col justify-between gap-3">
+                            <div>
+                              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-titanium/[0.56]">
+                                {action.lockedLabel}
+                              </p>
+                              <p className="mt-2 min-h-12 text-sm leading-5 text-titanium/[0.72]">
+                                {action.helper}
+                              </p>
+                            </div>
+                            <Button
+                              onClick={onClick}
+                              disabled={disabled}
+                              variant={variant}
+                              className="w-full py-4"
+                            >
+                              {isLoading && index === 0
+                                ? "Simulating..."
+                                : action.label}
+                            </Button>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </Card>
               </motion.div>
