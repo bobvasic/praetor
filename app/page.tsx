@@ -1,6 +1,7 @@
 import { ArrowRight, Ban, CheckCircle2, LockKeyhole, Radar, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Wordmark } from "@/components/Brand";
 import { OperationalBadges } from "@/components/OperationalBadges";
+import { PraetorHeroMedia } from "@/components/hero/PraetorHeroMedia";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
@@ -30,6 +31,9 @@ export default function Home() {
       <SectionShell className="min-h-[calc(100vh-5rem)] py-10 md:flex md:items-center md:py-16">
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.96fr_1.04fr] lg:items-center">
           <FadeUp>
+            <div className="mb-6 lg:hidden">
+              <PraetorHeroMedia />
+            </div>
             <GlassPanel className="p-6 md:p-9">
               <OperationalBadges />
               <div className="mt-8 max-w-sm"><Wordmark /></div>
@@ -56,7 +60,10 @@ export default function Home() {
           </FadeUp>
 
           <FadeUp delay={0.12}>
-            <GlassPanel className="praetor-console-grid relative min-h-[620px] p-0">
+            <div className="hidden lg:block">
+              <PraetorHeroMedia />
+            </div>
+            <GlassPanel className="praetor-console-grid relative mt-6 min-h-[620px] p-0">
               <div className="absolute inset-x-0 top-0 h-2 praetor-console-line" />
               <div className="p-6 md:p-8">
                 <div className="flex items-start justify-between gap-5">

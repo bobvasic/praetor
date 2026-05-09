@@ -1,0 +1,7 @@
+{
+  "name": "three",
+  "version": "0.0.0-praetor-local",
+  "private": true,
+  "main": "index.js",
+  "types": "index.d.ts"
+}
