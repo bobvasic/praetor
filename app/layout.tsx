@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   description:
     "Detect, attest, challenge, and block high-risk privileged actions for Solana protocols.",
   metadataBase: new URL("https://praetores.com"),
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     title: "PRAETOR",
     description: "Onchain Ops Firewall for Solana Protocols",
