@@ -1055,9 +1055,43 @@ body {
 
 .praetor-depth-base {
   background:
-    radial-gradient(circle at 14% 8%, rgba(152, 233, 255, 0.12), transparent 28rem),
-    radial-gradient(circle at 84% 18%, rgba(255, 130, 0, 0.18), transparent 32rem),
+    radial-gradient(circle at 14% 8%, rgba(152, 233, 255, 0.13), transparent 28rem),
+    radial-gradient(circle at 84% 18%, rgba(255, 130, 0, 0.2), transparent 32rem),
+    radial-gradient(ellipse at 50% -12%, rgba(255, 255, 255, 0.08), transparent 42rem),
     linear-gradient(135deg, var(--praetor-deep-navy) 0%, var(--praetor-navy) 48%, #07101d 100%);
+}
+
+.praetor-soft-geometry-wash {
+  opacity: 0.62;
+  background:
+    radial-gradient(ellipse at 18% 20%, rgba(152, 233, 255, 0.14), transparent 24rem),
+    radial-gradient(ellipse at 78% 24%, rgba(255, 130, 0, 0.13), transparent 25rem),
+    radial-gradient(ellipse at 46% 74%, rgba(44, 82, 255, 0.13), transparent 31rem),
+    conic-gradient(from 135deg at 62% 34%, transparent 0deg, rgba(152, 233, 255, 0.08) 42deg, transparent 78deg, rgba(255, 130, 0, 0.065) 132deg, transparent 180deg);
+  filter: blur(18px) saturate(1.18);
+}
+
+.praetor-luxury-linework {
+  opacity: 0.18;
+  background-image:
+    linear-gradient(120deg, transparent 0 44%, rgba(152, 233, 255, 0.16) 44.2% 44.55%, transparent 44.75% 100%),
+    linear-gradient(60deg, transparent 0 54%, rgba(255, 154, 31, 0.12) 54.2% 54.55%, transparent 54.75% 100%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.16) 0 1px, transparent 1.8px);
+  background-size: 180px 180px, 240px 240px, 72px 72px;
+  mask-image: radial-gradient(ellipse at 52% 28%, black 0 28rem, rgba(0, 0, 0, 0.7) 48rem, transparent 78rem);
+}
+
+.praetor-geometry-panel {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.095), transparent 38%, rgba(152, 233, 255, 0.07)),
+    linear-gradient(45deg, transparent 0 47%, rgba(255, 154, 31, 0.28) 48% 49%, transparent 50% 100%);
+  clip-path: polygon(18% 0, 100% 16%, 78% 100%, 0 76%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 60px rgba(152, 233, 255, 0.08),
+    0 30px 90px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(1px);
 }
 
 .praetor-orange-slab {
@@ -1077,12 +1111,13 @@ body {
 }
 
 .praetor-geo-grid {
-  opacity: 0.18;
+  opacity: 0.2;
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0 48%, rgba(255,130,0,0.12) 48% 48.35%, transparent 48.35% 100%);
-  background-size: 72px 72px, 72px 72px, 180px 180px;
+    linear-gradient(rgba(255,255,255,0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.075) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 48%, rgba(255,130,0,0.13) 48% 48.35%, transparent 48.35% 100%),
+    linear-gradient(45deg, transparent 0 49.2%, rgba(152,233,255,0.11) 49.35% 49.65%, transparent 49.8% 100%);
+  background-size: 72px 72px, 72px 72px, 180px 180px, 220px 220px;
   mask-image: radial-gradient(circle at 54% 18%, black, transparent 76%);
 }
 
@@ -1092,6 +1127,11 @@ body {
     linear-gradient(180deg, transparent, rgba(11,18,32,0.62) 78%, var(--praetor-deep-navy));
 }
 
+.praetor-premium-particle-field {
+  contain: paint;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 0 42rem, rgba(0, 0, 0, 0.72) 64rem, transparent 90rem);
+}
+
 .praetor-network-particle {
   position: absolute;
   left: var(--x);
@@ -1099,8 +1139,36 @@ body {
   width: var(--size);
   height: var(--size);
   border-radius: 9999px;
-  background: rgba(152, 233, 255, 0.7);
-  box-shadow: 0 0 18px rgba(152,233,255,0.32), 0 0 30px rgba(255,130,0,0.12);
+  background: var(--particle-tone);
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.34),
+    0 0 22px rgba(152,233,255,0.34),
+    0 0 40px rgba(255,130,0,0.14);
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.praetor-network-particle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--trail);
+  height: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--particle-tone), transparent);
+  opacity: 0.48;
+  transform: translate(-8%, -50%) rotate(128deg);
+  transform-origin: left center;
+  filter: blur(0.15px);
+}
+
+.praetor-network-particle:nth-child(6n)::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid rgba(152, 233, 255, 0.2);
+  border-radius: inherit;
 }
 
 .praetor-glass-panel {
@@ -1147,4 +1215,15 @@ body {
   background: rgba(255,255,255,0.055);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
   backdrop-filter: blur(18px);
+}
+
+@media (max-width: 767px) {
+  .praetor-geometry-panel {
+    opacity: 0.16 !important;
+  }
+
+  .praetor-luxury-linework,
+  .praetor-premium-particle-field {
+    opacity: 0.68;
+  }
 }

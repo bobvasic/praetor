@@ -21,14 +21,30 @@ const lines = [
   [1, 10], [3, 11], [5, 13], [10, 17], [12, 20],
 ] as const;
 
-const particles = Array.from({ length: 64 }, (_, index) => ({
+const particles = Array.from({ length: 84 }, (_, index) => ({
   id: index,
   x: `${(index * 37 + 9) % 100}%`,
   y: `${(index * 53 + 13) % 100}%`,
-  size: [1, 1.4, 1.8, 2.4][index % 4],
-  delay: (index % 12) * 0.35,
-  duration: 15 + (index % 9) * 1.7,
+  size: [1, 1.35, 1.8, 2.35, 3.2][index % 5],
+  delay: (index % 16) * 0.28,
+  duration: 12 + (index % 10) * 1.45,
+  driftX: ((index * 29) % 37) - 18,
+  driftY: -34 - ((index * 17) % 58),
+  tone: [
+    "rgba(152,233,255,0.88)",
+    "rgba(255,154,31,0.72)",
+    "rgba(255,255,255,0.78)",
+    "rgba(44,82,255,0.72)",
+  ][index % 4],
+  trail: [22, 30, 42, 56][index % 4],
 }));
+
+const geometryPanels = [
+  { className: "left-[6%] top-[10%] h-44 w-44 rotate-12", delay: 0, duration: 22 },
+  { className: "right-[10%] top-[18%] h-64 w-64 -rotate-6", delay: 1.4, duration: 28 },
+  { className: "left-[18%] bottom-[14%] h-56 w-56 -rotate-12", delay: 2.1, duration: 31 },
+  { className: "right-[22%] bottom-[8%] h-36 w-36 rotate-[21deg]", delay: 0.8, duration: 24 },
+] as const;
 
 function getMode(pathname: string | null): Mode {
   if (pathname === "/") return "home";
@@ -95,11 +111,47 @@ function NetworkSvg({ mode }: { mode: Mode }) {
   );
 }
 
-function ParticleField({ mode }: { mode: Mode }) {
+function AbstractGeometry() {
   const reduced = useReducedMotion();
-  const count = mode === "dashboard" ? 38 : mode === "demo" ? 52 : 60;
+
   return (
     <div className="absolute inset-0 overflow-hidden">
+      <motion.div
+        className="absolute inset-[-8%] praetor-soft-geometry-wash"
+        animate={reduced ? undefined : { x: [0, 18, -12, 0], y: [0, -10, 8, 0], scale: [1, 1.025, 1] }}
+        transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute inset-0 praetor-luxury-linework"
+        animate={reduced ? undefined : { backgroundPosition: ["0px 0px, 0px 0px, 0px 0px", "90px 54px, -72px 72px, 120px 0px"] }}
+        transition={{ duration: 46, repeat: Infinity, ease: "linear" }}
+      />
+      {geometryPanels.map((panel, index) => (
+        <motion.div
+          key={panel.className}
+          className={cn("absolute praetor-geometry-panel", panel.className)}
+          animate={
+            reduced
+              ? undefined
+              : {
+                  y: [0, index % 2 ? 18 : -14, 0],
+                  x: [0, index % 2 ? -8 : 10, 0],
+                  rotate: [0, index % 2 ? -4 : 4, 0],
+                  opacity: [0.22, 0.42, 0.24],
+                }
+          }
+          transition={{ duration: panel.duration, delay: panel.delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ParticleField({ mode }: { mode: Mode }) {
+  const reduced = useReducedMotion();
+  const count = mode === "dashboard" ? 52 : mode === "demo" ? 68 : 78;
+  return (
+    <div className="absolute inset-0 overflow-hidden praetor-premium-particle-field">
       {particles.slice(0, count).map((particle) => (
         <motion.span
           key={particle.id}
@@ -108,8 +160,19 @@ function ParticleField({ mode }: { mode: Mode }) {
             "--x": particle.x,
             "--y": particle.y,
             "--size": `${particle.size}px`,
+            "--particle-tone": particle.tone,
+            "--trail": `${particle.trail}px`,
           } as CSSProperties}
-          animate={reduced ? undefined : { x: [0, particle.id % 2 ? -12 : 12, 0], y: [0, -26 - particle.size * 5, 0], opacity: [0.12, 0.62, 0.18] }}
+          animate={
+            reduced
+              ? undefined
+              : {
+                  x: [0, particle.driftX * 0.45, particle.driftX, particle.driftX * 0.25, 0],
+                  y: [0, particle.driftY * 0.35, particle.driftY, particle.driftY * 0.55, 0],
+                  opacity: [0, 0.74, 0.2, 0.68, 0],
+                  scale: [0.6, 1.18, 0.84, 1, 0.6],
+                }
+          }
           transition={{ duration: particle.duration, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
@@ -123,6 +186,7 @@ export function PraetorNetworkBackground() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[var(--praetor-deep-navy)]">
       <div className="absolute inset-0 praetor-depth-base" />
+      <AbstractGeometry />
       <motion.div className="absolute -right-[18vw] top-[7vh] h-[56vh] w-[58vw] praetor-orange-slab" animate={{ y: [0, -18, 12, 0], rotate: [-10, -8, -11, -10] }} transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }} />
       <motion.div className="absolute -left-[20vw] bottom-[-16vh] h-[46vh] w-[52vw] praetor-navy-slab" animate={{ x: [0, 18, -10, 0], rotate: [15, 13, 16, 15] }} transition={{ duration: 34, repeat: Infinity, ease: "easeInOut" }} />
       <div className="absolute left-[8%] top-[14%] h-72 w-72 rounded-full bg-[rgba(152,233,255,0.10)] blur-3xl" />
