@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, Ban, CheckCircle2, ExternalLink, RadioTower, ShieldAlert, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
 import { PublicKey, Transaction, TransactionInstruction } from "@solana/web3.js";
+import { OperationalBadges } from "@/components/OperationalBadges";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PremiumButton } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -268,14 +269,14 @@ export default function PraetorAppPage() {
           <GlassPanel className="p-6 md:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <div className="flex flex-wrap gap-3">
-                  <StatusBadge tone={status?.ok ? "online" : "red"} pulse={status?.ok}>Solana Devnet</StatusBadge>
+                <OperationalBadges />
+                <div className="mt-3 flex flex-wrap gap-3">
                   <StatusBadge tone={connected ? "online" : "orange"}>{connected ? "Wallet Connected" : "Wallet Required"}</StatusBadge>
                   <StatusBadge tone={status?.ok ? "cyan" : "red"}>{latestStatusLabel}</StatusBadge>
                 </div>
                 <h1 className="mt-6 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">Praetor live devnet workflow.</h1>
                 <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--praetor-muted)]">
-                  Connect a wallet, simulate a critical treasury withdrawal, sign a Memo Program attestation on Solana Devnet, and view the real transaction in Solana Explorer.
+                  Connect a wallet, run a deterministic protocol incident simulation, sign a Memo Program attestation on Solana Devnet, and verify the real transaction in Solana Explorer. Powered by QuickNode RPC; wallet signs client-side and Praetor never handles private keys.
                 </p>
               </div>
               <PremiumButton onClick={connectWallet} variant={connected ? "glass" : "orange"}>
