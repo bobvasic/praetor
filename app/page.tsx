@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Wordmark } from "@/components/Brand";
 import { Badge, Card, Container, Section, SectionTitle } from "@/components/UI";
+import { SystemBadge } from "@/components/SystemBadge";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
 import { ButtonLink } from "@/src/components/ui/button";
 import {
@@ -52,17 +53,9 @@ export default function Home() {
           <Container className="grid gap-12 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
             <div>
               <FadeUp className="flex flex-wrap gap-3">
-                <span className="status-badge-premium inline-flex items-center gap-2 px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-teal-100">
-                  <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
-                  All Systems Online
-                </span>
-                <span className="status-badge-premium solana-pill inline-flex items-center gap-2 px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-arctic">
-                  <CircuitBoard
-                    className="h-3.5 w-3.5 text-[#14F195]"
-                    aria-hidden
-                  />
-                  Solana Devnet
-                </span>
+                <SystemBadge kind="online" />
+                <SystemBadge kind="devnet" />
+                <SystemBadge kind="mvp" />
               </FadeUp>
               <FadeUp delay={0.05} className="mt-8 max-w-md">
                 <Wordmark />
@@ -196,8 +189,13 @@ export default function Home() {
                         Execution blocked by Praetor policy.
                       </p>
                     </div>
-                    <div className="grid grid-cols-3 gap-3">
-                      {["Detect", "Attest", "Block"].map((item) => (
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                      {[
+                        "Detect",
+                        "Attest",
+                        "Challenge",
+                        "Block",
+                      ].map((item) => (
                         <div
                           key={item}
                           className="rounded-2xl border border-arctic/[0.14] bg-arctic/[0.06] p-3 text-center"
