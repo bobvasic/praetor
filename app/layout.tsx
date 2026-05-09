@@ -27,10 +27,12 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[var(--praetor-deep-navy)] text-slate-100 antialiased">
+      <body className="relative isolate min-h-screen overflow-x-hidden bg-[var(--praetor-deep-navy)] text-slate-100 antialiased">
         <PraetorNetworkBackground />
-        <Header />
-        {children}
+        <div className="relative z-10">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );

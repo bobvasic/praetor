@@ -1277,3 +1277,111 @@ body {
     opacity: 0.68;
   }
 }
+
+.praetor-network-background {
+  contain: layout paint style;
+  transform: translate3d(0, 0, 0);
+}
+
+.praetor-firewall-shield {
+  border-radius: 9999px;
+  background:
+    linear-gradient(120deg, transparent 0 46%, rgba(199, 161, 91, 0.28) 46.2% 46.55%, transparent 46.8% 100%),
+    linear-gradient(60deg, transparent 0 52%, rgba(152, 233, 255, 0.18) 52.15% 52.45%, transparent 52.75% 100%),
+    repeating-conic-gradient(from 30deg, rgba(199, 161, 91, 0.16) 0 6deg, transparent 6deg 18deg),
+    radial-gradient(circle, transparent 0 45%, rgba(152, 233, 255, 0.1) 45.2% 45.55%, transparent 45.8% 55%, rgba(255, 130, 0, 0.12) 55.2% 55.5%, transparent 55.8% 100%);
+  filter: drop-shadow(0 0 50px rgba(152, 233, 255, 0.08));
+  mask-image: radial-gradient(circle, transparent 0 20%, black 28% 64%, transparent 75%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.praetor-firewall-mesh {
+  background-image:
+    linear-gradient(30deg, rgba(199, 161, 91, 0.13) 1px, transparent 1px),
+    linear-gradient(150deg, rgba(152, 233, 255, 0.105) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 130, 0, 0.08) 1px, transparent 1px);
+  background-size: 92px 54px, 92px 54px, 184px 108px;
+  mask-image:
+    linear-gradient(to bottom, transparent 0, black 12%, black 72%, transparent 100%),
+    radial-gradient(ellipse at 50% 40%, black 0 38rem, transparent 74rem);
+  mask-composite: intersect;
+}
+
+.praetor-data-stream-layer {
+  contain: paint;
+  mask-image: linear-gradient(90deg, transparent 0, black 14%, black 86%, transparent 100%);
+}
+
+.praetor-data-stream {
+  position: absolute;
+  height: 2px;
+  border-radius: 9999px;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent),
+    repeating-linear-gradient(90deg, transparent 0 12px, currentColor 12px 19px, transparent 19px 34px);
+  box-shadow: 0 0 18px currentColor;
+  transform: skewX(-18deg) translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.praetor-data-stream::after {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  filter: blur(8px);
+  opacity: 0.36;
+}
+
+.praetor-data-stream-cyan {
+  color: rgba(152, 233, 255, 0.76);
+}
+
+.praetor-data-stream-blue {
+  color: rgba(44, 82, 255, 0.62);
+}
+
+.praetor-data-stream-gold {
+  color: rgba(199, 161, 91, 0.68);
+}
+
+.praetor-light-sweep {
+  opacity: 0.44;
+  background-image:
+    linear-gradient(108deg, transparent 0 34%, rgba(152, 233, 255, 0.11) 44%, transparent 55% 100%),
+    linear-gradient(112deg, transparent 0 48%, rgba(255, 154, 31, 0.085) 53%, rgba(199, 161, 91, 0.06) 56%, transparent 68% 100%);
+  background-size: 160% 100%, 210% 100%;
+  background-position: -120% 0, -160% 0;
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 76%, transparent 100%);
+}
+
+[data-background-mode="app"] .praetor-orange-slab,
+[data-background-mode="app"] .praetor-navy-slab {
+  opacity: 0.42;
+  filter: blur(0.2px) drop-shadow(0 30px 70px rgba(255, 130, 0, 0.14));
+}
+
+[data-background-mode="dashboard"] .praetor-firewall-mesh {
+  opacity: 0.82;
+}
+
+[data-background-mode="home"] .praetor-orange-slab {
+  opacity: 0.96;
+}
+
+@media (max-width: 767px) {
+  .praetor-network-background svg {
+    opacity: 0.42;
+  }
+
+  .praetor-firewall-shield {
+    width: 92vmin;
+    height: 92vmin;
+    opacity: 0.34 !important;
+  }
+
+  .praetor-data-stream:nth-child(n + 3) {
+    display: none;
+  }
+}
