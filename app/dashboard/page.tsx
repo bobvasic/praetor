@@ -80,10 +80,19 @@ export default function DashboardPage() {
       <main>
         <Section spacing="compact">
           <Container>
-            <FadeUp className="premium-shell rounded-[2rem] p-6 md:p-8">
+            <FadeUp className="premium-shell demo-theater rounded-[2rem] p-6 md:p-8">
               <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
                 <div>
-                  <Badge>Security command center</Badge>
+                  <div className="flex flex-wrap gap-3">
+                    <Badge>Security command center</Badge>
+                    <span className="status-badge-premium inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-teal-100">
+                      <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
+                      All Systems Online
+                    </span>
+                    <span className="status-badge-premium solana-pill inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-arctic">
+                      Solana Devnet
+                    </span>
+                  </div>
                   <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-0.045em] text-white md:text-6xl">
                     PRAETOR monitoring console
                   </h1>
@@ -162,7 +171,9 @@ export default function DashboardPage() {
                             className="group rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.58] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-arctic/[0.24] hover:bg-arctic/[0.055]"
                           >
                             <div className="flex items-center justify-between gap-3">
-                              <p className="font-bold text-white">{address.label}</p>
+                              <p className="font-bold text-white">
+                                {address.label}
+                              </p>
                               <Badge tone="green">{address.status}</Badge>
                             </div>
                             <p className="mt-3 break-all font-mono text-xs leading-5 text-arctic/[0.76]">
@@ -176,12 +187,16 @@ export default function DashboardPage() {
                       <div className="mt-5 rounded-2xl border border-alert/[0.32] bg-alert/[0.10] p-5">
                         <div className="flex items-start justify-between gap-5">
                           <div>
-                            <Badge tone="red" pulse>Critical risk</Badge>
+                            <Badge tone="red" pulse>
+                              Critical risk
+                            </Badge>
                             <h3 className="mt-4 text-2xl font-black text-white">
                               Treasury withdrawal above threshold
                             </h3>
                             <p className="mt-3 text-sm leading-6 text-red-50/80">
-                              {demoIncident.amount} requested by {demoIncident.signer.toLowerCase()} to a {demoIncident.destination.toLowerCase()}.
+                              {demoIncident.amount} requested by{" "}
+                              {demoIncident.signer.toLowerCase()} to a{" "}
+                              {demoIncident.destination.toLowerCase()}.
                             </p>
                           </div>
                           <p className="risk-glow text-5xl font-black text-red-100">
@@ -198,9 +213,12 @@ export default function DashboardPage() {
                             <Tooltip key={signal.label} content={signal.tip}>
                               <div
                                 tabIndex={0}
-                                className="rounded-2xl border border-arctic/[0.16] bg-arctic/[0.08] p-5 transition hover:border-arctic/[0.30] hover:bg-arctic/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70"
+                                className="liquid-glass rounded-2xl p-5 transition hover:border-arctic/[0.30] hover:bg-arctic/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70"
                               >
-                                <Icon className="h-5 w-5 text-arctic" aria-hidden />
+                                <Icon
+                                  className="h-5 w-5 text-arctic"
+                                  aria-hidden
+                                />
                                 <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-titanium/[0.58]">
                                   {signal.label}
                                 </p>
@@ -229,7 +247,9 @@ export default function DashboardPage() {
                           Treasury withdrawal above threshold
                         </h2>
                       </div>
-                      <Badge tone="red" pulse>Critical</Badge>
+                      <Badge tone="red" pulse>
+                        Critical
+                      </Badge>
                     </div>
                     <div className="mt-6 rounded-2xl border border-alert/[0.30] bg-alert/[0.10] p-5">
                       <div className="flex items-end justify-between gap-4">
@@ -241,13 +261,21 @@ export default function DashboardPage() {
                             {demoIncident.riskScore}
                           </p>
                         </div>
-                        <AlertTriangle className="h-10 w-10 text-alert" aria-hidden />
+                        <AlertTriangle
+                          className="h-10 w-10 text-alert"
+                          aria-hidden
+                        />
                       </div>
                       <p className="mt-4 text-sm leading-6 text-red-50/80">
-                        Unsafe operation is held until guardian review clears the policy risk.
+                        Unsafe operation is held until guardian review clears
+                        the policy risk.
                       </p>
                     </div>
-                    <ButtonLink href="/demo" variant="danger" className="mt-6 w-full">
+                    <ButtonLink
+                      href="/demo"
+                      variant="danger"
+                      className="mt-6 w-full"
+                    >
                       Investigate in Demo
                     </ButtonLink>
                   </Card>
@@ -262,10 +290,14 @@ export default function DashboardPage() {
                       </p>
                     </div>
                     <div className="mt-6 space-y-3">
-                      {["Webhooks receiving", "Policy engine armed", "Guardian challenge ready"].map((row) => (
+                      {[
+                        "Webhooks receiving",
+                        "Policy engine armed",
+                        "Guardian challenge ready",
+                      ].map((row) => (
                         <div
                           key={row}
-                          className="flex items-center justify-between rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] px-4 py-3"
+                          className="liquid-glass flex items-center justify-between rounded-xl px-4 py-3"
                         >
                           <span className="text-titanium/[0.78]">{row}</span>
                           <Badge tone="green">OK</Badge>
@@ -283,13 +315,24 @@ export default function DashboardPage() {
                   <div>
                     <Badge tone="blue">Operational assurance</Badge>
                     <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-white">
-                      Command-center readiness for treasury and authority events.
+                      Command-center readiness for treasury and authority
+                      events.
                     </h2>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {["Detect", "Attest", "Block"].map((item) => (
-                      <div key={item} className="rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.52] p-4">
-                        {item === "Block" ? <ShieldCheck className="h-5 w-5 text-teal-100" aria-hidden /> : <Activity className="h-5 w-5 text-arctic" aria-hidden />}
+                      <div key={item} className="liquid-glass rounded-2xl p-4">
+                        {item === "Block" ? (
+                          <ShieldCheck
+                            className="h-5 w-5 text-teal-100"
+                            aria-hidden
+                          />
+                        ) : (
+                          <Activity
+                            className="h-5 w-5 text-arctic"
+                            aria-hidden
+                          />
+                        )}
                         <p className="mt-4 font-black text-white">{item}</p>
                       </div>
                     ))}
