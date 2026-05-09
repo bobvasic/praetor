@@ -6,6 +6,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { SharpDivider } from "@/components/ui/SharpDivider";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { demoIncident, flowSteps, protectedAddresses } from "@/lib/demo-data";
 
@@ -55,7 +56,7 @@ export default function Home() {
           </FadeUp>
 
           <FadeUp delay={0.12}>
-            <GlassPanel className="relative min-h-[620px] p-0">
+            <GlassPanel className="praetor-console-grid relative min-h-[620px] p-0">
               <div className="absolute inset-x-0 top-0 h-2 praetor-console-line" />
               <div className="p-6 md:p-8">
                 <div className="flex items-start justify-between gap-5">
@@ -96,6 +97,8 @@ export default function Home() {
         </div>
       </SectionShell>
 
+      <SharpDivider />
+
       <SectionShell id="flow" className="praetor-section-cut bg-[rgba(18,27,43,0.72)]">
         <div className="mx-auto max-w-7xl px-6">
           <FadeUp className="max-w-3xl">
@@ -119,6 +122,8 @@ export default function Home() {
           </div>
         </div>
       </SectionShell>
+
+      <SharpDivider flip />
 
       <SectionShell>
         <div className="mx-auto grid max-w-7xl gap-6 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">

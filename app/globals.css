@@ -1190,6 +1190,56 @@ body {
   clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
 }
 
+
+.praetor-sharp-divider {
+  position: relative;
+  height: 5.5rem;
+  margin-block: -1px;
+  overflow: hidden;
+  background:
+    linear-gradient(172deg, transparent 0 42%, rgba(255, 130, 0, 0.64) 42.2% 48%, transparent 48.2% 100%),
+    linear-gradient(176deg, rgba(11, 18, 32, 0) 0 50%, rgba(11, 18, 32, 0.72) 50.4% 100%);
+}
+
+.praetor-sharp-divider::before {
+  content: "";
+  position: absolute;
+  inset: 42% 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 154, 31, 0.92), rgba(152, 233, 255, 0.46), transparent);
+  box-shadow: 0 0 34px rgba(255, 130, 0, 0.28);
+  transform: rotate(-3.5deg) scaleX(1.08);
+}
+
+.praetor-sharp-divider-flip {
+  transform: scaleY(-1);
+}
+
+.praetor-command-rail {
+  position: relative;
+}
+
+.praetor-command-rail::before {
+  content: "";
+  position: absolute;
+  bottom: 1.5rem;
+  left: clamp(1rem, 3vw, 2rem);
+  top: 1.5rem;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 130, 0, 0.88), rgba(152, 233, 255, 0.28), transparent);
+  box-shadow: 0 0 34px rgba(255, 130, 0, 0.28);
+  opacity: 0.72;
+}
+
+.praetor-console-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 48%, rgba(255, 130, 0, 0.11) 48.25% 48.55%, transparent 48.8% 100%);
+  background-size: 34px 34px, 34px 34px, 140px 140px;
+}
+
 .praetor-heading {
   color: var(--praetor-white);
   letter-spacing: -0.065em;
