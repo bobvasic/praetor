@@ -1,33 +1,12 @@
-import {
-  Activity,
-  BadgeCheck,
-  Ban,
-  CircuitBoard,
-  LockKeyhole,
-  ShieldCheck,
-  Swords,
-} from "lucide-react";
+import { ArrowRight, Ban, CheckCircle2, LockKeyhole, Radar, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Wordmark } from "@/components/Brand";
-import { Badge, Card, Container, Section, SectionTitle } from "@/components/UI";
-import { SystemBadge } from "@/components/SystemBadge";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
-import { ButtonLink } from "@/src/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@/src/components/ui/dialog";
-import { TooltipProvider } from "@/src/components/ui/tooltip";
-import { flowSteps } from "@/lib/demo-data";
-
-const flowDescriptions = [
-  "Continuously score treasury movement, signer identity, privileged instructions, and destination context.",
-  "Turn deterministic incident evidence into a reviewable security record for protocol operators.",
-  "Route dangerous execution paths through guardian review before funds or authority move.",
-  "Deny unsafe operations while policy risk is unresolved and preserve the audit trail.",
-];
+import { GlassPanel } from "@/components/ui/GlassPanel";
+import { MetricCard } from "@/components/ui/MetricCard";
+import { PremiumButtonLink } from "@/components/ui/PremiumButton";
+import { SectionShell } from "@/components/ui/SectionShell";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { demoIncident, flowSteps, protectedAddresses } from "@/lib/demo-data";
 
 const consoleRows = [
   ["PERIMETER", "DemoDAO Treasury", "ACTIVE"],
@@ -36,266 +15,132 @@ const consoleRows = [
   ["POLICY", "Guardian challenge required", "ARMED"],
 ];
 
-const trustSignals = [
-  "Policy-first controls",
-  "Deterministic local simulation",
-  "Solana-native incident workflow",
+const sections = [
+  { title: "Detect", body: "Score treasury movement, signer identity, privileged instructions, and destination context before execution settles.", icon: Radar },
+  { title: "Attest", body: "Convert incident evidence into a reviewable Solana security record operators can trust.", icon: CheckCircle2 },
+  { title: "Challenge", body: "Route critical operations through guardian review while preserving the exact incident trail.", icon: LockKeyhole },
+  { title: "Block", body: "Deny unsafe operations while unresolved policy risk remains attached to the action.", icon: Ban },
 ];
 
 export default function Home() {
   return (
-    <TooltipProvider>
-      <main>
-        <Section
-          spacing="hero"
-          className="min-h-[calc(100vh-5rem)] md:flex md:items-center"
-        >
-          <Container className="grid gap-12 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
-            <div>
-              <FadeUp className="flex flex-wrap gap-3">
-                <SystemBadge kind="online" />
-                <SystemBadge kind="devnet" />
-                <SystemBadge kind="mvp" />
-              </FadeUp>
-              <FadeUp delay={0.05} className="mt-8 max-w-md">
-                <Wordmark />
-              </FadeUp>
-              <FadeUp delay={0.1}>
-                <h1 className="hero-title-gradient mt-8 max-w-5xl text-5xl font-black tracking-[-0.065em] drop-shadow-[0_0_54px_rgba(152,233,255,0.14)] md:text-7xl xl:text-8xl">
-                  The onchain ops firewall for Solana protocols.
-                </h1>
-              </FadeUp>
-              <FadeUp delay={0.16}>
-                <p className="mt-7 max-w-2xl text-xl leading-9 text-titanium/[0.84]">
-                  PRAETOR detects risky privileged actions, attests evidence,
-                  routes guardian challenges, and blocks unsafe execution before
-                  treasury or authority operations become incidents.
-                </p>
-              </FadeUp>
-              <FadeUp
-                delay={0.2}
-                className="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3"
-              >
-                {trustSignals.map((signal) => (
-                  <span
-                    key={signal}
-                    className="liquid-glass rounded-2xl px-4 py-3 text-sm text-titanium/[0.84]"
-                  >
-                    <span className="relative z-10 inline-flex items-center gap-2">
-                      <ShieldCheck
-                        className="h-4 w-4 text-arctic"
-                        aria-hidden
-                      />
-                      {signal}
-                    </span>
-                  </span>
+    <main className="overflow-hidden">
+      <SectionShell className="min-h-[calc(100vh-5rem)] py-10 md:flex md:items-center md:py-16">
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.96fr_1.04fr] lg:items-center">
+          <FadeUp>
+            <GlassPanel className="p-6 md:p-9">
+              <div className="flex flex-wrap gap-3">
+                <StatusBadge tone="online" pulse>All Systems Online</StatusBadge>
+                <StatusBadge tone="devnet">Solana Devnet</StatusBadge>
+              </div>
+              <div className="mt-8 max-w-sm"><Wordmark /></div>
+              <p className="praetor-kicker mt-10">Praetor protocol firewall</p>
+              <h1 className="praetor-heading mt-5 max-w-5xl text-5xl font-black md:text-7xl xl:text-8xl">
+                Institutional onchain ops firewall for Solana protocols.
+              </h1>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--praetor-muted)] md:text-xl">
+                Praetor detects risky privileged actions, attests deterministic evidence, routes guardian challenges, and blocks unsafe execution before treasury or authority operations become incidents.
+              </p>
+              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+                <PremiumButtonLink href="/demo">Run Guided Demo <ArrowRight className="ml-2 h-4 w-4" /></PremiumButtonLink>
+                <PremiumButtonLink href="/dashboard" variant="glass">View Command Center</PremiumButtonLink>
+              </div>
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                {["Policy-first controls", "Local deterministic demo", "Solana-native workflow"].map((item) => (
+                  <div key={item} className="praetor-mini-card rounded-2xl px-4 py-3 text-sm text-[var(--praetor-muted)]">
+                    <ShieldCheck className="mb-2 h-4 w-4 text-[var(--praetor-orange-soft)]" />{item}
+                  </div>
                 ))}
-              </FadeUp>
-              <FadeUp
-                delay={0.25}
-                className="mt-10 flex flex-col gap-4 sm:flex-row"
-              >
-                <ButtonLink href="/demo" variant="hero" size="hero">
-                  Run Guided Demo
-                </ButtonLink>
-                <ButtonLink href="/dashboard" variant="command" size="hero">
-                  View Command Center
-                </ButtonLink>
-              </FadeUp>
-              <FadeUp delay={0.31} className="mt-7">
-                <Dialog>
-                  <DialogTrigger className="font-mono text-xs uppercase tracking-[0.18em] text-arctic underline decoration-arctic/[0.35] underline-offset-4 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
-                    What is a protocol?
-                  </DialogTrigger>
-                  <DialogContent>
-                    <Badge tone="blue">Praetor glossary</Badge>
-                    <DialogTitle className="mt-5 text-3xl font-black tracking-[-0.03em] text-white">
-                      What Praetor protects
-                    </DialogTitle>
-                    <DialogDescription className="mt-4 text-base leading-7 text-titanium/[0.82]">
-                      In Praetor, a protocol means the Solana project, DAO,
-                      treasury, app, or smart contract system you want to
-                      protect.
-                    </DialogDescription>
-                  </DialogContent>
-                </Dialog>
-              </FadeUp>
-            </div>
+              </div>
+            </GlassPanel>
+          </FadeUp>
 
-            <FadeUp delay={0.2}>
-              <Card variant="hero" className="premium-shell p-0">
-                <div className="border-b border-white/[0.10] p-5 md:p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-4">
+          <FadeUp delay={0.12}>
+            <GlassPanel className="relative min-h-[620px] p-0">
+              <div className="absolute inset-x-0 top-0 h-2 praetor-console-line" />
+              <div className="p-6 md:p-8">
+                <div className="flex items-start justify-between gap-5">
+                  <div>
+                    <p className="praetor-kicker">Security console</p>
+                    <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-white md:text-4xl">DemoDAO Treasury Perimeter</h2>
+                  </div>
+                  <StatusBadge tone="online" pulse>Monitoring</StatusBadge>
+                </div>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  <MetricCard label="Risk Score" value={String(demoIncident.riskScore)} tone="red" status="Critical incident" />
+                  <MetricCard label="Protected Routes" value={String(protectedAddresses.length)} tone="cyan" status="Treasury + authority" />
+                </div>
+
+                <div className="mt-6 rounded-[1.75rem] border border-[rgba(255,130,0,0.34)] bg-[rgba(255,130,0,0.10)] p-5 shadow-[0_24px_90px_rgba(255,130,0,0.10)]">
+                  <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="font-mono text-xs uppercase tracking-[0.26em] text-arctic">
-                        Institutional Security Console
-                      </p>
-                      <p className="mt-2 text-2xl font-black text-white">
-                        DemoDAO Treasury Perimeter
-                      </p>
+                      <p className="font-mono text-xs font-black uppercase tracking-[0.22em] text-[var(--praetor-orange-soft)]">Outcome</p>
+                      <p className="mt-3 text-3xl font-black tracking-[-0.04em] text-white">Execution blocked by Praetor policy.</p>
                     </div>
-                    <Badge tone="green" pulse>
-                      <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
-                      Monitoring Active
-                    </Badge>
+                    <Ban className="h-12 w-12 text-[var(--praetor-orange-soft)]" aria-hidden />
                   </div>
                 </div>
-                <div className="grid gap-5 p-5 md:grid-cols-[0.78fr_1.22fr] md:p-6">
-                  <div className="liquid-glass relative min-h-72 rounded-[1.75rem] p-5">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,rgba(152,233,255,0.22),transparent_39%)]" />
-                    <div className="console-orbit absolute inset-7 rounded-[2rem] border border-arctic/[0.18]" />
-                    <div className="console-orbit absolute inset-14 rounded-full border border-[#14F195]/[0.18] [animation-duration:24s] [animation-direction:reverse]" />
-                    <div className="relative flex h-full flex-col items-center justify-center text-center">
-                      <div className="flex h-28 w-28 items-center justify-center rounded-[2rem] border border-arctic/[0.30] bg-arctic/[0.08] shadow-glow">
-                        <LockKeyhole
-                          className="h-12 w-12 text-arctic"
-                          aria-hidden
-                        />
-                      </div>
-                      <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-titanium/[0.62]">
-                        Policy perimeter
-                      </p>
-                      <p className="mt-2 text-4xl font-black text-white">
-                        91 risk
-                      </p>
-                      <p className="mt-2 text-sm text-teal-100">
-                        Block path armed
-                      </p>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {consoleRows.map(([kind, value, status], index) => (
-                      <FadeUp key={kind} delay={0.28 + index * 0.04}>
-                        <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4 rounded-2xl border border-white/[0.10] bg-white/[0.045] px-4 py-3 font-mono text-xs shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-arctic/[0.28] hover:bg-arctic/[0.07]">
-                          <span className="text-titanium/[0.50]">{kind}</span>
-                          <span className="text-titanium">{value}</span>
-                          <span
-                            className={
-                              status === "CRITICAL"
-                                ? "text-alert"
-                                : "text-arctic"
-                            }
-                          >
-                            {status}
-                          </span>
-                        </div>
-                      </FadeUp>
-                    ))}
-                    <div className="rounded-2xl border border-gold/[0.28] bg-gold/[0.10] p-5 shadow-gold">
-                      <p className="font-mono text-xs uppercase tracking-[0.22em] text-amber-100">
-                        Firewall outcome
-                      </p>
-                      <p className="mt-3 text-3xl font-black tracking-tight text-white">
-                        Execution blocked by Praetor policy.
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                      {[
-                        "Detect",
-                        "Attest",
-                        "Challenge",
-                        "Block",
-                      ].map((item) => (
-                        <div
-                          key={item}
-                          className="rounded-2xl border border-arctic/[0.14] bg-arctic/[0.06] p-3 text-center"
-                        >
-                          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-arctic">
-                            {item}
-                          </p>
-                          <p className="mt-1 text-sm font-bold text-white">
-                            Ready
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </FadeUp>
-          </Container>
-        </Section>
 
-        <Section
-          id="flow"
-          className="border-y border-titanium/[0.10] bg-graphite/[0.20] backdrop-blur-sm"
-        >
-          <SectionTitle
-            eyebrow="Core flow"
-            title="Detect → Attest → Challenge → Block"
-            body="A focused policy loop for treasury withdrawals, upgrade authority interactions, signer anomalies, and non-allowlisted destinations."
-          />
-          <Container className="relative mt-12 grid gap-4 md:grid-cols-4">
-            <div className="flow-connector pointer-events-none absolute left-10 right-10 top-1/2 hidden h-px md:block" />
-            {flowSteps.map((step, index) => {
-              const icons = [Activity, BadgeCheck, Swords, Ban];
-              const Icon = icons[index];
-              return (
-                <HoverLift key={step} delay={index * 0.05}>
-                  <Card
-                    variant="subtle"
-                    className="min-h-64 hover:border-arctic/[0.28] hover:shadow-[0_28px_90px_rgba(152,233,255,0.10)]"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-arctic/[0.20] bg-arctic/[0.08]">
-                      <Icon className="h-5 w-5 text-arctic" aria-hidden />
+                <div className="mt-6 space-y-3">
+                  {consoleRows.map(([k, v, s]) => (
+                    <div key={k} className="praetor-mini-card flex items-center justify-between gap-4 rounded-2xl px-4 py-3">
+                      <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-[var(--praetor-muted)]">{k}</span>
+                      <span className="text-sm font-bold text-white">{v}</span>
+                      <span className={s === "CRITICAL" ? "font-mono text-[10px] text-red-100" : "font-mono text-[10px] text-teal-100"}>{s}</span>
                     </div>
-                    <p className="mt-6 font-mono text-xs font-bold text-arctic">
-                      0{index + 1}
-                    </p>
-                    <h2 className="mt-3 text-2xl font-black text-white">
-                      {step}
-                    </h2>
-                    <p className="mt-4 text-sm leading-6 text-titanium/[0.72]">
-                      {flowDescriptions[index]}
-                    </p>
-                  </Card>
+                  ))}
+                </div>
+              </div>
+            </GlassPanel>
+          </FadeUp>
+        </div>
+      </SectionShell>
+
+      <SectionShell id="flow" className="praetor-section-cut bg-[rgba(18,27,43,0.72)]">
+        <div className="mx-auto max-w-7xl px-6">
+          <FadeUp className="max-w-3xl">
+            <StatusBadge tone="orange">Operational flow</StatusBadge>
+            <h2 className="mt-5 text-4xl font-black tracking-[-0.05em] text-white md:text-6xl">Sharp controls for privileged Solana operations.</h2>
+          </FadeUp>
+          <div className="mt-10 grid gap-5 md:grid-cols-4">
+            {sections.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <HoverLift key={item.title} delay={index * 0.05}>
+                  <GlassPanel className="h-full p-6">
+                    <Icon className="h-7 w-7 text-[var(--praetor-orange-soft)]" />
+                    <p className="mt-6 font-mono text-xs font-black uppercase tracking-[0.24em] text-[var(--praetor-muted)]">0{index + 1}</p>
+                    <h3 className="mt-2 text-2xl font-black text-white">{flowSteps[index]}</h3>
+                    <p className="mt-3 text-sm leading-6 text-[var(--praetor-muted)]">{item.body}</p>
+                  </GlassPanel>
                 </HoverLift>
               );
             })}
-          </Container>
-        </Section>
+          </div>
+        </div>
+      </SectionShell>
 
-        <Section>
-          <Container>
-            <FadeUp>
-              <Card className="premium-shell rounded-[2rem] p-8 md:p-12">
-                <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                  <div>
-                    <Badge tone="green">Demo-ready MVP</Badge>
-                    <h2 className="mt-6 text-4xl font-black tracking-[-0.04em] text-white md:text-6xl">
-                      Premium command-center UX for live protocol security
-                      demos.
-                    </h2>
-                    <p className="mt-5 text-lg leading-8 text-titanium/[0.78]">
-                      The guided demo uses deterministic local logic to simulate
-                      a critical treasury withdrawal and show the exact firewall
-                      moment: detection, attestation, guardian challenge, and
-                      blocked execution.
-                    </p>
-                  </div>
-                  <div className="relative overflow-hidden rounded-2xl border border-arctic/[0.20] bg-arctic/[0.08] p-6 shadow-glow">
-                    <CircuitBoard className="h-9 w-9 text-arctic" aria-hidden />
-                    <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-arctic">
-                      Start here
-                    </p>
-                    <p className="mt-4 text-3xl font-black text-white">
-                      Trigger the incident, then block it.
-                    </p>
-                    <ButtonLink
-                      href="/demo"
-                      variant="hero"
-                      size="hero"
-                      className="mt-7"
-                    >
-                      Run Guided Demo
-                    </ButtonLink>
-                  </div>
-                </div>
-              </Card>
-            </FadeUp>
-          </Container>
-        </Section>
-      </main>
-    </TooltipProvider>
+      <SectionShell>
+        <div className="mx-auto grid max-w-7xl gap-6 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <FadeUp>
+            <GlassPanel className="p-8">
+              <Sparkles className="h-8 w-8 text-[var(--praetor-orange-soft)]" />
+              <h2 className="mt-5 text-4xl font-black tracking-[-0.05em] text-white md:text-5xl">Built for hackathon demo clarity and institutional operator confidence.</h2>
+              <p className="mt-5 text-lg leading-8 text-[var(--praetor-muted)]">Every surface uses the same navy/orange glass system, animated Solana network symbolism, readable status hierarchy, and decisive policy outcomes.</p>
+            </GlassPanel>
+          </FadeUp>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {["All Systems Online", "Solana Devnet", "Guardian Review", "Policy Block"].map((item, i) => (
+              <GlassPanel key={item} className="p-5">
+                <Zap className="h-5 w-5 text-[var(--praetor-cyan)]" />
+                <p className="mt-4 text-xl font-black text-white">{item}</p>
+                <p className="mt-2 text-sm text-[var(--praetor-muted)]">{i === 3 ? "Unsafe execution is denied." : "Visible throughout the product experience."}</p>
+              </GlassPanel>
+            ))}
+          </div>
+        </div>
+      </SectionShell>
+    </main>
   );
 }

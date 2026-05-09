@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Header } from "@/components/Brand";
-import { SecurityBackground } from "@/components/background/CinematicSecurityBackground";
+import { PraetorNetworkBackground } from "@/components/background/PraetorNetworkBackground";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,8 +23,8 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-ink text-slate-100 antialiased">
-        <SecurityBackground />
+      <body className="min-h-screen bg-[var(--praetor-deep-navy)] text-slate-100 antialiased">
+        <PraetorNetworkBackground />
         <Header />
         {children}
       </body>
