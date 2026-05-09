@@ -265,7 +265,7 @@ export default function PraetorAppPage() {
   return (
     <main className="overflow-hidden">
       <SectionShell className="py-10 md:py-14">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="praetor-command-rail mx-auto max-w-7xl px-6 pl-10 md:pl-14">
           <GlassPanel className="p-6 md:p-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div>

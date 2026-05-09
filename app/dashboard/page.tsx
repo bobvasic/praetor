@@ -8,6 +8,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { SharpDivider } from "@/components/ui/SharpDivider";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { demoIncident, protectedAddresses } from "@/lib/demo-data";
 import type { Incident } from "@/lib/risk-engine";
@@ -142,6 +143,8 @@ export default function DashboardPage() {
               </HoverLift>
             ))}
           </section>
+
+          <SharpDivider className="my-2 h-12" />
 
           <section className="mt-6 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
             <FadeUp delay={0.08}>

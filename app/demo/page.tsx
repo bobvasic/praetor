@@ -8,6 +8,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { PremiumButton } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { SharpDivider } from "@/components/ui/SharpDivider";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { demoIncident, flowSteps, policyRules, protectedAddresses } from "@/lib/demo-data";
 import type { Incident } from "@/lib/risk-engine";
@@ -104,6 +105,8 @@ export default function DemoPage() {
               </div>
             </GlassPanel>
           </motion.div>
+
+          <SharpDivider className="my-2 h-12" />
 
           <section className="mt-6 grid gap-6 lg:grid-cols-[0.86fr_1.14fr]">
             <div className="space-y-6">

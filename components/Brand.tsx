@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonLink } from "@/src/components/ui/button";
+import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
@@ -58,9 +58,9 @@ export function Header() {
             Guided Walkthrough
           </Link>
         </nav>
-        <ButtonLink href="/app" variant="command" size="sm" className="hidden sm:inline-flex">
+        <PremiumButtonLink href="/app" variant="glass" className="hidden px-4 py-2 text-[10px] sm:inline-flex">
           Launch Devnet App
-        </ButtonLink>
+        </PremiumButtonLink>
       </div>
     </header>
   );
