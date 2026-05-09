@@ -304,3 +304,142 @@ body {
     animation: none !important;
   }
 }
+
+.security-orb-teal {
+  right: 18%;
+  top: 34rem;
+  width: 28rem;
+  height: 28rem;
+  background: rgba(28, 142, 134, 0.13);
+  animation-duration: 30s;
+}
+
+.audit-reticle {
+  opacity: 0.18;
+  background:
+    radial-gradient(circle at 68% 20%, transparent 0 7rem, rgba(152, 233, 255, 0.18) 7.08rem 7.16rem, transparent 7.25rem 13rem, rgba(199, 161, 91, 0.10) 13.08rem 13.15rem, transparent 13.24rem),
+    linear-gradient(90deg, transparent 0 49.9%, rgba(152, 233, 255, 0.12) 50%, transparent 50.1% 100%),
+    linear-gradient(0deg, transparent 0 49.9%, rgba(44, 82, 255, 0.10) 50%, transparent 50.1% 100%);
+  background-size: 100% 100%, 14rem 14rem, 14rem 14rem;
+  mask-image: radial-gradient(circle at 68% 20%, black 0 21rem, transparent 35rem);
+  animation: audit-reticle-breathe 16s ease-in-out infinite;
+}
+
+.radar-sweep {
+  opacity: 0.22;
+  background: conic-gradient(from 225deg at 64% 18%, transparent 0deg, rgba(152, 233, 255, 0.16) 18deg, transparent 42deg, transparent 360deg);
+  mask-image: radial-gradient(circle at 64% 18%, black 0 24rem, transparent 39rem);
+  transform-origin: 64% 18%;
+  animation: radar-sweep-rotate 18s linear infinite;
+}
+
+.hero-energy-well {
+  opacity: 0.48;
+  background:
+    radial-gradient(circle at 76% 28%, rgba(152, 233, 255, 0.15), transparent 18rem),
+    radial-gradient(circle at 35% 34%, rgba(44, 82, 255, 0.15), transparent 24rem),
+    radial-gradient(ellipse at 50% 0%, rgba(152, 233, 255, 0.08), transparent 42rem);
+  filter: blur(10px);
+  animation: hero-energy-drift 20s ease-in-out infinite alternate;
+}
+
+.premium-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(152, 233, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(9, 11, 16, 0.82), rgba(20, 26, 34, 0.62) 48%, rgba(9, 11, 16, 0.86)),
+    radial-gradient(circle at 15% 0%, rgba(44, 82, 255, 0.16), transparent 22rem),
+    radial-gradient(circle at 90% 20%, rgba(152, 233, 255, 0.10), transparent 20rem);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 32px 130px rgba(0,0,0,0.52), 0 0 60px rgba(44,82,255,0.10);
+}
+
+.premium-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 0 22%, rgba(152, 233, 255, 0.10) 36%, transparent 52% 100%),
+    linear-gradient(90deg, rgba(152, 233, 255, 0.12), transparent 16%, transparent 84%, rgba(199, 161, 91, 0.10));
+  opacity: 0.65;
+}
+
+.premium-shell::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: linear-gradient(rgba(152, 233, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(152, 233, 255, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
+.console-orbit {
+  animation: console-orbit 16s linear infinite;
+}
+
+.live-pulse-dot {
+  position: relative;
+}
+
+.live-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(28, 142, 134, 0.42);
+  animation: live-pulse 2.4s ease-out infinite;
+}
+
+.risk-glow {
+  text-shadow: 0 0 28px rgba(255, 91, 110, 0.30), 0 0 60px rgba(199, 161, 91, 0.18);
+}
+
+.flow-connector {
+  background: linear-gradient(90deg, rgba(152, 233, 255, 0.10), rgba(152, 233, 255, 0.60), rgba(199, 161, 91, 0.45), rgba(152, 233, 255, 0.10));
+  background-size: 180% 100%;
+  animation: flow-energy 5.6s ease-in-out infinite;
+}
+
+@keyframes audit-reticle-breathe {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50% { opacity: 0.24; transform: scale(1.02); }
+}
+
+@keyframes radar-sweep-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hero-energy-drift {
+  from { transform: translate3d(-1rem, -0.5rem, 0) scale(1); }
+  to { transform: translate3d(1.4rem, 1rem, 0) scale(1.04); }
+}
+
+@keyframes console-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes live-pulse {
+  from { opacity: 0.9; transform: scale(0.72); }
+  to { opacity: 0; transform: scale(1.7); }
+}
+
+@keyframes flow-energy {
+  0%, 100% { background-position: 0% 50%; opacity: 0.55; }
+  50% { background-position: 100% 50%; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audit-reticle,
+  .radar-sweep,
+  .hero-energy-well,
+  .console-orbit,
+  .live-pulse-dot::after,
+  .flow-connector {
+    animation: none !important;
+  }
+}
