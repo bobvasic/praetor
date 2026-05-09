@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Header } from "@/components/Brand";
-import { SecurityBackground } from "@/src/components/background/security-background";
+import { SecurityBackground } from "@/components/background/CinematicSecurityBackground";
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -178,7 +178,7 @@ export default function DemoPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={defaultTransition}
-              className="flex flex-col justify-between gap-6 md:flex-row md:items-end"
+              className="premium-shell rounded-[2rem] p-6 md:p-8 flex flex-col justify-between gap-6 md:flex-row md:items-end"
             >
               <div>
                 <Badge>Interactive guided demo</Badge>
@@ -191,7 +191,7 @@ export default function DemoPage() {
                 </p>
               </div>
               <div className="flex flex-col items-start gap-3 md:items-end">
-                <Badge tone="green">Monitoring status: Active</Badge>
+                <Badge tone="green" pulse><span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />Monitoring status: Active</Badge>
                 <Dialog>
                   <DialogTrigger className="font-mono text-xs uppercase tracking-[0.18em] text-arctic underline decoration-arctic/[0.35] underline-offset-4 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70">
                     How Praetor works
@@ -211,14 +211,14 @@ export default function DemoPage() {
               </div>
             </motion.div>
 
-            <section className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <section className="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...defaultTransition, delay: 0.08 }}
                 className="space-y-6"
               >
-                <Card>
+                <Card className="premium-shell rounded-2xl">
                   <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">
                     Protocol Security Profile
                   </p>
@@ -260,7 +260,7 @@ export default function DemoPage() {
                     {protectedAddresses.map((address) => (
                       <div
                         key={address.label}
-                        className="rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] p-4 transition hover:border-arctic/[0.20]"
+                        className="rounded-xl border border-titanium/[0.10] bg-obsidian/[0.55] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-arctic/[0.24] hover:bg-arctic/[0.055]"
                       >
                         <div className="flex items-center justify-between gap-3">
                           <p className="font-bold text-white">
@@ -306,7 +306,7 @@ export default function DemoPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...defaultTransition, delay: 0.14 }}
               >
-                <Card className="min-h-[720px]">
+                <Card variant="hero" className="min-h-[720px]">
                   <div className="flex flex-wrap items-start justify-between gap-5">
                     <div>
                       <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-arctic">
@@ -337,7 +337,7 @@ export default function DemoPage() {
                         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red-100">
                           Risk Score
                         </p>
-                        <p className="mt-1 text-5xl font-black text-red-100">
+                        <p className="risk-glow mt-1 text-5xl font-black text-red-100">
                           <CountUp
                             value={visibleIncident.riskScore}
                             active={activeIndex >= 1}
@@ -350,7 +350,7 @@ export default function DemoPage() {
                   <div className="relative mt-8">
                     <div className="absolute left-0 right-0 top-1/2 hidden h-px -translate-y-1/2 bg-titanium/[0.12] sm:block" />
                     <motion.div
-                      className="absolute left-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-sovereign to-arctic sm:block"
+                      className="flow-connector absolute left-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-sovereign to-arctic sm:block"
                       animate={{ width: `${progress}%` }}
                       transition={defaultTransition}
                     />
@@ -367,7 +367,7 @@ export default function DemoPage() {
                             animate={{ scale: active || final ? 1.02 : 1 }}
                             transition={quickTransition}
                             className={cn(
-                              "rounded-2xl border p-4 transition",
+                              "rounded-2xl border p-4 transition duration-300",
                               completed || final
                                 ? "border-secure/[0.45] bg-secure/[0.15]"
                                 : active
@@ -408,7 +408,7 @@ export default function DemoPage() {
                   <motion.div
                     layout
                     aria-live="polite"
-                    className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5"
+                    className="mt-8 rounded-2xl border border-titanium/[0.10] bg-obsidian/[0.62] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <div>
@@ -522,12 +522,12 @@ export default function DemoPage() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0 }}
                           transition={defaultTransition}
-                          className="mt-6 rounded-2xl border border-gold/[0.45] bg-gold/[0.10] p-6 shadow-gold"
+                          className="premium-shell mt-6 rounded-2xl border border-gold/[0.45] bg-gold/[0.10] p-6 shadow-gold"
                         >
                           <p className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-amber-100">
                             Final security state
                           </p>
-                          <p className="mt-3 text-4xl font-black tracking-[-0.03em] text-white">
+                          <p className="mt-3 text-4xl font-black tracking-[-0.03em] text-white drop-shadow-[0_0_34px_rgba(199,161,91,0.20)]">
                             Execution blocked by Praetor policy.
                           </p>
                           <p className="mt-3 flex items-center gap-2 text-sm text-titanium/[0.74]">
@@ -552,7 +552,7 @@ export default function DemoPage() {
                     </div>
                   )}
 
-                  <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                     <Button
                       onClick={triggerSuspiciousWithdrawal}
                       disabled={isLoading}

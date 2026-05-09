@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <TooltipProvider>
       <main>
-        <Section spacing="hero">
+        <Section spacing="hero" className="min-h-[calc(100vh-5rem)] md:flex md:items-center">
           <Container className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
             <div>
               <FadeUp>
@@ -55,7 +55,7 @@ export default function Home() {
                 <Wordmark />
               </FadeUp>
               <FadeUp delay={0.1}>
-                <h1 className="mt-8 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">
+                <h1 className="mt-8 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white drop-shadow-[0_0_42px_rgba(152,233,255,0.12)] md:text-7xl">
                   Institutional onchain ops firewall for Solana protocols.
                 </h1>
               </FadeUp>
@@ -70,10 +70,10 @@ export default function Home() {
                 delay={0.22}
                 className="mt-10 flex flex-col gap-4 sm:flex-row"
               >
-                <ButtonLink href="/demo" size="lg">
+                <ButtonLink href="/demo" variant="hero" size="hero">
                   Run Guided Demo
                 </ButtonLink>
-                <ButtonLink href="/dashboard" variant="secondary" size="lg">
+                <ButtonLink href="/dashboard" variant="command" size="hero">
                   View Command Center
                 </ButtonLink>
               </FadeUp>
@@ -81,7 +81,7 @@ export default function Home() {
                 {trustSignals.map((signal) => (
                   <span
                     key={signal}
-                    className="inline-flex items-center gap-2 rounded-full border border-titanium/[0.12] bg-titanium/[0.05] px-3 py-2 text-sm text-titanium/[0.74]"
+                    className="inline-flex items-center gap-2 rounded-full border border-arctic/[0.14] bg-arctic/[0.055] px-3 py-2 text-sm text-titanium/[0.80] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   >
                     <ShieldCheck className="h-4 w-4 text-arctic" aria-hidden />
                     {signal}
@@ -109,7 +109,7 @@ export default function Home() {
             </div>
 
             <FadeUp delay={0.2}>
-              <Card className="p-0">
+              <Card variant="hero" className="premium-shell p-0">
                 <div className="border-b border-titanium/[0.10] p-5">
                   <div className="flex items-center justify-between gap-4">
                     <div>
@@ -120,14 +120,14 @@ export default function Home() {
                         DemoDAO Treasury
                       </p>
                     </div>
-                    <Badge tone="green">Monitoring Active</Badge>
+                    <Badge tone="green" pulse><span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />Monitoring Active</Badge>
                   </div>
                 </div>
                 <div className="grid gap-5 p-5 md:grid-cols-[0.82fr_1.18fr]">
                   <div className="relative min-h-64 overflow-hidden rounded-2xl border border-arctic/[0.18] bg-obsidian/[0.72] p-5">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(152,233,255,0.20),transparent_38%)]" />
-                    <div className="absolute inset-8 rounded-[2rem] border border-arctic/[0.14]" />
-                    <div className="absolute inset-14 rounded-full border border-gold/[0.18]" />
+                    <div className="console-orbit absolute inset-8 rounded-[2rem] border border-arctic/[0.14]" />
+                    <div className="console-orbit absolute inset-14 rounded-full border border-gold/[0.18] [animation-duration:24s] [animation-direction:reverse]" />
                     <div className="relative flex h-full flex-col items-center justify-center text-center">
                       <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-arctic/[0.28] bg-arctic/[0.08] shadow-glow">
                         <LockKeyhole
@@ -146,7 +146,7 @@ export default function Home() {
                   <div className="space-y-3">
                     {consoleRows.map(([kind, value, status], index) => (
                       <FadeUp key={kind} delay={0.28 + index * 0.04}>
-                        <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition hover:border-arctic/[0.22]">
+                        <div className="grid grid-cols-[0.58fr_1fr_auto] items-center gap-4 rounded-xl border border-titanium/[0.10] bg-obsidian/[0.62] px-4 py-3 font-mono text-xs transition duration-300 hover:-translate-y-0.5 hover:border-arctic/[0.26] hover:bg-arctic/[0.055]">
                           <span className="text-titanium/[0.48]">{kind}</span>
                           <span className="text-titanium">{value}</span>
                           <span
@@ -178,20 +178,21 @@ export default function Home() {
 
         <Section
           id="flow"
-          className="border-y border-titanium/[0.10] bg-graphite/[0.22] backdrop-blur-sm"
+          className="border-y border-titanium/[0.10] bg-graphite/[0.20] backdrop-blur-sm"
         >
           <SectionTitle
             eyebrow="Core flow"
             title="Detect → Attest → Challenge → Block"
             body="A focused policy loop for treasury withdrawals, upgrade authority interactions, signer anomalies, and non-allowlisted destinations."
           />
-          <Container className="mt-12 grid gap-4 md:grid-cols-4">
+          <Container className="relative mt-12 grid gap-4 md:grid-cols-4">
+            <div className="flow-connector pointer-events-none absolute left-10 right-10 top-1/2 hidden h-px md:block" />
             {flowSteps.map((step, index) => {
               const icons = [Activity, BadgeCheck, Swords, Ban];
               const Icon = icons[index];
               return (
                 <HoverLift key={step} delay={index * 0.05}>
-                  <Card variant="subtle" className="min-h-64 hover:border-arctic/[0.28]">
+                  <Card variant="subtle" className="min-h-64 hover:border-arctic/[0.28] hover:shadow-[0_28px_90px_rgba(152,233,255,0.10)]">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-arctic/[0.20] bg-arctic/[0.08]">
                       <Icon className="h-5 w-5 text-arctic" aria-hidden />
                     </div>
@@ -214,7 +215,7 @@ export default function Home() {
         <Section>
           <Container>
             <FadeUp>
-              <Card className="p-8 md:p-12">
+              <Card className="premium-shell rounded-[2rem] p-8 md:p-12">
                 <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
                   <div>
                     <Badge tone="green">Demo-ready MVP</Badge>
@@ -229,7 +230,7 @@ export default function Home() {
                       blocked execution.
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-arctic/[0.20] bg-arctic/[0.08] p-6">
+                  <div className="relative overflow-hidden rounded-2xl border border-arctic/[0.20] bg-arctic/[0.08] p-6 shadow-glow">
                     <CircuitBoard className="h-9 w-9 text-arctic" aria-hidden />
                     <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.25em] text-arctic">
                       Start here
@@ -237,8 +238,8 @@ export default function Home() {
                     <p className="mt-4 text-3xl font-black text-white">
                       Trigger the incident, then block it.
                     </p>
-                    <ButtonLink href="/demo" variant="white" className="mt-7">
-                      Open /demo
+                    <ButtonLink href="/demo" variant="hero" size="hero" className="mt-7">
+                      Run Guided Demo
                     </ButtonLink>
                   </div>
                 </div>
