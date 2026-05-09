@@ -45,6 +45,9 @@ export function Header() {
           </div>
         </Link>
         <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-[var(--praetor-muted)] md:flex">
+          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/app">
+            App
+          </Link>
           <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
             Demo
           </Link>
@@ -55,8 +58,8 @@ export function Header() {
             Flow
           </a>
         </nav>
-        <ButtonLink href="/demo" variant="command" size="sm" className="hidden sm:inline-flex">
-          Launch demo
+        <ButtonLink href="/app" variant="command" size="sm" className="hidden sm:inline-flex">
+          Launch app
         </ButtonLink>
       </div>
     </header>
