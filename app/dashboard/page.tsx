@@ -9,6 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { Badge, Card, Container, MetricCard, Section } from "@/components/UI";
+import { SystemBadge } from "@/components/SystemBadge";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
 import { ButtonLink } from "@/src/components/ui/button";
 import {
@@ -85,13 +86,9 @@ export default function DashboardPage() {
                 <div>
                   <div className="flex flex-wrap gap-3">
                     <Badge>Security command center</Badge>
-                    <span className="status-badge-premium inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-teal-100">
-                      <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
-                      All Systems Online
-                    </span>
-                    <span className="status-badge-premium solana-pill inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-arctic">
-                      Solana Devnet
-                    </span>
+                    <SystemBadge kind="online" compact />
+                    <SystemBadge kind="devnet" compact />
+                    <SystemBadge kind="mvp" compact />
                   </div>
                   <h1 className="mt-5 max-w-4xl text-4xl font-black tracking-[-0.045em] text-white md:text-6xl">
                     PRAETOR monitoring console

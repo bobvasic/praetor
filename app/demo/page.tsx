@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Badge, Card, Container, Section } from "@/components/UI";
+import { SystemBadge } from "@/components/SystemBadge";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
@@ -79,6 +80,96 @@ const stepDetail: Record<DemoStep, string> = {
 
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
 const perimeterAddresses = protectedAddresses.slice(0, 3);
+
+const eventStream: Record<
+  DemoStep,
+  Array<{
+    label: string;
+    detail: string;
+    tone: "idle" | "cyan" | "red" | "green" | "gold";
+  }>
+> = {
+  ready: [
+    {
+      label: "Perimeter armed",
+      detail: "Protected treasury routes are online",
+      tone: "green",
+    },
+    {
+      label: "Awaiting action",
+      detail: "No privileged execution detected",
+      tone: "idle",
+    },
+  ],
+  detected: [
+    {
+      label: "Incident detected",
+      detail: "Withdrawal exceeds treasury threshold",
+      tone: "red",
+    },
+    {
+      label: "Signer anomaly",
+      detail: "Unknown signer escalated to critical",
+      tone: "red",
+    },
+    {
+      label: "Destination check",
+      detail: "Non-allowlisted wallet flagged",
+      tone: "gold",
+    },
+  ],
+  attested: [
+    {
+      label: "Evidence sealed",
+      detail: "Risk reasons packaged for review",
+      tone: "cyan",
+    },
+    {
+      label: "Devnet attestation",
+      detail: "Security record prepared for Solana devnet",
+      tone: "green",
+    },
+    {
+      label: "Audit trail",
+      detail: "Deterministic incident context preserved",
+      tone: "cyan",
+    },
+  ],
+  challenged: [
+    {
+      label: "Guardian challenge",
+      detail: "Execution path routed to review",
+      tone: "gold",
+    },
+    {
+      label: "Operator hold",
+      detail: "Protocol action remains pending",
+      tone: "cyan",
+    },
+    {
+      label: "Policy lock",
+      detail: "Treasury movement cannot finalize",
+      tone: "red",
+    },
+  ],
+  blocked: [
+    {
+      label: "Execution blocked",
+      detail: "Unsafe operation denied by policy",
+      tone: "green",
+    },
+    {
+      label: "Funds retained",
+      detail: "Treasury remains inside protected perimeter",
+      tone: "green",
+    },
+    {
+      label: "Incident complete",
+      detail: "Reviewable security workflow is preserved",
+      tone: "cyan",
+    },
+  ],
+};
 
 const demoActions: Array<{
   label: string;
@@ -191,13 +282,9 @@ export default function DemoPage() {
               <div>
                 <div className="flex flex-wrap gap-3">
                   <Badge>Interactive guided demo</Badge>
-                  <span className="status-badge-premium inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-teal-100">
-                    <span className="live-pulse-dot h-2 w-2 rounded-full bg-secure" />
-                    All Systems Online
-                  </span>
-                  <span className="status-badge-premium solana-pill inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-arctic">
-                    Solana Devnet
-                  </span>
+                  <SystemBadge kind="online" compact />
+                  <SystemBadge kind="devnet" compact />
+                  <SystemBadge kind="mvp" compact />
                 </div>
                 <h1 className="mt-5 text-4xl font-black tracking-[-0.045em] text-white md:text-6xl">
                   PRAETOR protocol firewall simulation
@@ -564,6 +651,47 @@ export default function DemoPage() {
                       )}
                     </AnimatePresence>
                   </motion.div>
+
+
+                  <div className="mt-6 grid gap-3 md:grid-cols-3">
+                    {eventStream[step].map((event, index) => (
+                      <motion.div
+                        key={`${step}-${event.label}`}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          ...quickTransition,
+                          delay: index * 0.05,
+                        }}
+                        className={cn(
+                          "demo-event-card rounded-2xl border p-4",
+                          event.tone === "red" &&
+                            "border-alert/[0.30] bg-alert/[0.10]",
+                          event.tone === "green" &&
+                            "border-secure/[0.30] bg-secure/[0.10]",
+                          event.tone === "gold" &&
+                            "border-gold/[0.30] bg-gold/[0.10]",
+                          event.tone === "cyan" &&
+                            "border-arctic/[0.24] bg-arctic/[0.08]",
+                          event.tone === "idle" &&
+                            "border-titanium/[0.10] bg-obsidian/[0.56]",
+                        )}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="live-pulse-dot h-2 w-2 rounded-full bg-arctic" />
+                          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-titanium/[0.62]">
+                            Event 0{index + 1}
+                          </p>
+                        </div>
+                        <p className="mt-3 font-black text-white">
+                          {event.label}
+                        </p>
+                        <p className="mt-2 text-sm leading-5 text-titanium/[0.68]">
+                          {event.detail}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
 
                   {error && (
                     <div
