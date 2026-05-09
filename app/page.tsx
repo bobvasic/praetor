@@ -1,5 +1,6 @@
 import { ArrowRight, Ban, CheckCircle2, LockKeyhole, Radar, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Wordmark } from "@/components/Brand";
+import { OperationalBadges } from "@/components/OperationalBadges";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
@@ -29,24 +30,22 @@ export default function Home() {
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.96fr_1.04fr] lg:items-center">
           <FadeUp>
             <GlassPanel className="p-6 md:p-9">
-              <div className="flex flex-wrap gap-3">
-                <StatusBadge tone="online" pulse>All Systems Online</StatusBadge>
-                <StatusBadge tone="devnet">Solana Devnet</StatusBadge>
-              </div>
+              <OperationalBadges />
               <div className="mt-8 max-w-sm"><Wordmark /></div>
-              <p className="praetor-kicker mt-10">Praetor protocol firewall</p>
+              <p className="praetor-kicker mt-10">Praetor live devnet ops firewall</p>
               <h1 className="praetor-heading mt-5 max-w-5xl text-5xl font-black md:text-7xl xl:text-8xl">
-                Institutional onchain ops firewall for Solana protocols.
+                Praetor is live for Solana devnet protocols.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--praetor-muted)] md:text-xl">
-                Praetor detects risky privileged actions, attests deterministic evidence, routes guardian challenges, and blocks unsafe execution before treasury or authority operations become incidents.
+                Praetor is an onchain ops firewall for Solana protocols: QuickNode RPC-backed monitoring, real devnet attestations, guardian-ready challenge evidence, and blocked execution state for high-risk treasury or authority actions.
               </p>
               <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                <PremiumButtonLink href="/demo">Run Guided Demo <ArrowRight className="ml-2 h-4 w-4" /></PremiumButtonLink>
-                <PremiumButtonLink href="/dashboard" variant="glass">View Command Center</PremiumButtonLink>
+                <PremiumButtonLink href="/app">Launch Devnet App <ArrowRight className="ml-2 h-4 w-4" /></PremiumButtonLink>
+                <PremiumButtonLink href="/dashboard" variant="glass">View Dashboard</PremiumButtonLink>
               </div>
+              <a href="/demo" className="mt-5 inline-flex font-mono text-xs font-black uppercase tracking-[0.2em] text-[var(--praetor-muted)] transition hover:text-[var(--praetor-cyan)]">Guided Walkthrough for non-wallet review</a>
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {["Policy-first controls", "Local deterministic demo", "Solana-native workflow"].map((item) => (
+                {["Create a real Solana devnet attestation", "Verify on Solana Explorer", "Wallet signs client-side; no keys handled"].map((item) => (
                   <div key={item} className="praetor-mini-card rounded-2xl px-4 py-3 text-sm text-[var(--praetor-muted)]">
                     <ShieldCheck className="mb-2 h-4 w-4 text-[var(--praetor-orange-soft)]" />{item}
                   </div>

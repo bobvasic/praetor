@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion, type Transition } from "framer-motion";
 import { AlertTriangle, BadgeCheck, Ban, FileCheck2, KeyRound, Radar, ShieldAlert } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { OperationalBadges } from "@/components/OperationalBadges";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { PremiumButton } from "@/components/ui/PremiumButton";
@@ -31,7 +32,7 @@ const stepDetail: Record<DemoStep, string> = {
 };
 const stepIcons = [Radar, FileCheck2, KeyRound, Ban];
 const actions = [
-  { label: "Trigger Suspicious Withdrawal", helper: "Simulate a privileged treasury withdrawal against the local incident endpoint." },
+  { label: "Trigger Suspicious Withdrawal", helper: "Run a deterministic protocol incident simulation against the local incident endpoint." },
   { label: "Create Attestation", helper: "Package the finding into a signed security record." },
   { label: "Guardian Challenge", helper: "Escalate the attested incident to guardian review." },
   { label: "Attempt Execution", helper: "Attempt the risky operation so policy enforcement can block it." },
@@ -94,13 +95,10 @@ export default function DemoPage() {
             <GlassPanel className="p-6 md:p-8">
               <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                 <div>
-                  <div className="flex flex-wrap gap-3">
-                    <StatusBadge tone="orange">Interactive guided demo</StatusBadge>
-                    <StatusBadge tone="online" pulse>All Systems Online</StatusBadge>
-                    <StatusBadge tone="devnet">Solana Devnet</StatusBadge>
-                  </div>
-                  <h1 className="mt-6 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">Praetor protocol firewall theater.</h1>
-                  <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--praetor-muted)]">Follow the premium product walkthrough: Detect → Attest → Challenge → Block. The demo logic and local incident endpoint remain intact.</p>
+                  <StatusBadge tone="orange">Guided Walkthrough</StatusBadge>
+                  <OperationalBadges className="mt-3" />
+                  <h1 className="mt-6 max-w-5xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">Non-wallet guided walkthrough.</h1>
+                  <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--praetor-muted)]">Use this secondary path to review Detect → Attest → Challenge → Block without connecting a wallet. The live devnet product path is /app; this walkthrough uses a deterministic protocol incident simulation for judge-friendly review.</p>
                 </div>
                 <StatusBadge tone={step === "blocked" ? "online" : activeIndex > 0 ? "red" : "online"} pulse>{step === "blocked" ? "Policy enforced" : activeIndex > 0 ? "Incident active" : "Monitoring active"}</StatusBadge>
               </div>

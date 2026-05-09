@@ -45,21 +45,21 @@ export function Header() {
           </div>
         </Link>
         <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-[var(--praetor-muted)] md:flex">
-          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/app">
-            App
+          <Link className="rounded-md transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/">
+            Praetor
           </Link>
-          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
-            Demo
+          <Link className="rounded-md text-[var(--praetor-orange-soft)] transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/app">
+            Launch Devnet App
           </Link>
           <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/dashboard">
             Dashboard
           </Link>
-          <a className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/#flow">
-            Flow
-          </a>
+          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
+            Guided Walkthrough
+          </Link>
         </nav>
         <ButtonLink href="/app" variant="command" size="sm" className="hidden sm:inline-flex">
-          Launch app
+          Launch Devnet App
         </ButtonLink>
       </div>
     </header>

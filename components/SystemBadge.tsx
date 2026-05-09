@@ -12,7 +12,7 @@ type SystemBadgeProps = {
 const badgeCopy = {
   online: "All Systems Online",
   devnet: "Solana Devnet",
-  mvp: "Demo-ready MVP",
+  mvp: "Devnet-ready MVP",
 } as const;
 
 export function SystemBadge({

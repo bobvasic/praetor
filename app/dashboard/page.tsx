@@ -1,4 +1,8 @@
-import { AlertTriangle, Ban, Coins, KeyRound, LockKeyhole, Radar, ShieldCheck } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { AlertTriangle, Ban, Coins, ExternalLink, KeyRound, LockKeyhole, RadioTower, ShieldCheck } from "lucide-react";
+import { OperationalBadges } from "@/components/OperationalBadges";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { MetricCard } from "@/components/ui/MetricCard";
@@ -6,13 +10,32 @@ import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { demoIncident, protectedAddresses } from "@/lib/demo-data";
+import type { Incident } from "@/lib/risk-engine";
 
-const metrics = [
-  { label: "Monitoring", value: "Active", status: "Live perimeter", tone: "green" as const },
-  { label: "Protected Addresses", value: "4", status: "Treasury + authority", tone: "cyan" as const },
-  { label: "Critical Incidents", value: "1", status: "Review now", tone: "red" as const },
-  { label: "Latest Risk", value: "91", status: "Severe", tone: "orange" as const },
-];
+const STORAGE_KEY = "praetor.devnet.attestation.inc_demo_001";
+
+type SolanaStatus = {
+  ok: boolean;
+  network?: string;
+  rpcProvider?: string;
+  slot?: number;
+  health?: string;
+  blockhashPreview?: string;
+  explorerCluster?: string;
+  error?: string;
+};
+
+type StoredAttestation = {
+  signature: string;
+  explorerUrl: string;
+  status: string;
+  payload?: {
+    protocol?: string;
+    riskScore?: number;
+    decision?: string;
+    timestamp?: string;
+  };
+};
 
 const signals = [
   { label: "Treasury Policy", value: "10 SOL max", icon: Coins },
@@ -20,7 +43,75 @@ const signals = [
   { label: "Guardian Challenge", value: "Required", icon: LockKeyhole },
 ];
 
+function shortenSignature(signature: string) {
+  return `${signature.slice(0, 10)}…${signature.slice(-10)}`;
+}
+
+function DetailRow({ label, value, href }: { label: string; value: string | number; href?: string }) {
+  return (
+    <div className="flex items-start justify-between gap-4 border-b border-white/10 py-3 last:border-b-0">
+      <span className="text-sm text-[var(--praetor-muted)]">{label}</span>
+      {href ? (
+        <a className="inline-flex max-w-[62%] items-center gap-2 break-all text-right font-mono text-sm font-bold text-[var(--praetor-cyan)] hover:text-white" href={href} target="_blank" rel="noreferrer">
+          {value} <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+        </a>
+      ) : (
+        <span className="max-w-[62%] break-words text-right font-mono text-sm font-bold text-white">{value}</span>
+      )}
+    </div>
+  );
+}
+
 export default function DashboardPage() {
+  const [status, setStatus] = useState<SolanaStatus | null>(null);
+  const [attestation, setAttestation] = useState<StoredAttestation | null>(null);
+  const [incident, setIncident] = useState<Incident>(demoIncident);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        setAttestation(JSON.parse(stored) as StoredAttestation);
+      } catch {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+
+    let cancelled = false;
+    async function loadReadiness() {
+      try {
+        const [statusResponse, incidentResponse] = await Promise.all([
+          fetch("/api/solana/status", { cache: "no-store" }),
+          fetch("/api/incidents/simulate", { cache: "no-store" }),
+        ]);
+        const statusBody = (await statusResponse.json()) as SolanaStatus;
+        const incidentBody = (await incidentResponse.json()) as { ok: boolean; incident?: Incident };
+        if (!cancelled) {
+          setStatus(statusBody);
+          if (incidentBody.ok && incidentBody.incident) setIncident(incidentBody.incident);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setStatus({ ok: false, error: error instanceof Error ? error.message : "Unable to load devnet status" });
+        }
+      }
+    }
+
+    loadReadiness();
+    const interval = window.setInterval(loadReadiness, 20_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, []);
+
+  const metrics = [
+    { label: "Systems", value: status?.ok === false ? "Degraded" : "Online", status: "All Systems Online", tone: status?.ok === false ? "red" as const : "green" as const },
+    { label: "Devnet Slot", value: status?.slot?.toLocaleString() ?? "Loading", status: "Latest from /api/solana/status", tone: "cyan" as const },
+    { label: "Latest Risk", value: incident.riskScore, status: incident.riskLevel, tone: "red" as const },
+    { label: "Blocked State", value: "Blocked", status: "Execution denied by policy", tone: "orange" as const },
+  ];
+
   return (
     <main className="overflow-hidden">
       <SectionShell className="py-10 md:py-14">
@@ -29,17 +120,16 @@ export default function DashboardPage() {
             <GlassPanel className="p-6 md:p-8">
               <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                 <div>
-                  <div className="flex flex-wrap gap-3">
-                    <StatusBadge tone="orange">Security command center</StatusBadge>
-                    <StatusBadge tone="online" pulse>All Systems Online</StatusBadge>
-                    <StatusBadge tone="devnet">Solana Devnet</StatusBadge>
-                  </div>
-                  <h1 className="mt-6 max-w-4xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">Praetor monitoring console.</h1>
-                  <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--praetor-muted)]">A frosted institutional ops shell for protected addresses, latest incident evidence, risk posture, and policy enforcement readiness.</p>
+                  <StatusBadge tone="orange">Devnet readiness dashboard</StatusBadge>
+                  <OperationalBadges className="mt-3" />
+                  <h1 className="mt-6 max-w-4xl text-5xl font-black tracking-[-0.06em] text-white md:text-7xl">Praetor live command center.</h1>
+                  <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--praetor-muted)]">
+                    A devnet-ready operational console for QuickNode RPC health, Solana slot state, latest attestation evidence, incident risk, protected protocol posture, and blocked execution status.
+                  </p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-end">
-                  <StatusBadge tone="online" pulse>Live monitoring</StatusBadge>
-                  <PremiumButtonLink href="/demo">Open Guided Demo</PremiumButtonLink>
+                  <PremiumButtonLink href="/app">Launch Devnet App</PremiumButtonLink>
+                  <PremiumButtonLink href="/demo" variant="glass">Guided Walkthrough</PremiumButtonLink>
                 </div>
               </div>
             </GlassPanel>
@@ -53,12 +143,54 @@ export default function DashboardPage() {
             ))}
           </section>
 
-          <section className="mt-6 grid gap-6 lg:grid-cols-[1.12fr_0.88fr]">
+          <section className="mt-6 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
             <FadeUp delay={0.08}>
               <GlassPanel className="min-h-full p-6 md:p-7">
                 <div className="flex items-start justify-between gap-5">
                   <div>
-                    <p className="praetor-kicker">Protocol perimeter</p>
+                    <p className="praetor-kicker">Devnet infrastructure</p>
+                    <h2 className="mt-3 text-4xl font-black tracking-[-0.045em] text-white">QuickNode RPC status</h2>
+                  </div>
+                  <StatusBadge tone={status?.ok === false ? "red" : "online"} pulse={status?.ok !== false}>{status?.ok === false ? "Needs review" : "Connected"}</StatusBadge>
+                </div>
+                <div className="mt-7 rounded-3xl border border-white/10 bg-white/[0.05] p-5">
+                  <DetailRow label="All Systems Online" value={status?.ok === false ? "No" : "Yes"} />
+                  <DetailRow label="Network" value={status?.network ?? "Solana Devnet"} />
+                  <DetailRow label="RPC provider" value={status?.rpcProvider ?? "QuickNode RPC"} />
+                  <DetailRow label="Health" value={status?.health ?? (status?.ok === false ? status.error ?? "Unavailable" : "Checking")} />
+                  <DetailRow label="Latest devnet slot" value={status?.slot ?? "Loading"} />
+                  <DetailRow label="Latest blockhash preview" value={status?.blockhashPreview ?? "Loading"} />
+                </div>
+              </GlassPanel>
+            </FadeUp>
+
+            <FadeUp delay={0.12}>
+              <GlassPanel className="min-h-full p-6 md:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="praetor-kicker">Onchain attestation</p>
+                    <h2 className="mt-3 text-4xl font-black tracking-[-0.045em] text-white">Latest devnet proof</h2>
+                  </div>
+                  <StatusBadge tone={attestation ? "online" : "orange"} pulse={Boolean(attestation)}>{attestation ? "Explorer ready" : "Ready"}</StatusBadge>
+                </div>
+                <div className="mt-7 rounded-3xl border border-white/10 bg-white/[0.05] p-5">
+                  <DetailRow label="Onchain Attestation Ready" value="Yes" />
+                  <DetailRow label="Latest signature" value={attestation ? shortenSignature(attestation.signature) : "No local attestation yet"} />
+                  <DetailRow label="Confirmation status" value={attestation?.status ?? "Create from /app"} />
+                  <DetailRow label="Protocol" value={attestation?.payload?.protocol ?? demoIncident.protocolName} />
+                  <DetailRow label="Attested risk score" value={attestation?.payload?.riskScore ?? incident.riskScore} />
+                  {attestation?.explorerUrl && <DetailRow label="Solana Explorer" value="Open transaction" href={attestation.explorerUrl} />}
+                </div>
+              </GlassPanel>
+            </FadeUp>
+          </section>
+
+          <section className="mt-6 grid gap-6 lg:grid-cols-[1.12fr_0.88fr]">
+            <FadeUp delay={0.14}>
+              <GlassPanel className="min-h-full p-6 md:p-7">
+                <div className="flex items-start justify-between gap-5">
+                  <div>
+                    <p className="praetor-kicker">Protected protocol profile</p>
                     <h2 className="mt-3 text-4xl font-black tracking-[-0.045em] text-white">DemoDAO Treasury posture</h2>
                   </div>
                   <StatusBadge tone="online">Armed</StatusBadge>
@@ -93,7 +225,7 @@ export default function DashboardPage() {
             </FadeUp>
 
             <div className="space-y-6">
-              <FadeUp delay={0.12}>
+              <FadeUp delay={0.16}>
                 <GlassPanel className="border-[rgba(255,91,110,0.38)] p-6 md:p-7">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -105,28 +237,32 @@ export default function DashboardPage() {
                   <div className="mt-6 rounded-3xl border border-[rgba(255,91,110,0.32)] bg-[rgba(255,91,110,0.11)] p-5">
                     <div className="flex items-end justify-between gap-4">
                       <div>
-                        <p className="text-sm text-[var(--praetor-muted)]">{demoIncident.protocolName}</p>
-                        <p className="mt-2 text-6xl font-black text-red-100">{demoIncident.riskScore}</p>
+                        <p className="text-sm text-[var(--praetor-muted)]">{incident.protocolName}</p>
+                        <p className="mt-2 text-6xl font-black text-red-100">{incident.riskScore}</p>
                       </div>
                       <AlertTriangle className="h-11 w-11 text-red-100" aria-hidden />
                     </div>
-                    <p className="mt-4 text-sm leading-6 text-red-50/85">{demoIncident.amount} requested by {demoIncident.signer.toLowerCase()} to a {demoIncident.destination.toLowerCase()}. Unsafe operation is held until guardian review clears the policy risk.</p>
+                    <p className="mt-4 text-sm leading-6 text-red-50/85">{incident.amount} requested by {incident.signer.toLowerCase()} to a {incident.destination.toLowerCase()}. Unsafe operation is held until guardian review clears the policy risk.</p>
                   </div>
-                  <PremiumButtonLink href="/demo" variant="danger" className="mt-6 w-full">Investigate in Demo</PremiumButtonLink>
+                  <PremiumButtonLink href="/app" variant="danger" className="mt-6 w-full">Create Devnet Attestation</PremiumButtonLink>
                 </GlassPanel>
               </FadeUp>
 
-              <FadeUp delay={0.16}>
+              <FadeUp delay={0.18}>
                 <GlassPanel className="p-6">
                   <div className="flex items-center gap-3">
-                    <Radar className="h-5 w-5 text-[var(--praetor-cyan)]" />
-                    <p className="praetor-kicker">Monitoring status</p>
+                    <RadioTower className="h-5 w-5 text-[var(--praetor-cyan)]" />
+                    <p className="praetor-kicker">Blocked execution state</p>
                   </div>
                   <div className="mt-6 space-y-3">
-                    {["Webhooks receiving", "Policy engine armed", "Guardian challenge ready"].map((row) => (
+                    {[
+                      ["QuickNode RPC Connected", "OK"],
+                      ["Onchain Attestation Ready", attestation ? "SIGNED" : "READY"],
+                      ["Execution blocked by Praetor policy", "BLOCKED"],
+                    ].map(([row, state]) => (
                       <div key={row} className="praetor-mini-card flex items-center justify-between rounded-2xl px-4 py-3">
                         <span className="text-[var(--praetor-muted)]">{row}</span>
-                        <StatusBadge tone="online">OK</StatusBadge>
+                        <StatusBadge tone={state === "BLOCKED" ? "orange" : "online"}>{state}</StatusBadge>
                       </div>
                     ))}
                   </div>
@@ -140,15 +276,15 @@ export default function DashboardPage() {
               <div className="grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
                 <div>
                   <StatusBadge tone="devnet">Operational assurance</StatusBadge>
-                  <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white md:text-4xl">Command-center readiness for treasury and authority events.</h2>
+                  <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-white md:text-4xl">Detect → Attest → Challenge → Block for devnet treasury and authority events.</h2>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-3">
                   {[
-                    ["Detect", Radar],
-                    ["Attest", ShieldCheck],
+                    ["Detect", ShieldCheck],
+                    ["Attest", RadioTower],
                     ["Block", Ban],
                   ].map(([item, Icon]) => {
-                    const IconComp = Icon as typeof Radar;
+                    const IconComp = Icon as typeof ShieldCheck;
                     return (
                       <div key={item as string} className="praetor-mini-card rounded-2xl p-4">
                         <IconComp className="h-5 w-5 text-[var(--praetor-orange-soft)]" />
