@@ -146,3 +146,23 @@ Do not commit real secrets.
 
 X: [@bobvasx](https://x.com/bobvasx)  
 Telegram: [@ZoComp](https://t.me/ZoComp)
+
+## Hero Animation
+
+Praetor includes an optional premium hero animation system for the landing page.
+
+- Source scene: `components/hero/PraetorHeroScene.tsx`.
+- Landing page video/live-scene wrapper: `components/hero/PraetorHeroMedia.tsx`.
+- Recorder route: `/render/hero-animation`.
+
+To export the hero video:
+
+1. Run the app locally with `npm run dev`.
+2. Open `/render/hero-animation` in a browser that supports `HTMLCanvasElement.captureStream` and `MediaRecorder`.
+3. Click **Record WebM**.
+4. The browser downloads `praetor-hero.webm`.
+5. Place the exported file at `public/brand/praetor-hero.webm`.
+
+The recording step is intentionally manual and optional. `npm run build` does not generate or require the WebM file. If `public/brand/praetor-hero.webm` is absent or fails to load, the homepage gracefully falls back to the live browser-rendered Praetor hero scene.
+
+The animation symbolizes Praetor protecting Solana protocol operations: a compact metallic city core represents protocol infrastructure, cyan/blue and Solana-toned streams represent verified onchain data, red/orange particles represent threat vectors, and gold/cyan shield geometry represents Praetor's defensive firewall intercepting risky privileged actions.

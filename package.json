@@ -20,7 +20,9 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.468.0",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "three": "file:vendor/three",
+    "@react-three/fiber": "file:vendor/react-three-fiber"
   },
   "devDependencies": {
     "@types/node": "^20.17.10",
