@@ -1028,3 +1028,123 @@ body {
     rgba(152, 233, 255, 0.055)
   );
 }
+
+:root {
+  --praetor-navy: #121B2B;
+  --praetor-deep-navy: #0B1220;
+  --praetor-orange: #FF8200;
+  --praetor-orange-soft: #FF9A1F;
+  --praetor-cream: #F7F4EA;
+  --praetor-white: #FFFFFF;
+  --praetor-muted: #AAB2C0;
+  --praetor-glass: rgba(255, 255, 255, 0.08);
+  --praetor-glass-strong: rgba(255, 255, 255, 0.14);
+  --praetor-border: rgba(255, 255, 255, 0.24);
+  --praetor-shadow: rgba(0, 0, 0, 0.42);
+  --praetor-cyan: #98E9FF;
+  --praetor-blue: #2C52FF;
+  --praetor-gold: #C7A15B;
+  --praetor-red: #FF5B6E;
+  --praetor-teal: #1C8E86;
+}
+
+body {
+  background: var(--praetor-deep-navy);
+  color: var(--praetor-cream);
+}
+
+.praetor-depth-base {
+  background:
+    radial-gradient(circle at 14% 8%, rgba(152, 233, 255, 0.12), transparent 28rem),
+    radial-gradient(circle at 84% 18%, rgba(255, 130, 0, 0.18), transparent 32rem),
+    linear-gradient(135deg, var(--praetor-deep-navy) 0%, var(--praetor-navy) 48%, #07101d 100%);
+}
+
+.praetor-orange-slab {
+  clip-path: polygon(18% 0, 100% 0, 82% 100%, 0 84%);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 22%),
+    linear-gradient(135deg, var(--praetor-orange), #ff6a00 58%, rgba(255, 154, 31, 0.74));
+  filter: drop-shadow(0 42px 90px rgba(255, 130, 0, 0.25));
+  opacity: 0.9;
+}
+
+.praetor-navy-slab {
+  clip-path: polygon(0 22%, 84% 0, 100% 78%, 18% 100%);
+  background: linear-gradient(135deg, rgba(18, 27, 43, 0.92), rgba(44, 82, 255, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.76;
+}
+
+.praetor-geo-grid {
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 48%, rgba(255,130,0,0.12) 48% 48.35%, transparent 48.35% 100%);
+  background-size: 72px 72px, 72px 72px, 180px 180px;
+  mask-image: radial-gradient(circle at 54% 18%, black, transparent 76%);
+}
+
+.praetor-background-vignette {
+  background:
+    linear-gradient(90deg, rgba(11,18,32,0.82), transparent 18%, transparent 76%, rgba(11,18,32,0.72)),
+    linear-gradient(180deg, transparent, rgba(11,18,32,0.62) 78%, var(--praetor-deep-navy));
+}
+
+.praetor-network-particle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 9999px;
+  background: rgba(152, 233, 255, 0.7);
+  box-shadow: 0 0 18px rgba(152,233,255,0.32), 0 0 30px rgba(255,130,0,0.12);
+}
+
+.praetor-glass-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--praetor-border);
+  border-radius: 2rem;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.055) 34%, rgba(18,27,43,0.58)),
+    var(--praetor-glass);
+  box-shadow:
+    0 30px 110px var(--praetor-shadow),
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    inset 0 -1px 0 rgba(255,255,255,0.06);
+  backdrop-filter: blur(24px) saturate(1.2);
+}
+
+.praetor-section-cut {
+  clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%);
+}
+
+.praetor-heading {
+  color: var(--praetor-white);
+  letter-spacing: -0.065em;
+  line-height: 0.91;
+}
+
+.praetor-kicker {
+  color: var(--praetor-orange-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.praetor-console-line {
+  background: linear-gradient(90deg, rgba(255,130,0,0.88), rgba(152,233,255,0.6), transparent);
+  box-shadow: 0 0 28px rgba(255,130,0,0.22);
+}
+
+.praetor-mini-card {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.055);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+  backdrop-filter: blur(18px);
+}

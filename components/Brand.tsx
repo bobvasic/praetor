@@ -5,7 +5,7 @@ import { ButtonLink } from "@/src/components/ui/button";
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`relative flex h-11 w-11 items-center justify-center rounded-xl border border-arctic/[0.28] bg-graphite/[0.84] shadow-glow transition duration-200 hover:border-arctic/[0.48] ${className}`}
+      className={`relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/25 bg-white/[0.08] shadow-[0_18px_48px_rgba(255,130,0,0.16)] backdrop-blur-xl transition duration-200 hover:border-[var(--praetor-orange)] ${className}`}
     >
       <Image
         src="/brand/praetor-mark.svg"
@@ -33,7 +33,7 @@ export function Wordmark({ className = "" }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-titanium/[0.10] bg-obsidian/[0.72] backdrop-blur-2xl supports-[backdrop-filter]:bg-obsidian/[0.62]">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(11,18,32,0.68)] backdrop-blur-2xl supports-[backdrop-filter]:bg-[rgba(11,18,32,0.58)]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian">
           <LogoMark />
@@ -41,21 +41,21 @@ export function Header() {
             <p className="text-base font-black tracking-[0.24em] text-white">
               PRAETOR
             </p>
-            <p className="text-xs text-titanium/[0.62]">praetores.com</p>
+            <p className="text-xs text-[var(--praetor-muted)]">praetores.com</p>
           </div>
         </Link>
-        <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-titanium/[0.72] md:flex">
-          <Link className="rounded-md transition hover:text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
+        <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-[var(--praetor-muted)] md:flex">
+          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
             Demo
           </Link>
-          <Link className="rounded-md transition hover:text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/dashboard">
+          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/dashboard">
             Dashboard
           </Link>
-          <a className="rounded-md transition hover:text-arctic focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/#flow">
+          <a className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/#flow">
             Flow
           </a>
         </nav>
-        <ButtonLink href="/demo" variant="outline" size="sm" className="hidden sm:inline-flex">
+        <ButtonLink href="/demo" variant="command" size="sm" className="hidden sm:inline-flex">
           Launch demo
         </ButtonLink>
       </div>
