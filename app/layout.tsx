@@ -23,11 +23,12 @@ export const metadata: Metadata = {
   title: "PRAETOR | Onchain Ops Firewall for Solana Protocols",
   description:
     "Detect, attest, challenge, and block high-risk privileged actions for Solana protocols.",
+  applicationName: "PRAETOR",
   metadataBase: new URL("https://praetores.com"),
-  icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg",
-  },
+  // Icons are emitted by file conventions (app/icon.tsx, app/apple-icon.tsx)
+  // and the manifest is wired by app/manifest.ts. Phantom and other Solana
+  // wallets pick the dApp logo up from the auto-injected <link rel="icon">
+  // and <link rel="apple-touch-icon"> tags.
   openGraph: {
     title: "PRAETOR",
     description: "Onchain Ops Firewall for Solana Protocols",
