@@ -100,6 +100,87 @@ body {
   color: white;
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+ * Scrollbar — matte near-black track + crimson thumb (Praetor-aligned).
+ * Applies app-wide. Firefox + WebKit. Cross-browser compact tactical look.
+ * ───────────────────────────────────────────────────────────────────── */
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #7A0710 #0A0A0A;
+}
+
+/* All scrollable surfaces (panels, lists, code blocks, etc.) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #7A0710 #0A0A0A;
+}
+
+/* WebKit / Blink (Chrome, Edge, Safari, Brave) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+::-webkit-scrollbar-track:horizontal {
+  border-left: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7A0710;
+  border: 2px solid #050505;
+  border-radius: 2px;
+  transition: background 200ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E10600;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #FF2020;
+}
+
+::-webkit-scrollbar-corner {
+  background: #050505;
+}
+
+/* Thin variant for inner scrollable surfaces (overflow-y in panels) */
+.praetor-glass-panel ::-webkit-scrollbar,
+.praetor-mini-card ::-webkit-scrollbar,
+.praetor-console-grid ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.praetor-glass-panel ::-webkit-scrollbar-track,
+.praetor-mini-card ::-webkit-scrollbar-track,
+.praetor-console-grid ::-webkit-scrollbar-track {
+  background: #0A0A0A;
+  border: 0;
+}
+
+.praetor-glass-panel ::-webkit-scrollbar-thumb,
+.praetor-mini-card ::-webkit-scrollbar-thumb,
+.praetor-console-grid ::-webkit-scrollbar-thumb {
+  background: #7A0710;
+  border: 2px solid #0A0A0A;
+  border-radius: 2px;
+}
+
+.praetor-glass-panel ::-webkit-scrollbar-thumb:hover,
+.praetor-mini-card ::-webkit-scrollbar-thumb:hover,
+.praetor-console-grid ::-webkit-scrollbar-thumb:hover {
+  background: #E10600;
+}
+
 /* ──────────────────────────────────────────────────────────────────────
  * Honeycomb mesh — the ONLY allowed decorative background layer.
  * Subtle crimson hex pattern, low-opacity, masked toward edges.
