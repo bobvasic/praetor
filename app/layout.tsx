@@ -1,8 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { Header } from "@/components/Brand";
-import { PraetorNetworkBackground } from "@/components/background/PraetorNetworkBackground";
+import AgenticHeroBackground from "@/components/background/AgenticHeroBackground";
 import "./globals.css";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "PRAETOR | Onchain Ops Firewall for Solana Protocols",
@@ -22,17 +37,31 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+  colorScheme: "dark",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
-      <body className="relative isolate min-h-screen overflow-x-hidden bg-[var(--praetor-deep-navy)] text-slate-100 antialiased">
-        <PraetorNetworkBackground />
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
+      <body className="relative isolate min-h-screen overflow-x-hidden bg-background font-sans text-foreground antialiased">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 z-0"
+        >
+          <AgenticHeroBackground />
+        </div>
         <div className="relative z-10">
           <Header />
           {children}
         </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed bottom-0 left-0 right-0 z-[60] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+        />
       </body>
     </html>
   );
