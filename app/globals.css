@@ -2,8 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    /* Raptor Labs core palette (HSL components, Tailwind/CSS-variable native) */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 0 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 0 100% 45%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 0 85% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 100% 55%;
+    --radius: 0.5rem;
+
+    /* Glow stops */
+    --glow-red: 0 100% 50%;
+    --glow-crimson: 355 100% 45%;
+    --glow-lava: 15 100% 50%;
+
+    /* Gradients */
+    --gradient-lava: linear-gradient(135deg, hsl(0 100% 50%), hsl(20 100% 45%), hsl(0 100% 40%));
+    --gradient-ember: linear-gradient(180deg, hsl(0 100% 55% / 0.8), hsl(15 100% 45% / 0.6));
+
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(0 100% 50% / 0.4), 0 0 60px hsl(0 100% 45% / 0.2);
+    --shadow-intense: 0 0 50px hsl(0 100% 50% / 0.6), 0 0 100px hsl(0 100% 45% / 0.3);
+
+    /* Sidebar palette */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 0 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 100% 55%;
+  }
 }
 
 * {
@@ -16,12 +64,15 @@ html {
 
 body {
   margin: 0;
-  background: #090b10;
-  color: #bcc6d3;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-space-grotesk), 'Space Grotesk', var(--font-inter), 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: rgba(44, 82, 255, 0.48);
+  background: hsl(0 100% 55% / 0.45);
   color: white;
 }
 
@@ -1030,27 +1081,114 @@ body {
 }
 
 :root {
-  --praetor-navy: #121B2B;
-  --praetor-deep-navy: #0B1220;
-  --praetor-orange: #FF8200;
-  --praetor-orange-soft: #FF9A1F;
-  --praetor-cream: #F7F4EA;
+  /* Legacy praetor-* aliases re-pointed to Raptor Labs crimson + near-black palette.
+   * Existing components keep working; their colors automatically retone to crimson. */
+  --praetor-navy: #0F0F0F;
+  --praetor-deep-navy: #0A0A0A;
+  --praetor-orange: #FF1A1A;
+  --praetor-orange-soft: #FF4040;
+  --praetor-cream: #F5F5F5;
   --praetor-white: #FFFFFF;
-  --praetor-muted: #AAB2C0;
-  --praetor-glass: rgba(255, 255, 255, 0.08);
-  --praetor-glass-strong: rgba(255, 255, 255, 0.14);
-  --praetor-border: rgba(255, 255, 255, 0.24);
-  --praetor-shadow: rgba(0, 0, 0, 0.42);
-  --praetor-cyan: #98E9FF;
-  --praetor-blue: #2C52FF;
-  --praetor-gold: #C7A15B;
-  --praetor-red: #FF5B6E;
-  --praetor-teal: #1C8E86;
+  --praetor-muted: #8C8C8C;
+  --praetor-glass: rgba(255, 26, 26, 0.06);
+  --praetor-glass-strong: rgba(255, 26, 26, 0.12);
+  --praetor-border: rgba(255, 255, 255, 0.12);
+  --praetor-shadow: rgba(0, 0, 0, 0.62);
+  --praetor-cyan: #FF6B6B;
+  --praetor-blue: #E60000;
+  --praetor-gold: #FF4040;
+  --praetor-red: #FF1A1A;
+  --praetor-teal: #B81616;
 }
 
 body {
-  background: var(--praetor-deep-navy);
-  color: var(--praetor-cream);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* ---------- Raptor Labs utility classes ---------- */
+.text-gradient-lava {
+  background: linear-gradient(135deg, hsl(0 100% 60%), hsl(20 100% 55%), hsl(0 100% 50%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.glow-text {
+  text-shadow:
+    0 0 20px hsl(0 100% 50% / 0.5),
+    0 0 40px hsl(0 100% 45% / 0.3);
+}
+
+.glow-box {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-box-intense {
+  box-shadow: var(--shadow-intense);
+}
+
+.bg-gradient-lava {
+  background: var(--gradient-lava);
+}
+
+.bg-gradient-ember {
+  background: var(--gradient-ember);
+}
+
+/* ---------- Raptor Labs animations ---------- */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.3); }
+}
+
+@keyframes lava-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scale-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.015); opacity: 1; }
+}
+
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-breathe { animation: breathe 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-lava-flow {
+  animation: lava-flow 8s ease-in-out infinite;
+  background-size: 200% 200%;
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+.marquee-track {
+  animation: marquee 45s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe,
+  .animate-pulse-glow,
+  .animate-lava-flow,
+  .animate-float,
+  .marquee-track {
+    animation: none !important;
+  }
 }
 
 .praetor-depth-base {
