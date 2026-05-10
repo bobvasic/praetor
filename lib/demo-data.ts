@@ -34,25 +34,25 @@ export function createDemoIncident(): Incident {
 export const protectedAddresses = [
   {
     label: "Main Treasury",
-    address: "PraeTore7ury11111111111111111111111111111",
+    address: "Dk22YaGKhnsaD7pLvCJyejHo3xj6NkSuvaCgbMVZLYgy",
     policy: "Max withdrawal without review: 10 SOL",
     status: "Active",
   },
   {
     label: "Upgrade Authority",
-    address: "PraeUpgradeAuth222222222222222222222222222",
+    address: "8h16LZgH6Hm5RmjdNHW1wtVGHPpw716ETKLLgniK5rh",
     policy: "Any upgrade authority touch becomes guardian-reviewable",
     status: "Active",
   },
   {
     label: "Operations Multisig",
-    address: "PraeOpsMulti3333333333333333333333333333",
+    address: "7BorHb7UL3PcGSrbfWMZcLpBNWyShk6XJWb2zLbMJtnz",
     policy: "Unknown signer escalates to critical severity",
     status: "Active",
   },
   {
     label: "Guardian Wallet",
-    address: "PraeGuardian4444444444444444444444444444",
+    address: "93RffqaHrZW1ZEHQAeucm8GciyFLB6ME7Jou8XWFxYSe",
     policy: "Guardian challenge required before execution resumes",
     status: "Active",
   },

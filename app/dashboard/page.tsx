@@ -12,6 +12,7 @@ import { SharpDivider } from "@/components/ui/SharpDivider";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { demoIncident, protectedAddresses } from "@/lib/demo-data";
 import type { Incident } from "@/lib/risk-engine";
+import { PRAETOR_ANCHOR_PROGRAM_ID, getExplorerAddressUrl } from "@/lib/solana/constants";
 
 const STORAGE_KEY = "praetor.devnet.attestation.inc_demo_001";
 
@@ -178,6 +179,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-7 rounded-3xl border border-white/10 bg-white/[0.05] p-5">
                   <DetailRow label="Onchain Attestation Ready" value="Yes" />
+                  <DetailRow label="Praetor Anchor Program" value={shortenSignature(PRAETOR_ANCHOR_PROGRAM_ID)} href={getExplorerAddressUrl(PRAETOR_ANCHOR_PROGRAM_ID)} />
                   <DetailRow label="Latest signature" value={attestation ? shortenSignature(attestation.signature) : "No local attestation yet"} />
                   <DetailRow label="Confirmation status" value={attestation?.status ?? "Create from /app"} />
                   <DetailRow label="Protocol" value={attestation?.payload?.protocol ?? demoIncident.protocolName} />

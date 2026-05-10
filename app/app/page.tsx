@@ -8,10 +8,10 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PremiumButton } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { PRAETOR_INCIDENT_ID, SOLANA_MEMO_PROGRAM_ID } from "@/lib/solana/constants";
+import { PRAETOR_ANCHOR_PROGRAM_ID, PRAETOR_INCIDENT_ID, SOLANA_MEMO_PROGRAM_ID, getExplorerAddressUrl } from "@/lib/solana/constants";
 
 const STORAGE_KEY = "praetor.devnet.attestation.inc_demo_001";
-const DEMO_TREASURY_PUBLIC_KEY = "PraeTore7ury11111111111111111111111111111";
+const DEMO_TREASURY_PUBLIC_KEY = "Dk22YaGKhnsaD7pLvCJyejHo3xj6NkSuvaCgbMVZLYgy";
 const RISK_REASONS = [
   "Treasury transfer above threshold",
   "Unknown signer",
@@ -96,11 +96,17 @@ function createAttestationPayload(): AttestationPayload {
   };
 }
 
-function DetailRow({ label, value }: { label: string; value: string | number }) {
+function DetailRow({ label, value, href }: { label: string; value: string | number; href?: string }) {
   return (
     <div className="flex items-start justify-between gap-4 border-b border-white/10 py-3 last:border-b-0">
       <span className="text-sm text-[var(--praetor-muted)]">{label}</span>
-      <span className="max-w-[62%] break-words text-right font-mono text-sm font-bold text-white">{value}</span>
+      {href ? (
+        <a className="inline-flex max-w-[62%] items-center gap-2 break-all text-right font-mono text-sm font-bold text-[var(--praetor-cyan)] hover:text-white" href={href} target="_blank" rel="noreferrer">
+          {value} <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+        </a>
+      ) : (
+        <span className="max-w-[62%] break-words text-right font-mono text-sm font-bold text-white">{value}</span>
+      )}
     </div>
   );
 }
@@ -314,6 +320,7 @@ export default function PraetorAppPage() {
                 <DetailRow label="QuickNode RPC" value={status?.ok ? "Connected" : status?.error ?? "Checking"} />
                 <DetailRow label="Latest devnet slot" value={status?.slot ?? "Unavailable"} />
                 <DetailRow label="Blockhash preview" value={status?.blockhashPreview ?? "Unavailable"} />
+                <DetailRow label="Praetor Anchor program" value={shortenAddress(PRAETOR_ANCHOR_PROGRAM_ID)} href={getExplorerAddressUrl(PRAETOR_ANCHOR_PROGRAM_ID)} />
               </div>
             </GlassPanel>
           </section>

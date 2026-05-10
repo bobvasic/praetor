@@ -27,6 +27,7 @@ Praetor is a security control plane for high-risk Solana protocol operations:
 - Detects suspicious treasury, governance, signer, and upgrade-authority actions using deterministic risk rules.
 - Scores the operation and emits a clear decision path for operators and guardians.
 - Creates a real Solana devnet attestation transaction using the Memo Program.
+- Ships a live Anchor v1.0 devnet program for protocol profiles, attestation records, and guardian challenges.
 - Sends and confirms the signed transaction through QuickNode RPC.
 - Shows a Solana Explorer devnet link for the resulting transaction.
 - Supports a guardian challenge / blocked execution workflow so unsafe operations are visibly denied by Praetor policy.
@@ -59,6 +60,28 @@ Detect → Attest → Challenge → Block
 6. QuickNode RPC sends and confirms the signed transaction.
 7. App shows the signature and Solana Explorer devnet link.
 8. Execution is marked blocked by Praetor policy.
+
+## Anchor Program (Devnet)
+
+Praetor now includes a deployed Anchor v1.0 devnet program for the onchain MVP primitive:
+
+- Program ID: `HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk`
+- Explorer: https://explorer.solana.com/address/HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk?cluster=devnet
+- Workspace: `solana/praetor_program`
+
+Current instructions:
+
+- `initialize_protocol_profile` — creates the protected protocol profile PDA
+- `record_attestation` — writes a risk attestation PDA for a privileged action
+- `submit_guardian_challenge` — opens a guardian challenge PDA and flips the attestation into blocked state
+
+Current PDAs:
+
+- Protocol profile PDA
+- Attestation PDA (one per incident sequence)
+- Guardian challenge PDA (one per attestation and guardian)
+
+The web app still uses Memo Program attestations for the fastest demo-safe live path. The Anchor program is the shipped onchain primitive that demonstrates the upgrade path from logging-only proof to native protocol security state on Solana.
 
 ## QuickNode
 
@@ -129,6 +152,9 @@ Example simulated incident response:
 QUICKNODE_RPC_URL=
 NEXT_PUBLIC_SOLANA_RPC_URL= optional
 QUICKNODE_WEBHOOK_SECRET=
+PRAETOR_PROGRAM_ID=HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk
+NEXT_PUBLIC_PRAETOR_PROGRAM_ID=HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk
+DEMO_VAULT_PROGRAM_ID=
 NEXT_PUBLIC_APP_URL=
 NEXT_PUBLIC_API_URL=
 NEXT_PUBLIC_SOLANA_CLUSTER=devnet
@@ -139,6 +165,7 @@ Notes:
 - `QUICKNODE_RPC_URL` should point to a Solana devnet QuickNode endpoint.
 - `NEXT_PUBLIC_SOLANA_CLUSTER` should remain `devnet` for this MVP.
 - `NEXT_PUBLIC_SOLANA_RPC_URL` is optional; server-side Solana routes use `QUICKNODE_RPC_URL`.
+- `PRAETOR_PROGRAM_ID` and `NEXT_PUBLIC_PRAETOR_PROGRAM_ID` should point to the deployed Praetor Anchor program on devnet.
 - Do not commit real secrets.
 
 ## Local Development
@@ -151,6 +178,15 @@ npm run start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) while `npm run dev` is running.
+
+For the onchain workspace:
+
+```bash
+cd solana/praetor_program
+anchor build
+cargo test
+anchor deploy --provider.cluster devnet
+```
 
 ## Colosseum Demo Script
 

@@ -1,0 +1,55 @@
+PRAETOR HANDOVER NOTES
+======================
+
+Last updated: 2026-05-10
+
+1. Live app
+- Website: https://praetores.com
+- App: https://praetores.com/app
+- Dashboard: https://praetores.com/dashboard
+- Demo walkthrough: https://praetores.com/demo
+
+2. Devnet onchain primitive
+- Anchor workspace: solana/praetor_program
+- Program ID: HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk
+- Explorer: https://explorer.solana.com/address/HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk?cluster=devnet
+- Program instructions:
+  - initialize_protocol_profile
+  - record_attestation
+  - submit_guardian_challenge
+- Rust validation status:
+  - anchor build: passing
+  - cargo test: passing
+  - LiteSVM flow test covers detect -> attest -> block path
+
+3. Local toolchain installed
+- rustup / cargo
+- solana-cli 3.1.x
+- avm + anchor-cli 1.0.2
+
+4. Critical environment variables
+- QUICKNODE_RPC_URL: required for server-side Solana RPC
+- QUICKNODE_WEBHOOK_SECRET: optional locally, used by webhook route
+- PRAETOR_PROGRAM_ID: set to deployed devnet program ID
+- NEXT_PUBLIC_PRAETOR_PROGRAM_ID: set to deployed devnet program ID
+- DEMO_VAULT_PROGRAM_ID: intentionally empty for MVP
+- NEXT_PUBLIC_APP_URL / NEXT_PUBLIC_API_URL / NEXT_PUBLIC_SOLANA_CLUSTER
+
+5. MVP architecture
+- Next.js app remains the live demo path
+- Wallet-connected flow still uses Memo Program for the fastest stable attestation demo
+- Anchor program is now shipped in-repo and deployed to devnet as the native security-state primitive
+- No server-side signing; keys stay in the wallet
+
+6. DigitalOcean follow-up
+- Add PRAETOR_PROGRAM_ID=HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk
+- Add NEXT_PUBLIC_PRAETOR_PROGRAM_ID=HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk
+- Keep DEMO_VAULT_PROGRAM_ID empty unless the vault program is built later
+- Redeploy after env update
+
+7. Highest-value next tasks
+- Replace the vendored @solana/web3.js stub with the real package
+- Add multiple incident scenarios (treasury / upgrade authority / signer set change)
+- Add public security profile pages and live activity feed
+- Record tech demo and pitch videos
+- Submit Colosseum application
