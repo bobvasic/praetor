@@ -5,6 +5,12 @@ import { Header } from "@/components/Brand";
 import AgenticHeroBackground from "@/components/background/AgenticHeroBackground";
 import "./globals.css";
 
+// Route Segment Config: keep edge cache short so frontend rebrands and copy
+// changes propagate within ~60s instead of Next.js's default 1-year s-maxage
+// for fully static prerendered pages. Critical for a hackathon-pace pipeline
+// where DigitalOcean redeploys must reach Cloudflare promptly.
+export const revalidate = 60;
+
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
