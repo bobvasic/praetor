@@ -26,23 +26,19 @@ export function SystemBadge({
   return (
     <span
       className={cn(
-        "status-badge-premium relative inline-flex items-center gap-2.5 overflow-hidden font-mono text-[11px] font-bold uppercase tracking-[0.22em]",
-        kind === "devnet" && "solana-pill text-arctic",
-        kind === "online" && "text-teal-100",
-        kind === "mvp" && "border-gold/[0.30] text-amber-100",
-        compact ? "px-3.5 py-1.5" : "px-4 py-2",
+        "relative inline-flex items-center gap-2 rounded-full border font-mono text-[10px] font-black uppercase tracking-[0.22em]",
+        kind === "online" && "border-[rgba(28,201,160,0.45)] bg-[#0A0A0A] text-[#5DE0BB]",
+        kind === "devnet" && "border-[rgba(94,227,255,0.40)] bg-[#0A0A0A] text-[#7BD9F2]",
+        kind === "mvp" && "border-[rgba(255,32,32,0.45)] bg-[#0A0A0A] text-[#FF6B6B]",
+        compact ? "px-3 py-1" : "px-3.5 py-1.5",
         className,
       )}
     >
-      <span className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white/[0.10] to-transparent" />
       {kind === "online" ? (
-        <span className="live-pulse-dot relative z-10 h-2 w-2 rounded-full bg-secure" />
+        <span className="live-pulse-dot relative z-10 h-1.5 w-1.5 rounded-full bg-current" />
       ) : (
         <Icon
-          className={cn(
-            "relative z-10 h-3.5 w-3.5",
-            kind === "devnet" ? "text-[#14F195]" : "text-amber-100",
-          )}
+          className="relative z-10 h-3.5 w-3.5"
           aria-hidden
         />
       )}

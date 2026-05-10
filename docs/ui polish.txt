@@ -1,0 +1,350 @@
+claude "Apply a full Praetor UI/visual polish pass. This is UI/visual/routing-content polish only.
+
+DO NOT CHANGE:
+- app/api/*
+- lib/risk-engine.ts logic
+- lib/solana/*
+- wallet connection logic
+- Solana transaction creation/signing/submission logic
+- QuickNode RPC logic
+- environment variables
+- localStorage keys
+- Anchor Program ID
+- Dockerfile
+- deployment config
+- Solana program files
+- package dependencies unless absolutely unavoidable
+- business logic
+
+DO NOT invent product data, customers, metrics, revenue, audits, partners, exploit numbers, mainnet claims, or production-security claims.
+
+PRODUCT FACTS TO USE:
+- Product: Praetor
+- Category: Onchain Ops Firewall for Solana Protocols
+- Core loop: Detect → Attest → Challenge → Block
+- Demo protocol: DemoDAO Treasury
+- Demo incident: treasury_withdrawal
+- Amount: 25 SOL
+- Threshold: 10 SOL
+- Risk score: 91
+- Risk level: Critical
+- Reasons: Treasury transfer above threshold; Unknown signer; Destination not allowlisted; Policy mismatch
+- Network: Solana Devnet
+- RPC: QuickNode RPC
+- Attestation path: Memo Program devnet attestation
+- Anchor Program ID: HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk
+- Signing model: wallet signs client-side only
+- Server never handles private keys
+- Execution state: blocked by Praetor policy
+
+PRIMARY VISUAL GOAL:
+Make Praetor feel like premium black/crimson operational-security infrastructure:
+- tactical
+- command-center
+- serious
+- deterministic
+- security-first
+- RaptorLabs-aligned
+- closer to SOC / Palantir / Anduril-lite than crypto SaaS
+
+It must NOT feel like:
+- orange cyberpunk
+- generic crypto dashboard
+- SaaS template
+- hackathon toy
+- fake hacker UI
+- neon gaming interface
+
+STRICT COLOR RULES:
+- Remove orange everywhere.
+- Remove amber everywhere.
+- Remove yellow everywhere.
+- Remove decorative blue everywhere.
+- No blue backgrounds.
+- No blue glows.
+- No blue beams.
+- No blue gradients.
+- No blue panel tint.
+- No blue dividers.
+- No purple/blue decorative atmosphere.
+- Blue/cyan is allowed ONLY for tiny online/connected/verified/confirmed status badges, status dots, or status buttons where it clearly means system status.
+- Main palette: black / near-black / graphite / white / gray / crimson.
+- Allowed crimson: #FF2020, #E10600, #B80F1C, #990000, #7A0710.
+- Allowed backgrounds: #050505, #070707, #0A0A0A, #101010, #121212, rgba(18,14,16,0.82).
+- Allowed borders: rgba(255,255,255,0.10), rgba(255,32,32,0.24).
+- Muted text should remain readable: rgba(255,255,255,0.60-0.72).
+
+Search and remove/replace:
+orange, amber, yellow, lava, ember,
+text-orange, bg-orange, border-orange, from-orange, to-orange, via-orange, shadow-orange, ring-orange,
+text-amber, bg-amber, border-amber, from-amber, to-amber, via-amber, shadow-amber, ring-amber,
+text-yellow, bg-yellow, border-yellow,
+#ff8200, #ff8a00, #f97316, #fb923c, #f59e0b.
+
+STRICT GRADIENT RULES:
+- Remove decorative gradients across the UI.
+- No orange gradients.
+- No blue gradients.
+- No lava gradients.
+- No ember gradients.
+- No multicolor gradients.
+- No diagonal gradient beams.
+- No large soft background glow gradients.
+- Prefer solid near-black/graphite panels with subtle borders.
+- Buttons should be flat crimson or graphite; a very subtle dark crimson depth effect is acceptable only if not flashy.
+
+BACKGROUND RULES:
+- Remove all large diagonal red/blue slash lines from backgrounds.
+- Remove skewed beams, sweep lines, diagonal overlays, blue/red graphic bands, and large decorative divider beams.
+- The ONLY allowed background decoration is a subtle honeycomb/hex mesh.
+- Honeycomb must be low-opacity crimson/dark red only.
+- Background must stay matte near-black and not compete with content.
+
+SHAPE / GEOMETRY RULES:
+- Sharpen the whole app.
+- Reduce oversized rounded corners everywhere.
+- No huge pillow-shaped SaaS cards.
+- Large containers: max rounded-2xl / about 20-24px.
+- Inner cards: rounded-xl / about 12-18px.
+- Buttons: sharper tactical rectangles, not soft pillows.
+- Status badges may remain pill-shaped if appropriate.
+- Panels should feel hardened, precise, operational.
+- Use clean borders and sharp internal dividers.
+- Less glass blur, more solid graphite surfaces.
+- No excessive shadow softness.
+
+TYPOGRAPHY RULES:
+- Main hero title must be mostly WHITE.
+- Do NOT make the full hero title red.
+- Optional: only one keyword such as Solana may be crimson.
+- Preferred hero title:
+  Onchain Ops Firewall for Solana Protocols
+  with Onchain Ops Firewall for in white, Solana optionally crimson, Protocols white.
+- Use large strong headings.
+- Use uppercase tracked labels for sections.
+- Use mono/tabular styling for addresses, slot numbers, API paths, signatures, hashes, program IDs.
+- Improve muted text contrast.
+- Avoid huge headings inside operational panels if they reduce density.
+
+HEADER RULES:
+Header nav labels and routes must be exactly:
+- Praetor -> /
+- Launch Devnet App -> /app
+- Dashboard -> /dashboard
+- Guided Walkthrough -> /demo
+
+Header visual:
+- near-black / graphite
+- crimson active route
+- restrained hover
+- no orange/amber/yellow
+- no blue decorative glow
+- right CTA may remain Launch Devnet App, crimson/graphite only
+
+ROUTE RESPONSIBILITIES:
+
+1. Landing page `/`
+Make this the premium Praetor landing page.
+
+Must include:
+Hero:
+- Title: Onchain Ops Firewall for Solana Protocols
+- Subtitle: Detect, attest, challenge, and block high-risk privileged actions before they can damage protocol operations.
+- Status badges: All Systems Online; Solana Devnet; QuickNode RPC Connected; Onchain Attestation Ready
+- CTAs: Launch Devnet App; View Dashboard; Guided Walkthrough
+- Security console preview:
+  - Protected protocol: DemoDAO Treasury
+  - Risk score: 91 / 100
+  - Risk level: Critical
+  - Status: Execution blocked by Praetor policy
+  - Network: Solana Devnet
+  - RPC: QuickNode
+  - Attestation: Ready
+
+Section: What Praetor does
+Use four cards:
+- Detect: Monitor privileged operations such as treasury withdrawals, signer activity, governance changes, and upgrade-authority actions.
+- Attest: Create wallet-signed Solana devnet attestation proof through the Memo Program.
+- Challenge: Escalate high-risk actions into guardian review before execution proceeds.
+- Block: Show unsafe execution blocked by Praetor policy in the demo workflow.
+
+Section: Why it matters
+Use only these real/general statements:
+- Audits protect code before launch; Praetor focuses on privileged operations after deployment.
+- Operational risk can come from compromised signers, unsafe treasury movements, governance pressure, and upgrade-authority misuse.
+- Protocols need visible, verifiable security posture around privileged actions.
+
+Section: Technical proof
+Use cards:
+- Wallet signs client-side only
+- Server never handles private keys
+- QuickNode-backed Solana Devnet RPC
+- Memo Program attestation path
+- Anchor Program deployed on devnet
+- Deterministic risk score: 91 Critical
+
+Section: Core loop
+Large visual:
+Detect → Attest → Challenge → Block
+
+Landing page style:
+- black/crimson
+- premium
+- tactical
+- no gradients except extremely subtle dark depth if needed
+- no orange
+- no decorative blue
+- no diagonal beams
+- honeycomb only
+
+2. `/app`
+Preserve functional devnet wallet workflow exactly.
+Only change visual classes/layout/copy.
+
+Must still show:
+- wallet connection
+- system status
+- QuickNode RPC status
+- DemoDAO Treasury protected profile
+- suspicious operation simulation
+- trigger suspicious operation button
+- risk decision
+- create devnet attestation button
+- Solana Explorer link when present
+- blocked execution state
+
+Use factual copy:
+- Wallet signs client-side only. Praetor never asks for private keys.
+- QuickNode RPC provides Solana Devnet status, slot, and blockhash data.
+- 25 SOL withdrawal against a 10 SOL threshold from an unknown signer to a non-allowlisted wallet.
+- Decision: Block. Guardian challenge required.
+- Execution blocked by Praetor policy.
+
+Do not change handlers, state, API calls, transaction logic, wallet logic, or localStorage.
+
+3. `/dashboard`
+Keep this as dashboard/command center, not marketing.
+
+Must show:
+- Systems: Online
+- Devnet Slot
+- Latest Risk: 91 Critical
+- Blocked State: Blocked
+- QuickNode RPC status
+- Latest devnet proof
+- DemoDAO Treasury posture
+- Latest Incident
+
+Improve copy:
+Dashboard subtitle:
+A devnet-ready operational console for QuickNode RPC health, Solana slot state, latest attestation evidence, protected protocol posture, and blocked execution status.
+
+Metric helper text:
+- Systems: All systems online
+- Devnet Slot: Latest from /api/solana/status
+- Latest Risk: Critical deterministic decision
+- Blocked State: Execution denied by policy
+
+Rules:
+- Do not invent charts, fake history, fake incident counts, fake users, fake volume, fake revenue, or fake production data.
+- If no latest attestation exists, use empty state:
+No latest attestation yet. Create a devnet attestation in Launch Devnet App.
+
+Remove any diagonal slash/beam divider from dashboard if present.
+
+4. `/demo`
+Make this a premium Guided Walkthrough video-ready page.
+
+Must include:
+- Title: Guided Walkthrough
+- Subtitle: Watch the Praetor demo flow: Detect → Attest → Challenge → Block.
+- Large 16:9 video placeholder
+- Placeholder text: Demo video will be embedded here.
+- Video title text: Praetor Guided Walkthrough
+- Buttons: Launch Devnet App; View Dashboard
+
+Below video placeholder, include flow cards:
+1. Detect suspicious treasury withdrawal
+2. Attest deterministic risk decision on Solana Devnet
+3. Challenge through guardian review
+4. Block unsafe execution by Praetor policy
+
+If existing guided state machine is safe, keep it below the video section; if it complicates the layout, prioritize the video placeholder.
+
+UI DENSITY / POLISH:
+- Add micro-telemetry only from known facts, not invented data:
+  - Incident ID: inc_demo_001 if already in data
+  - Network: Solana Devnet
+  - RPC: QuickNode
+  - Risk: 91 Critical
+  - Decision: Block
+  - Signing: Client-side only
+  - Program: HKQ5...qLbk
+- Use small dividers and label/value rows inside panels.
+- Make panels denser, not empty, but do not clutter.
+- Keep content readable on mobile.
+- Truncate long addresses/hashes cleanly.
+- Use no address overflow.
+
+MOTION RULES:
+- Keep motion restrained.
+- Acceptable: tiny status pulse, subtle scanline, minimal hover border change.
+- Avoid: glitch spam, bouncing, heavy parallax, large particle effects, flashy sweeps.
+
+ACCESSIBILITY:
+- Improve text contrast.
+- Keep focus states visible.
+- Keep buttons clickable.
+- Respect prefers-reduced-motion if already implemented.
+
+SAFE FILE AREAS:
+Prefer editing:
+- app/globals.css
+- tailwind.config.ts visual tokens only
+- components/Brand.tsx visual/nav only
+- components/OperationalBadges.tsx visual only
+- components/background/* visual only
+- components/ui/*
+- app/page.tsx
+- app/app/page.tsx visual/classes/copy only
+- app/dashboard/page.tsx visual/classes/copy only
+- app/demo/page.tsx
+
+HANDOFF FILE:
+Create or update PRAETOR_VISUAL_CHANGES_HANDOFF.md with:
+- files changed
+- color cleanup summary
+- orange/amber/yellow removal summary
+- decorative blue removal summary
+- gradient removal summary
+- diagonal slash/beam background removal summary
+- honeycomb-only background confirmation
+- sharper geometry/radius changes
+- landing page changes
+- /app safety note
+- /dashboard safety note
+- /demo video placeholder changes
+- confirmation that API/wallet/Solana/QuickNode/deployment logic was not intentionally changed
+- validation commands run
+- lint/build result
+- risks/warnings
+
+VALIDATION:
+Run:
+npm run lint
+npm run build
+
+If build fails because of environment/native Next/SWC/system issues, do not rewrite logic blindly. Document the error in the handoff file.
+
+FINAL REPORT:
+Report:
+- files changed
+- whether orange/amber/yellow were removed
+- whether decorative blue was removed
+- whether gradients were removed
+- whether diagonal slash/beam background was removed
+- whether only honeycomb remains in background
+- whether hero title is white
+- whether rounded corners were sharpened
+- whether build passed
+- location of handoff file"

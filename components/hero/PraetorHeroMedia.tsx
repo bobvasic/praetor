@@ -36,10 +36,10 @@ export function PraetorHeroMedia() {
           onError={() => setVideoFailed(true)}
         />
       ) : null}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74),rgba(0,0,0,0.22)_42%,rgba(0,0,0,0.38)),radial-gradient(circle_at_58%_32%,rgba(231,184,93,0.16),transparent_34%),linear-gradient(180deg,rgba(0,0,0,0.12),rgba(0,0,0,0.58))]" />
-      <div className="pointer-events-none absolute bottom-5 left-5 right-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 backdrop-blur-xl">
-        <span className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[var(--praetor-cyan)]">Verified data streams</span>
-        <span className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[var(--praetor-orange-soft)]">Threat vectors intercepted</span>
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.10),rgba(0,0,0,0.55))]" />
+      <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-white/10 bg-[rgba(5,5,5,0.7)] px-4 py-2.5">
+        <span className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/70">Privileged-action perimeter</span>
+        <span className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#FF6B6B]">Detect → Attest → Challenge → Block</span>
       </div>
     </div>
   );

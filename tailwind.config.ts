@@ -72,17 +72,17 @@ const config: Config = {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Legacy keys remapped to crimson + near-black (kept for backward compat)
-        obsidian: "#0A0A0A",
+        obsidian: "#050505",
         graphite: "#0F0F0F",
         titanium: "#BCBCBC",
-        sovereign: "#FF1A1A",
-        arctic: "#FF6B6B",
-        gold: "#FF4040",
-        secure: "#C81E1E",
-        alert: "#FF1A1A",
-        ink: "#0A0A0A",
-        cyanfire: "#FF6B6B",
-        vault: "#0F0F0F",
+        sovereign: "#FF2020",
+        arctic: "#E0E6EC",
+        gold: "#FF2020",
+        secure: "#1CC9A0",
+        alert: "#FF2020",
+        ink: "#050505",
+        cyanfire: "#5EE3FF",
+        vault: "#0A0A0A",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -90,21 +90,21 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        glow: "0 0 30px hsl(0 100% 50% / 0.4), 0 0 60px hsl(0 100% 45% / 0.2)",
-        intense: "0 0 50px hsl(0 100% 50% / 0.6), 0 0 100px hsl(0 100% 45% / 0.3)",
-        card: "0 24px 90px rgba(0, 0, 0, 0.62)",
-        command: "inset 0 1px 0 rgba(255,255,255,0.05), 0 30px 120px rgba(0,0,0,0.62)",
-        gold: "0 0 54px hsl(0 100% 50% / 0.18)",
+        // Restrained tactical shadows. No heavy soft blooms.
+        card: "0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 28px rgba(0,0,0,0.42)",
+        command: "inset 0 1px 0 rgba(255,255,255,0.04), 0 14px 36px rgba(0,0,0,0.48)",
+        // Legacy keys retained but neutralized so existing usages compile.
+        glow: "0 0 0 1px rgba(255,32,32,0.18) inset",
+        intense: "0 0 0 1px rgba(255,32,32,0.30) inset",
+        gold: "0 0 0 1px rgba(255,32,32,0.18) inset",
       },
       backgroundImage: {
-        "radial-grid":
-          "radial-gradient(circle at 16% 0%, hsl(0 100% 50% / 0.18), transparent 30rem), radial-gradient(circle at 82% 16%, hsl(0 100% 55% / 0.10), transparent 28rem), radial-gradient(circle at 50% 100%, hsl(15 100% 50% / 0.08), transparent 34rem)",
-        "panel-gradient":
-          "linear-gradient(135deg, rgba(15,15,15,0.92), rgba(10,10,10,0.82))",
-        "gradient-lava":
-          "linear-gradient(135deg, hsl(0 100% 50%), hsl(20 100% 45%), hsl(0 100% 40%))",
-        "gradient-ember":
-          "linear-gradient(180deg, hsl(0 100% 55% / 0.8), hsl(15 100% 45% / 0.6))",
+        // Solid graphite panel — no decorative gradient.
+        "panel-gradient": "linear-gradient(180deg, #0A0A0A, #070707)",
+        // Legacy keys retained as no-op solids so existing class usages compile.
+        "radial-grid": "none",
+        "gradient-lava": "none",
+        "gradient-ember": "none",
       },
       keyframes: {
         breathe: {
