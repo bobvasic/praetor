@@ -1,23 +1,24 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Praetor shield mark">
-  <rect width="128" height="128" rx="24" fill="#090B10"/>
-  <path d="M64 13L103 27V58C103 84.5 87.6 105.2 64 116C40.4 105.2 25 84.5 25 58V27L64 13Z" fill="url(#shieldFill)" stroke="url(#shieldStroke)" stroke-width="3"/>
-  <path d="M48 89V36H70.5C82.4 36 90 43.1 90 53.7C90 64.2 82.2 71.7 70.5 71.7H60.4V89H48ZM60.4 60.8H69.1C74.4 60.8 77.6 58 77.6 53.7C77.6 49.3 74.4 46.8 69.1 46.8H60.4V60.8Z" fill="url(#pFill)"/>
-  <path d="M42 97H86" stroke="#C7A15B" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+  <rect width="128" height="128" rx="24" fill="#0A0A0A"/>
+  <rect x="3" y="3" width="122" height="122" rx="22" stroke="url(#mark-frame)" stroke-width="1.5" opacity="0.6"/>
+  <path d="M64 13L103 27V58C103 84.5 87.6 105.2 64 116C40.4 105.2 25 84.5 25 58V27L64 13Z" fill="#0F0F0F" stroke="url(#mark-shield-stroke)" stroke-width="3"/>
+  <path d="M48 89V36H70.5C82.4 36 90 43.1 90 53.7C90 64.2 82.2 71.7 70.5 71.7H60.4V89H48ZM60.4 60.8H69.1C74.4 60.8 77.6 58 77.6 53.7C77.6 49.3 74.4 46.8 69.1 46.8H60.4V60.8Z" fill="url(#mark-letter)"/>
+  <path d="M42 97H86" stroke="#FF1A1A" stroke-width="2.2" stroke-linecap="round" opacity="0.92"/>
   <defs>
-    <linearGradient id="shieldFill" x1="29" y1="18" x2="105" y2="108" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#141A22"/>
-      <stop offset="0.55" stop-color="#0A1735"/>
-      <stop offset="1" stop-color="#2C52FF" stop-opacity="0.52"/>
+    <linearGradient id="mark-frame" x1="6" y1="4" x2="124" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF1A1A"/>
+      <stop offset="0.55" stop-color="#FF4040" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#990000"/>
     </linearGradient>
-    <linearGradient id="shieldStroke" x1="32" y1="14" x2="101" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#BCC6D3"/>
-      <stop offset="0.52" stop-color="#98E9FF"/>
-      <stop offset="1" stop-color="#C7A15B"/>
+    <linearGradient id="mark-shield-stroke" x1="32" y1="14" x2="101" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF6B6B"/>
+      <stop offset="0.55" stop-color="#FF1A1A"/>
+      <stop offset="1" stop-color="#E60000"/>
     </linearGradient>
-    <linearGradient id="pFill" x1="48" y1="36" x2="89" y2="89" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F8FBFF"/>
-      <stop offset="0.42" stop-color="#BCC6D3"/>
-      <stop offset="1" stop-color="#C7A15B"/>
+    <linearGradient id="mark-letter" x1="48" y1="36" x2="89" y2="89" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FF6B6B"/>
+      <stop offset="1" stop-color="#FF1A1A"/>
     </linearGradient>
   </defs>
 </svg>
