@@ -37,8 +37,8 @@ export default function Home() {
             <GlassPanel className="p-6 md:p-9">
               <OperationalBadges />
               <div className="mt-8 max-w-sm"><Wordmark /></div>
-              <p className="praetor-kicker mt-10">Praetor live devnet ops firewall</p>
-              <h1 className="praetor-heading mt-5 max-w-5xl text-5xl font-black md:text-7xl xl:text-8xl">
+              <p className="praetor-kicker glow-text mt-10">Praetor live devnet ops firewall</p>
+              <h1 className="praetor-heading text-gradient-lava mt-5 max-w-5xl text-5xl font-black md:text-7xl xl:text-8xl">
                 Praetor is live for Solana devnet protocols.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-[var(--praetor-muted)] md:text-xl">

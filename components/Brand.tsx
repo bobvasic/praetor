@@ -5,7 +5,7 @@ import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`relative flex h-11 w-11 items-center justify-center rounded-2xl border border-white/25 bg-white/[0.08] shadow-[0_18px_48px_rgba(255,130,0,0.16)] backdrop-blur-xl transition duration-200 hover:border-[var(--praetor-orange)] ${className}`}
+      className={`relative flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/35 bg-card/80 shadow-[0_18px_48px_hsl(0_100%_50%_/_0.18)] backdrop-blur-xl transition duration-200 hover:border-primary ${className}`}
     >
       <Image
         src="/brand/praetor-mark.svg"
@@ -33,28 +33,43 @@ export function Wordmark({ className = "" }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[rgba(11,18,32,0.68)] backdrop-blur-2xl supports-[backdrop-filter]:bg-[rgba(11,18,32,0.58)]">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/40 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/30">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian">
+        <Link
+          href="/"
+          className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
           <LogoMark />
           <div>
-            <p className="text-base font-black tracking-[0.24em] text-white">
+            <p className="text-base font-black tracking-[0.24em] text-foreground">
               PRAETOR
             </p>
-            <p className="text-xs text-[var(--praetor-muted)]">praetores.com</p>
+            <p className="text-xs text-muted-foreground">praetores.com</p>
           </div>
         </Link>
-        <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-[var(--praetor-muted)] md:flex">
-          <Link className="rounded-md transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/">
+        <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground md:flex">
+          <Link
+            className="rounded-md transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            href="/"
+          >
             Praetor
           </Link>
-          <Link className="rounded-md text-[var(--praetor-orange-soft)] transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/app">
+          <Link
+            className="rounded-md text-primary transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            href="/app"
+          >
             Launch Devnet App
           </Link>
-          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/dashboard">
+          <Link
+            className="rounded-md transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            href="/dashboard"
+          >
             Dashboard
           </Link>
-          <Link className="rounded-md transition hover:text-[var(--praetor-orange-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-arctic/70" href="/demo">
+          <Link
+            className="rounded-md transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            href="/demo"
+          >
             Guided Walkthrough
           </Link>
         </nav>
