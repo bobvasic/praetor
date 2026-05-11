@@ -29,9 +29,10 @@ function decodeBase64Transaction(value: string) {
   return transaction.length >= 32 ? transaction : null;
 }
 
-async function waitForConfirmedSignature(connection: ReturnType<typeof createQuickNodeConnection>, signature: string) {
+async function pollSignatureStatus(connection: ReturnType<typeof createQuickNodeConnection>, signature: string) {
+  // Keep total wait under platform gateway timeout (DO/Cloudflare ~60s).
   const startedAt = Date.now();
-  const timeoutMs = 45_000;
+  const timeoutMs = 12_000;
 
   while (Date.now() - startedAt < timeoutMs) {
     const statuses = await connection.getSignatureStatuses([signature]);
@@ -45,10 +46,12 @@ async function waitForConfirmedSignature(connection: ReturnType<typeof createQui
       return status.confirmationStatus;
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1_500));
+    await new Promise((resolve) => setTimeout(resolve, 600));
   }
 
-  throw new Error("Confirmation timeout while waiting for devnet attestation");
+  // Not confirmed within the budget. Return a soft status so the client gets
+  // the signature + Explorer link and can verify directly.
+  return "submitted";
 }
 
 export async function POST(request: NextRequest) {
@@ -88,8 +91,11 @@ export async function POST(request: NextRequest) {
       maxRetries: 3,
     });
 
-    await connection.confirmTransaction(signature, "confirmed");
-    const status = await waitForConfirmedSignature(connection, signature);
+    // Return immediately to stay under the DO/Cloudflare gateway timeout (~60s).
+    // The signature + Explorer URL is enough for the client to verify confirmation
+    // itself; polling here was the cause of the upstream 504 → HTML response that
+    // tripped the client's JSON parser.
+    const status = "submitted";
 
     return NextResponse.json({
       ok: true,

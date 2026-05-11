@@ -248,7 +248,12 @@ export default function PraetorAppPage() {
           incidentId: PRAETOR_INCIDENT_ID,
         }),
       });
-      const sendBody = (await sendResponse.json()) as { ok: boolean; signature?: string; explorerUrl?: string; status?: string; error?: string };
+      // Tolerate non-JSON responses (e.g. an upstream HTML 504 from the gateway)
+      // so the user gets a readable error instead of a JSON parse exception.
+      const sendBody = (await sendResponse.json().catch(() => ({
+        ok: false,
+        error: "Server returned an invalid response. Your wallet may have already submitted the transaction — check Solana Explorer or your wallet activity.",
+      }))) as { ok: boolean; signature?: string; explorerUrl?: string; status?: string; error?: string };
       if (!sendResponse.ok || !sendBody.ok || !sendBody.signature || !sendBody.explorerUrl) {
         throw new Error(sendBody.error ?? "Devnet attestation transaction failed.");
       }
