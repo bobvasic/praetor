@@ -25,7 +25,8 @@ export function PraetorHeroMedia() {
       {!videoFailed ? (
         <video
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${videoReady ? "opacity-100" : "opacity-0"}`}
-          src="/brand/praetor-hero.webm"
+          src="/media/praetor-city.webm"
+          poster="/media/praetor-city-poster.png"
           autoPlay
           loop
           muted
