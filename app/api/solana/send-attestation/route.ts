@@ -92,9 +92,20 @@ export async function POST(request: NextRequest) {
     // 404 on Solana Explorer). Confirmation polling is now done client-side
     // against /api/solana/tx-status to keep this request short and side-step
     // the DO/Cloudflare gateway timeout.
-    const signature = await connection.sendRawTransaction(signedTransaction, {
-      maxRetries: 3,
-    });
+    //
+    // Hard timeout around the RPC call so this route always returns JSON
+    // within the gateway budget, even if QuickNode is rate-limited or devnet
+    // stalls. Without this, a slow RPC turns into an HTML 504 from the
+    // gateway and the client's .json() parse blows up.
+    const signature = (await Promise.race([
+      connection.sendRawTransaction(signedTransaction, { maxRetries: 3 }),
+      new Promise<string>((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Solana devnet RPC send exceeded 18s. Please retry — devnet may be congested.")),
+          18_000,
+        ),
+      ),
+    ])) as string;
 
     // Return immediately to stay under the DO/Cloudflare gateway timeout (~60s).
     // The signature + Explorer URL is enough for the client to verify confirmation
@@ -109,6 +120,9 @@ export async function POST(request: NextRequest) {
       status,
     });
   } catch (error) {
+    // Surface the real cause in DO runtime logs so production failures are
+    // diagnosable (QuickNode rate limit, missing env, devnet outage, etc.).
+    console.error("[send-attestation]", error);
     return NextResponse.json(
       { ok: false, error: cleanSolanaError(error) },
       { status: 502 },
