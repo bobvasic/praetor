@@ -18,7 +18,6 @@ import { OperationalBadges } from "@/components/OperationalBadges";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 
 const flowCards = [
   {
@@ -58,28 +57,34 @@ const technicalProof = [
   { label: "Deterministic risk score: 91 Critical", icon: Activity },
 ] as const;
 
-const consoleRows: Array<[string, string, "critical" | "info"]> = [
-  ["PROTOCOL", "DemoDAO Treasury", "info"],
-  ["NETWORK", "Solana Devnet", "info"],
-  ["RPC", "QuickNode", "info"],
-  ["RISK SCORE", "91 / 100", "critical"],
-  ["RISK LEVEL", "Critical", "critical"],
-  ["ATTESTATION", "Ready", "info"],
-];
-
 export default function HomePage() {
   return (
     <main className="relative overflow-hidden">
       {/* Hero */}
-      <SectionShell className="relative py-16 md:py-24">
-        <div className="praetor-honeycomb pointer-events-none absolute inset-0 opacity-[0.55]" aria-hidden />
-        <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.96fr_1.04fr] lg:items-center">
-          <div>
+      <SectionShell className="relative isolate min-h-[760px] py-16 md:py-24 lg:min-h-[820px]">
+        <video
+          className="praetor-hero-video pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/media/praetor-city-poster.png"
+          aria-hidden="true"
+        >
+          <source src="/media/praetor-city.webm" type="video/webm" />
+        </video>
+        <div className="praetor-hero-video-glow pointer-events-none absolute inset-0 -z-20" aria-hidden />
+        <div className="praetor-hero-video-mask pointer-events-none absolute inset-0 -z-10" aria-hidden />
+        <div className="praetor-honeycomb pointer-events-none absolute inset-0 -z-10 opacity-[0.28]" aria-hidden />
+
+        <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+          <div className="max-w-3xl py-8 md:py-14 lg:py-20">
             <OperationalBadges />
             <p className="praetor-kicker mt-7">
               Onchain ops firewall · Solana protocols
             </p>
-            <h1 className="mt-4 max-w-4xl text-4xl font-black leading-[1.04] tracking-[-0.04em] text-white md:text-6xl xl:text-7xl">
+            <h1 className="mt-4 max-w-4xl text-4xl font-black leading-[1.04] tracking-normal text-white md:text-6xl xl:text-7xl">
               Onchain Ops Firewall for{" "}
               <span className="text-[#FF2020]">Solana</span> Protocols
             </h1>
@@ -118,61 +123,31 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Security console preview */}
-          <GlassPanel className="rounded-2xl p-0">
-            <div className="p-6 md:p-7">
-              <div className="flex items-start justify-between gap-4">
+          <div className="hidden min-h-[520px] items-end justify-end lg:flex">
+            <div className="praetor-hero-readout w-full max-w-sm px-6 py-5">
+              <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/48">
+                DemoDAO Treasury
+              </p>
+              <div className="mt-4 flex items-end justify-between gap-6">
                 <div>
-                  <p className="praetor-kicker">Security console</p>
-                  <h2 className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">
-                    DemoDAO Treasury
-                  </h2>
+                  <p className="text-6xl font-black leading-none tracking-normal text-white">
+                    91
+                  </p>
+                  <p className="mt-2 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#FF6B6B]">
+                    Critical risk score
+                  </p>
                 </div>
-                <StatusBadge tone="online" pulse>
-                  Monitoring
-                </StatusBadge>
+                <Ban className="mb-2 h-12 w-12 text-[#FF2020]" aria-hidden />
               </div>
-
-              <div className="mt-6 rounded-xl border border-[rgba(255,32,32,0.32)] bg-[rgba(122,7,16,0.10)] p-5">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#FF8888]">
-                      Outcome
-                    </p>
-                    <p className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">
-                      Execution blocked by Praetor policy.
-                    </p>
-                  </div>
-                  <Ban
-                    className="h-10 w-10 shrink-0 text-[#FF6B6B]"
-                    aria-hidden
-                  />
-                </div>
-              </div>
-
-              <div className="mt-5 divide-y divide-white/[0.06] rounded-xl border border-white/10 bg-[#0A0A0A]">
-                {consoleRows.map(([label, value, tone]) => (
-                  <div
-                    key={label}
-                    className="flex items-center justify-between gap-4 px-4 py-3"
-                  >
-                    <span className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/55">
-                      {label}
-                    </span>
-                    <span
-                      className={
-                        tone === "critical"
-                          ? "font-mono text-sm font-black tabular-nums text-[#FF6B6B]"
-                          : "font-mono text-sm font-bold tabular-nums text-white"
-                      }
-                    >
-                      {value}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <div className="mt-5 h-px bg-[rgba(255,32,32,0.34)]" />
+              <p className="mt-4 text-sm font-bold leading-6 text-white/82">
+                Unsafe treasury withdrawal blocked before execution.
+              </p>
+              <p className="mt-2 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/42">
+                Detect → Attest → Challenge → Block
+              </p>
             </div>
-          </GlassPanel>
+          </div>
         </div>
       </SectionShell>
 

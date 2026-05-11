@@ -224,6 +224,41 @@ html {
   background-size: 56px 98px;
 }
 
+/* Homepage hero WebM treatment: monochrome media, crimson command light. */
+.praetor-hero-video {
+  object-position: 66% 50%;
+  opacity: 0.94;
+  filter: contrast(1.12) brightness(0.9) saturate(1.18);
+  transform: scale(1.22) translateY(-7%);
+  transform-origin: 66% 48%;
+}
+
+.praetor-hero-video-glow {
+  background:
+    radial-gradient(circle at 69% 44%, rgba(255, 32, 32, 0.34), transparent 31rem),
+    radial-gradient(circle at 82% 78%, rgba(122, 7, 16, 0.45), transparent 24rem),
+    linear-gradient(90deg, rgba(255, 32, 32, 0.08), transparent 40%, rgba(255, 32, 32, 0.12));
+  mix-blend-mode: screen;
+}
+
+.praetor-hero-video-mask {
+  background:
+    linear-gradient(90deg, #050505 0%, rgba(5, 5, 5, 0.9) 30%, rgba(5, 5, 5, 0.18) 58%, rgba(5, 5, 5, 0.74) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.84) 0%, rgba(5, 5, 5, 0.08) 28%, rgba(5, 5, 5, 0.28) 72%, #050505 100%);
+}
+
+.praetor-hero-readout {
+  border-left: 1px solid rgba(255, 32, 32, 0.42);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  background:
+    linear-gradient(90deg, rgba(122, 7, 16, 0.22), rgba(10, 10, 10, 0.52)),
+    rgba(5, 5, 5, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(255, 32, 32, 0.08) inset,
+    0 24px 90px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(16px);
+}
+
 /* Hex mesh class kept for legacy references — re-pointed to crimson honeycomb */
 .hex-mesh {
   background-image:
