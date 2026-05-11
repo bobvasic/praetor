@@ -323,9 +323,9 @@ export default function PraetorAppPage() {
                   <StatusBadge tone={connected ? "online" : "crimson"}>{connected ? "Wallet Connected" : "Wallet Required"}</StatusBadge>
                   <StatusBadge tone={status?.ok ? "cyan" : "red"}>{latestStatusLabel}</StatusBadge>
                 </div>
-                <p className="praetor-kicker mt-7">Live devnet workflow</p>
+                <p className="praetor-kicker mt-7">LIVE SOLANA DEVNET ATTESTATION FLOW</p>
                 <h1 className="mt-3 max-w-4xl text-3xl font-black leading-[1.06] tracking-[-0.03em] text-white md:text-5xl xl:text-6xl">
-                  Praetor live devnet workflow.
+                  Runtime security for privileged Solana operations.
                 </h1>
                 <p className="mt-4 max-w-3xl text-base leading-7 text-white/72 md:text-lg">
                   Wallet signs client-side only. Praetor never asks for private keys. QuickNode RPC provides Solana Devnet status, slot, and blockhash data.

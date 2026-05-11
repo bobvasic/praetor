@@ -1,6 +1,5 @@
 import {
   Activity,
-  ArrowRight,
   Ban,
   CheckCircle2,
   Cpu,
@@ -11,10 +10,8 @@ import {
   Lock,
   Radar,
   ShieldAlert,
-  ShieldCheck,
   Wallet,
 } from "lucide-react";
-import { OperationalBadges } from "@/components/OperationalBadges";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -76,78 +73,72 @@ export default function HomePage() {
         </video>
         <div className="praetor-hero-video-glow pointer-events-none absolute inset-0 -z-20" aria-hidden />
         <div className="praetor-hero-video-mask pointer-events-none absolute inset-0 -z-10" aria-hidden />
-        <div className="praetor-honeycomb pointer-events-none absolute inset-0 -z-10 opacity-[0.28]" aria-hidden />
+        <div className="praetor-honeycomb pointer-events-none absolute inset-0 -z-10 opacity-[0.22]" aria-hidden />
 
-        <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
-          <div className="max-w-3xl py-8 md:py-14 lg:py-20">
-            <OperationalBadges />
-            <p className="praetor-kicker mt-7">
-              Onchain ops firewall · Solana protocols
+        <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="max-w-2xl py-8 md:py-14 lg:py-20">
+            <p className="font-mono text-[11px] font-black uppercase tracking-[0.24em] text-[var(--praetor-crimson)]">
+              Runtime threat perimeter
             </p>
-            <h1 className="mt-4 max-w-4xl text-4xl font-black leading-[1.04] tracking-normal text-white md:text-6xl xl:text-7xl">
-              Onchain Ops Firewall for{" "}
-              <span className="text-[#FF2020]">Solana</span> Protocols
+            <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.04] tracking-normal text-white md:text-6xl xl:text-7xl">
+              The protocol was audited.
+              <br />
+              The operation was not.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/72 md:text-xl">
-              Detect, attest, challenge, and block high-risk privileged actions
-              before they can damage protocol operations.
+            <p className="mt-6 max-w-xl text-lg leading-8 text-white/72 md:text-xl">
+              Praetor protects privileged Solana operations after launch.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <PremiumButtonLink href="/app" variant="crimson">
-                Launch Devnet App <ArrowRight className="ml-2 h-3.5 w-3.5" />
+                Launch Devnet App
               </PremiumButtonLink>
               <PremiumButtonLink href="/dashboard" variant="glass">
                 View Dashboard
               </PremiumButtonLink>
-              <PremiumButtonLink href="/demo" variant="ghost">
-                Guided Walkthrough
-              </PremiumButtonLink>
             </div>
-            <div className="mt-10 grid max-w-2xl gap-2.5 sm:grid-cols-3">
-              {[
-                "Real Solana Devnet attestation",
-                "Verifiable on Solana Explorer",
-                "Wallet signs client-side; no keys handled",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="praetor-mini-card flex items-start gap-2.5 rounded-xl px-3.5 py-3 text-sm text-white/72"
-                >
-                  <ShieldCheck
-                    className="mt-0.5 h-4 w-4 shrink-0 text-[#FF6B6B]"
-                    aria-hidden
-                  />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
+            <p className="mt-4 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/42">
+              Solana Devnet • QuickNode RPC • Wallet-signed attestations • Non-custodial
+            </p>
           </div>
 
-          <div className="hidden min-h-[520px] items-end justify-end lg:flex">
-            <div className="praetor-hero-readout w-full max-w-sm px-6 py-5">
-              <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/48">
-                DemoDAO Treasury
-              </p>
-              <div className="mt-4 flex items-end justify-between gap-6">
-                <div>
-                  <p className="text-6xl font-black leading-none tracking-normal text-white">
-                    91
-                  </p>
-                  <p className="mt-2 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#FF6B6B]">
-                    Critical risk score
-                  </p>
-                </div>
-                <Ban className="mb-2 h-12 w-12 text-[#FF2020]" aria-hidden />
+          <div className="relative mx-auto w-full max-w-[620px] pb-8 lg:pb-0">
+            <div className="praetor-perimeter-wrap">
+              <div className="praetor-module praetor-module-top-left">Treasury</div>
+              <div className="praetor-module praetor-module-top-right">Signers</div>
+              <div className="praetor-module praetor-module-bottom-left">Upgrade Authority</div>
+              <div className="praetor-module praetor-module-bottom-right">Governance</div>
+
+              <div className="praetor-threat-vector" aria-hidden>
+                <span className="praetor-threat-endpoint" />
               </div>
-              <div className="mt-5 h-px bg-[rgba(255,32,32,0.34)]" />
-              <p className="mt-4 text-sm font-bold leading-6 text-white/82">
-                Unsafe treasury withdrawal blocked before execution.
-              </p>
-              <p className="mt-2 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/42">
-                Detect → Attest → Challenge → Block
-              </p>
+
+              <div className="praetor-perimeter-core">
+                <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-white/58">DemoDAO Treasury</span>
+                <span className="mt-2 text-2xl font-black tracking-[0.06em] text-white">PROTECTED</span>
+              </div>
+
+              {Array.from({ length: 10 }).map((_, idx) => (
+                <span key={idx} className="praetor-perimeter-node" data-node={idx} />
+              ))}
+
+              <div className="praetor-telemetry">
+                <p><span>privileged_operation_detected</span></p>
+                <p>risk_score: <strong>91</strong></p>
+                <p>decision: <strong>block</strong></p>
+                <p>attestation: <strong>recorded</strong></p>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="relative mx-auto mt-6 grid w-full max-w-7xl grid-cols-2 gap-2 px-6 md:grid-cols-4 md:gap-3">
+          {[['1', 'Detect', 'Monitor'], ['2', 'Attest', 'Prove'], ['3', 'Challenge', 'Review'], ['4', 'Block', 'Stop']].map(([step, title, helper]) => (
+            <div key={title} className="praetor-process-item">
+              <p className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-[var(--praetor-crimson)]">{step}</p>
+              <p className="mt-1 text-sm font-black uppercase tracking-[0.08em] text-white">{title}</p>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/42">{helper}</p>
+            </div>
+          ))}
         </div>
       </SectionShell>
 
