@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Ban, CheckCircle2, ExternalLink, RadioTower, ShieldAlert, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
 import { PublicKey, Transaction, TransactionInstruction } from "@solana/web3.js";
 import { OperationalBadges } from "@/components/OperationalBadges";
@@ -134,6 +134,7 @@ export default function PraetorAppPage() {
   const [attesting, setAttesting] = useState(false);
   const [attestation, setAttestation] = useState<AttestationResult | null>(null);
   const [error, setError] = useState("");
+  const decisionRef = useRef<HTMLElement | null>(null);
 
   const walletInstalled = Boolean(provider);
   const connected = Boolean(walletAddress);
@@ -203,6 +204,40 @@ export default function PraetorAppPage() {
   function triggerSuspiciousOperation() {
     setError("");
     setIncidentTriggered(true);
+    // Visible feedback: scroll the freshly-revealed risk decision panel into
+    // view so judges can immediately see the Block decision and CTA.
+    setTimeout(() => {
+      decisionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  }
+
+  // Poll on-chain confirmation so the Solana Explorer link is always valid by
+  // the time the user clicks it. Server-side polling was removed because it
+  // blew past the DO/Cloudflare gateway timeout.
+  async function pollOnChainStatus(signature: string, initial: AttestationResult) {
+    const deadline = Date.now() + 45_000;
+    while (Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      try {
+        const res = await fetch(`/api/solana/tx-status?signature=${encodeURIComponent(signature)}`, { cache: "no-store" });
+        const body = (await res.json().catch(() => null)) as
+          | { ok?: boolean; confirmationStatus?: string | null; err?: unknown }
+          | null;
+        if (body?.err) {
+          setError("Solana rejected the transaction on chain. Please retry the attestation.");
+          return;
+        }
+        const cs = body?.confirmationStatus;
+        if (cs === "confirmed" || cs === "finalized") {
+          const updated = { ...initial, status: cs };
+          setAttestation(updated);
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+          return;
+        }
+      } catch {
+        // transient network blip — keep polling within the deadline
+      }
+    }
   }
 
   async function createDevnetAttestation() {
@@ -258,14 +293,17 @@ export default function PraetorAppPage() {
         throw new Error(sendBody.error ?? "Devnet attestation transaction failed.");
       }
 
-      const result = {
+      const result: AttestationResult = {
         signature: sendBody.signature,
         explorerUrl: sendBody.explorerUrl,
-        status: sendBody.status ?? "confirmed",
+        status: sendBody.status ?? "submitted",
         payload,
       };
       setAttestation(result);
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
+      // Fire-and-forget client-side confirmation poll. UI updates from
+      // "Submitted" → "Confirmed"/"Finalized" once the leader includes it.
+      void pollOnChainStatus(sendBody.signature, result);
     } catch (attestationError) {
       setError(attestationError instanceof Error ? attestationError.message : "User rejected signing or transaction confirmation failed.");
     } finally {
@@ -359,14 +397,19 @@ export default function PraetorAppPage() {
                 <DetailRow label="Destination" value="Non-allowlisted wallet" />
                 <DetailRow label="Result" value={incidentTriggered ? "Risk decision generated" : "Awaiting trigger"} />
               </div>
-              <PremiumButton className="mt-5 w-full" onClick={triggerSuspiciousOperation} variant="danger">
-                Trigger Suspicious Operation
+              <PremiumButton
+                className="mt-5 w-full"
+                onClick={triggerSuspiciousOperation}
+                variant="danger"
+                disabled={incidentTriggered}
+              >
+                {incidentTriggered ? "Suspicious Operation Triggered ✓" : "Trigger Suspicious Operation"}
               </PremiumButton>
             </GlassPanel>
           </section>
 
           {incidentTriggered && (
-            <section className="mt-6 grid gap-5 lg:grid-cols-2">
+            <section ref={decisionRef} className="mt-6 grid gap-5 lg:grid-cols-2">
               <GlassPanel className="rounded-xl p-6 md:p-7">
                 <PanelTitle icon={Ban} kicker="Risk decision" title="Decision: Block" />
                 <p className="mt-4 text-sm leading-6 text-white/68">
@@ -397,7 +440,16 @@ export default function PraetorAppPage() {
 
                 {attestation && (
                   <div className="mt-5 rounded-xl border border-[rgba(28,201,160,0.40)] bg-[#0A0A0A] p-4">
-                    <StatusBadge tone="online" pulse>Confirmed</StatusBadge>
+                    <StatusBadge
+                      tone={attestation.status === "confirmed" || attestation.status === "finalized" ? "online" : "cyan"}
+                      pulse
+                    >
+                      {attestation.status === "finalized"
+                        ? "Finalized on Solana Devnet"
+                        : attestation.status === "confirmed"
+                        ? "Confirmed on Solana Devnet"
+                        : "Submitted · Awaiting devnet confirmation"}
+                    </StatusBadge>
                     <div className="mt-3">
                       <DetailRow label="Signature" value={attestation.signature} />
                       <DetailRow label="Status" value={attestation.status} />

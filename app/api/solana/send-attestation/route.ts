@@ -87,11 +87,12 @@ export async function POST(request: NextRequest) {
       );
     }
     const connection = createQuickNodeConnection();
+    // Keep preflight ON so invalid txs are rejected here with a useful error
+    // instead of appearing "submitted" but never landing on chain (which would
+    // 404 on Solana Explorer). Confirmation polling is now done client-side
+    // against /api/solana/tx-status to keep this request short and side-step
+    // the DO/Cloudflare gateway timeout.
     const signature = await connection.sendRawTransaction(signedTransaction, {
-      // skipPreflight avoids a server-side simulation roundtrip that can push
-      // total latency past the DO/Cloudflare gateway timeout. The wallet has
-      // already validated the tx; on devnet a failed send is harmless.
-      skipPreflight: true,
       maxRetries: 3,
     });
 
