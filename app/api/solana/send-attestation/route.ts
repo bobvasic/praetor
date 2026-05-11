@@ -88,6 +88,10 @@ export async function POST(request: NextRequest) {
     }
     const connection = createQuickNodeConnection();
     const signature = await connection.sendRawTransaction(signedTransaction, {
+      // skipPreflight avoids a server-side simulation roundtrip that can push
+      // total latency past the DO/Cloudflare gateway timeout. The wallet has
+      // already validated the tx; on devnet a failed send is harmless.
+      skipPreflight: true,
       maxRetries: 3,
     });
 
