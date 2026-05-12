@@ -1,3 +1,37 @@
+<p align="center">
+  <a href="https://praetores.com">
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,50:7a0710,100:e10600&height=210&section=header&text=PRAETOR&fontColor=ffffff&fontSize=78&fontAlignY=38&desc=Onchain%20Ops%20Firewall%20for%20Solana%20Protocols&descSize=18&descAlignY=62&animation=fadeIn" alt="PRAETOR — Onchain Ops Firewall for Solana Protocols" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-FF2020.svg?style=for-the-badge" alt="MIT License" /></a>
+  <a href="https://explorer.solana.com/address/HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk?cluster=devnet"><img src="https://img.shields.io/badge/Solana-Devnet-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Solana Devnet" /></a>
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js 14" /></a>
+  <a href="https://www.anchor-lang.com"><img src="https://img.shields.io/badge/Anchor-1.0-E10600?style=for-the-badge&logoColor=white" alt="Anchor 1.0" /></a>
+  <a href="https://praetores.com/app"><img src="https://img.shields.io/badge/Status-Live%20on%20Devnet-5DE0BB?style=for-the-badge" alt="Live on Devnet" /></a>
+</p>
+
+<p align="center">
+  <a href="https://praetores.com">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1200&color=FF2020&center=true&vCenter=true&width=720&height=45&lines=Detect+%E2%86%92+Attest+%E2%86%92+Challenge+%E2%86%92+Block;Onchain+Ops+Firewall+for+Solana+Protocols;Wallet-signed+%E2%80%A2+QuickNode-powered+%E2%80%A2+Live+on+Devnet" alt="Detect → Attest → Challenge → Block" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=nextjs,typescript,react,tailwind,rust,docker" alt="Built with Next.js, TypeScript, React, Tailwind, Rust, Docker" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/bobvasic/praetor">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=bobvasic&repo=praetor&theme=dark&bg_color=0A0A0A&border_color=FF2020&title_color=FF2020&icon_color=FF6B6B&text_color=ffffff" alt="bobvasic/praetor on GitHub" />
+  </a>
+</p>
+
+---
+
 # Praetor
 
 **Onchain ops firewall for Solana protocols.**
@@ -239,8 +273,8 @@ Risk levels:
 
 ## Team
 
-**BOB** — Co-founder, CTO, Security Architect  
-**Jelena** — CEO, Strategy, Partnerships
+**Jelena** — Founder and CEO, Strategy, Partnerships  
+**Bob** — Co-founder, CTO, Security Architect
 
 ## Hero Animation
 
