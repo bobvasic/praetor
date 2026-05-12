@@ -17,7 +17,6 @@ import { CyberSphere, CyberStatusFeed } from "@/components/hero/CyberSphere";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 
 const flowCards = [
   {
@@ -60,10 +59,10 @@ const technicalProof = [
 export default function HomePage() {
   return (
     <main className="relative overflow-hidden" data-praetor-route="landing-cybersphere-v2">
-      {/* Hero — premium cyber-defense layout. Left: status pills, kicker,
-       *   headline, body, CTAs. Right: animated CyberSphere + telemetry
-       *   feed. Bottom: 4-step process strip. Sections below are untouched. */}
-      <SectionShell className="relative isolate overflow-hidden pb-20 pt-12 md:pb-24 md:pt-16 lg:min-h-[860px]" data-praetor-hero="cybersphere">
+      {/* Hero — premium cyber-defense layout. Left: kicker, headline, body,
+       *   CTAs. Right: animated CyberSphere + telemetry feed. Bottom:
+       *   4-step process strip. Operational status now lives in the header. */}
+      <SectionShell className="relative isolate overflow-hidden pb-20 pt-8 md:pb-24 md:pt-12 lg:min-h-[860px]" data-praetor-hero="cybersphere">
         {/* Atmospheric backdrop: kept the cinematic video but turned down so
          *  the new orb is the focal point. Honeycomb + radial red glows
          *  sit between the video and the content. */}
@@ -88,16 +87,8 @@ export default function HomePage() {
 
         <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-6 lg:grid-cols-[0.92fr_1.08fr]">
           {/* Left — copy block */}
-          <div className="py-6 lg:py-10">
-            <div className="flex flex-wrap gap-2.5">
-              <StatusBadge tone="online" pulse>All Systems Online</StatusBadge>
-              <StatusBadge tone="devnet">Solana Devnet</StatusBadge>
-              <StatusBadge tone="cyan">QuickNode RPC Connected</StatusBadge>
-              <StatusBadge tone="crimson">Onchain Attestation Ready</StatusBadge>
-              <StatusBadge tone="crimson">Wallet Required</StatusBadge>
-            </div>
-
-            <p className="mt-10 font-mono text-[11px] font-black uppercase tracking-[0.24em] text-[#FF2020]">
+          <div className="py-4 lg:py-8">
+            <p className="font-mono text-[11px] font-black uppercase tracking-[0.24em] text-[#FF2020]">
               Live Solana Devnet Attestation Flow
             </p>
             <h1 className="mt-4 max-w-[640px] text-4xl font-black leading-[1.05] tracking-[-0.03em] text-white md:text-6xl xl:text-[66px]">
