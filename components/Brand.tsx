@@ -39,8 +39,6 @@ export function Wordmark({ className = "" }: { className?: string }) {
 }
 
 const navLinks = [
-  { href: "/", label: "Praetor" },
-  { href: "/app", label: "Launch Devnet App" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/demo", label: "Guided Walkthrough" },
 ] as const;
