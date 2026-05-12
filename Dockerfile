@@ -22,13 +22,21 @@ RUN npm install --no-audit --no-fund --loglevel=error
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+# CACHEBUST: bumping this ARG invalidates every layer from here down so
+# DigitalOcean's force-rebuild button cannot accidentally reuse a stale
+# `COPY . .` layer. Bump the date in the default value to force a clean
+# rebuild from this stage onward.
+ARG CACHEBUST=2026-05-12-01
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-RUN npm run build
+# Print the resolved CACHEBUST value into the build log so it is obvious in
+# DO's deploy output which rebuild was actually fresh.
+RUN echo "CACHEBUST=$CACHEBUST" && npm run build
 
 # ---------- Stage 3: runtime -------------------------------------------------
 FROM node:22-alpine AS runner

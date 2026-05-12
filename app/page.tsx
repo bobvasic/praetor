@@ -19,6 +19,14 @@ import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
+// Force-dynamic on `/` so the new hero is rendered on every request — bypasses
+// the in-runtime ISR cache that pinned the previous prerender on production
+// even after a forced rebuild + redeploy. Static prerendering is fine in
+// theory but DO's standalone runtime kept holding the old HTML in memory
+// across deploys; force-dynamic makes it impossible for it to do that.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const flowCards = [
   {
     title: "Detect",
