@@ -10,16 +10,17 @@ export function LogoMark({ className = "" }: { className?: string }) {
   return (
     <span
       className={cn(
-        "relative flex h-11 w-11 items-center justify-center rounded-xl border border-[rgba(255,32,32,0.28)] bg-[#0A0A0A] transition duration-200 hover:border-[rgba(255,32,32,0.55)]",
+        "relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[rgba(255,32,32,0.34)] bg-black shadow-[0_0_22px_rgba(255,32,32,0.18)] transition duration-200 hover:border-[rgba(255,32,32,0.66)] hover:shadow-[0_0_28px_rgba(255,32,32,0.30)]",
         className,
       )}
     >
       <Image
-        src="/brand/praetor-mark.svg"
+        src="/brand/praetor-mark-red.png"
         alt="PRAETOR shield mark"
-        width={32}
-        height={32}
+        width={44}
+        height={44}
         priority
+        className="h-full w-full object-cover"
       />
     </span>
   );
