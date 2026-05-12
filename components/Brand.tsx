@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Github } from "lucide-react";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { cn } from "@/src/lib/utils";
 
@@ -132,13 +133,20 @@ export function Header() {
               );
             })}
           </nav>
-          <PremiumButtonLink
-            href="/app"
-            variant="crimson"
-            className="hidden sm:inline-flex"
-          >
-            Launch Devnet App
-          </PremiumButtonLink>
+          <div className="hidden items-center gap-2 sm:flex">
+            <a
+              href="https://github.com/bobvasic/praetor"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-md border border-white/15 bg-[#0D1117] px-4 py-2.5 font-mono text-[11px] font-black uppercase tracking-[0.18em] text-white/88 transition duration-200 hover:border-white/28 hover:bg-[#161B22] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+            >
+              <Github className="mr-2 h-4 w-4" aria-hidden="true" />
+              GitHub
+            </a>
+            <PremiumButtonLink href="/app" variant="crimson">
+              Launch Devnet App
+            </PremiumButtonLink>
+          </div>
         </div>
       </div>
       {showTacticalStatusStrip && <TacticalStatusStrip />}
