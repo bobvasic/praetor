@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
+import Script from "next/script";
+import { PlausibleAnalytics } from "@/components/analytics/PlausibleAnalytics";
 import { Header } from "@/components/Brand";
 import AgenticHeroBackground from "@/components/background/AgenticHeroBackground";
 import "./globals.css";
@@ -94,6 +96,22 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
+      <head>
+        {/* Privacy-friendly analytics by Plausible */}
+        <Script
+          async
+          src="https://plausible.io/js/pa-Ai9xJdH0L7tzee44ecC-8.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          id="plausible-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init();",
+          }}
+        />
+      </head>
       <body className="relative isolate min-h-screen overflow-x-hidden bg-background font-sans text-foreground antialiased">
         <div
           aria-hidden="true"
@@ -110,6 +128,7 @@ export default function RootLayout({
           aria-hidden="true"
           className="pointer-events-none fixed bottom-0 left-0 right-0 z-[60] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
         />
+        <PlausibleAnalytics />
       </body>
     </html>
   );
