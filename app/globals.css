@@ -723,7 +723,21 @@ html {
   .praetor-perimeter-node,
   .praetor-perimeter-node::after,
   .praetor-telemetry,
-  .praetor-threat-vector {
+  .praetor-threat-vector,
+  .cs-rotate-slow,
+  .cs-rotate-mid,
+  .cs-rotate-vslow {
     animation: none !important;
   }
 }
+
+/* Hero CyberSphere — layered rotations. Each .cs-rotate-* class is applied
+ * to an absolutely-positioned <svg> so it can spin around its own centre
+ * via transform-origin: 50% 50% without affecting the other layers. Only
+ * `transform` and `opacity` are animated, so the GPU does the work.
+ */
+@keyframes cs-rotate         { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+@keyframes cs-rotate-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); }   }
+.cs-rotate-slow  { animation: cs-rotate         120s linear infinite; transform-origin: 50% 50%; }
+.cs-rotate-mid   { animation: cs-rotate          14s linear infinite; transform-origin: 50% 50%; }
+.cs-rotate-vslow { animation: cs-rotate-reverse 220s linear infinite; transform-origin: 50% 50%; }

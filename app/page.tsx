@@ -1,5 +1,6 @@
 import {
   Activity,
+  ArrowRight,
   Ban,
   CheckCircle2,
   Cpu,
@@ -12,9 +13,11 @@ import {
   ShieldAlert,
   Wallet,
 } from "lucide-react";
+import { CyberSphere, CyberStatusFeed } from "@/components/hero/CyberSphere";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { StatusBadge } from "@/components/ui/StatusBadge";
 
 const flowCards = [
   {
@@ -57,10 +60,15 @@ const technicalProof = [
 export default function HomePage() {
   return (
     <main className="relative overflow-hidden">
-      {/* Hero */}
-      <SectionShell className="relative isolate min-h-[760px] py-16 md:py-24 lg:min-h-[820px]">
+      {/* Hero — premium cyber-defense layout. Left: status pills, kicker,
+       *   headline, body, CTAs. Right: animated CyberSphere + telemetry
+       *   feed. Bottom: 4-step process strip. Sections below are untouched. */}
+      <SectionShell className="relative isolate overflow-hidden pb-20 pt-12 md:pb-24 md:pt-16 lg:min-h-[860px]">
+        {/* Atmospheric backdrop: kept the cinematic video but turned down so
+         *  the new orb is the focal point. Honeycomb + radial red glows
+         *  sit between the video and the content. */}
         <video
-          className="praetor-hero-video pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover"
+          className="praetor-hero-video pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover opacity-55"
           autoPlay
           loop
           muted
@@ -71,72 +79,84 @@ export default function HomePage() {
         >
           <source src="/media/praetor-city.webm" type="video/webm" />
         </video>
-        <div className="praetor-hero-video-glow pointer-events-none absolute inset-0 -z-20" aria-hidden />
-        <div className="praetor-hero-video-mask pointer-events-none absolute inset-0 -z-10" aria-hidden />
-        <div className="praetor-honeycomb pointer-events-none absolute inset-0 -z-10 opacity-[0.22]" aria-hidden />
+        <div className="praetor-hero-video-mask pointer-events-none absolute inset-0 -z-20" aria-hidden />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_55%_at_78%_50%,rgba(255,32,32,0.24),transparent_72%),radial-gradient(38%_40%_at_18%_30%,rgba(255,32,32,0.10),transparent_70%)]"
+        />
+        <div className="praetor-honeycomb pointer-events-none absolute inset-0 -z-10 opacity-[0.16]" aria-hidden />
 
-        <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="max-w-2xl py-8 md:py-14 lg:py-20">
-            <p className="font-mono text-[11px] font-black uppercase tracking-[0.24em] text-[var(--praetor-crimson)]">
-              Runtime threat perimeter
+        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-6 lg:grid-cols-[0.92fr_1.08fr]">
+          {/* Left — copy block */}
+          <div className="py-6 lg:py-10">
+            <div className="flex flex-wrap gap-2.5">
+              <StatusBadge tone="online" pulse>All Systems Online</StatusBadge>
+              <StatusBadge tone="devnet">Solana Devnet</StatusBadge>
+              <StatusBadge tone="cyan">QuickNode RPC Connected</StatusBadge>
+              <StatusBadge tone="crimson">Onchain Attestation Ready</StatusBadge>
+              <StatusBadge tone="crimson">Wallet Required</StatusBadge>
+            </div>
+
+            <p className="mt-10 font-mono text-[11px] font-black uppercase tracking-[0.24em] text-[#FF2020]">
+              Live Solana Devnet Attestation Flow
             </p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.04] tracking-normal text-white md:text-6xl xl:text-7xl">
-              The protocol was audited.
-              <br />
-              The operation was not.
+            <h1 className="mt-4 max-w-[640px] text-4xl font-black leading-[1.05] tracking-[-0.03em] text-white md:text-6xl xl:text-[66px]">
+              Runtime security for privileged{" "}
+              <span className="text-[#FF2020]">Solana</span> operations.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/72 md:text-xl">
-              Praetor protects privileged Solana operations after launch.
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/68 md:text-lg">
+              Wallet signs client-side only — Praetor never asks for private keys.
+              QuickNode RPC provides Solana Devnet status, slot, and blockhash data.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <PremiumButtonLink href="/app" variant="crimson">
-                Launch Devnet App
+                <Wallet className="mr-2 h-4 w-4" aria-hidden /> Connect Wallet
               </PremiumButtonLink>
-              <PremiumButtonLink href="/dashboard" variant="glass">
-                View Dashboard
+              <PremiumButtonLink href="/dashboard" variant="ghost">
+                Explore Platform <ArrowRight className="ml-2 h-3.5 w-3.5" aria-hidden />
               </PremiumButtonLink>
             </div>
-            <p className="mt-4 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/42">
-              Solana Devnet • QuickNode RPC • Wallet-signed attestations • Non-custodial
+
+            <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/42">
+              Solana Devnet · QuickNode RPC · Wallet-signed attestations · Non-custodial
             </p>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[620px] pb-8 lg:pb-0">
-            <div className="praetor-perimeter-wrap">
-              <div className="praetor-module praetor-module-top-left">Treasury</div>
-              <div className="praetor-module praetor-module-top-right">Signers</div>
-              <div className="praetor-module praetor-module-bottom-left">Upgrade Authority</div>
-              <div className="praetor-module praetor-module-bottom-right">Governance</div>
-
-              <div className="praetor-threat-vector" aria-hidden>
-                <span className="praetor-threat-endpoint" />
-              </div>
-
-              <div className="praetor-perimeter-core">
-                <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-white/58">DemoDAO Treasury</span>
-                <span className="mt-2 text-2xl font-black tracking-[0.06em] text-white">PROTECTED</span>
-              </div>
-
-              {Array.from({ length: 10 }).map((_, idx) => (
-                <span key={idx} className="praetor-perimeter-node" data-node={idx} />
-              ))}
-
-              <div className="praetor-telemetry">
-                <p><span>privileged_operation_detected</span></p>
-                <p>risk_score: <strong>91</strong></p>
-                <p>decision: <strong>block</strong></p>
-                <p>attestation: <strong>recorded</strong></p>
-              </div>
-            </div>
+          {/* Right — animated orb + status feed */}
+          <div className="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+            <CyberSphere />
+            <CyberStatusFeed />
           </div>
         </div>
 
-        <div className="relative mx-auto mt-6 grid w-full max-w-7xl grid-cols-2 gap-2 px-6 md:grid-cols-4 md:gap-3">
-          {[['1', 'Detect', 'Monitor'], ['2', 'Attest', 'Prove'], ['3', 'Challenge', 'Review'], ['4', 'Block', 'Stop']].map(([step, title, helper]) => (
-            <div key={title} className="praetor-process-item">
-              <p className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-[var(--praetor-crimson)]">{step}</p>
-              <p className="mt-1 text-sm font-black uppercase tracking-[0.08em] text-white">{title}</p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/42">{helper}</p>
+        {/* Bottom 4-step process strip */}
+        <div className="relative mx-auto mt-14 grid w-full max-w-7xl grid-cols-2 gap-3 px-6 md:grid-cols-4 md:gap-4">
+          {[
+            ["1", "Detect"],
+            ["2", "Attest"],
+            ["3", "Challenge"],
+            ["4", "Block"],
+          ].map(([n, title]) => (
+            <div
+              key={n}
+              className="flex items-center gap-4 rounded-xl border border-white/10 bg-[rgba(8,8,8,0.72)] px-4 py-4 backdrop-blur-sm"
+            >
+              <span className="relative grid h-12 w-12 shrink-0 place-items-center">
+                <svg viewBox="0 0 24 24" className="absolute inset-0 h-12 w-12">
+                  <polygon
+                    points="12,2 22,7 22,17 12,22 2,17 2,7"
+                    fill="transparent"
+                    stroke="rgba(255,32,32,0.55)"
+                    strokeWidth="1"
+                  />
+                </svg>
+                <span className="relative font-mono text-base font-black text-[#FF2020]">{n}</span>
+              </span>
+              <div>
+                <p className="text-base font-bold text-white">{title}</p>
+                <span className="mt-1 block h-px w-10 bg-[#FF2020]/70" />
+              </div>
             </div>
           ))}
         </div>
