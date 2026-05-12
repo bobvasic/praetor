@@ -142,10 +142,10 @@ All routes deployed at **https://praetores.com** on DigitalOcean App Platform.
 
 ### 5.6 `/api/*` — Server Routes
 - `GET /api/health` → `{ ok: true, service: "praetor-api" }`
-- `GET|POST /api/incidents/simulate` → returns deterministic demo incident (id `inc_demo_001`)
-- `GET /api/solana/status` → QuickNode-backed devnet health, slot, blockhash preview
+- `GET|POST /api/incidents/simulate` → returns `410 Gone`; local fixture incident simulation has been removed
+- `GET /api/solana/status` → QuickNode-backed devnet health, slot, block height, Solana core version, blockhash preview, and Praetor Anchor program account state
 - `GET /api/solana/blockhash` → fresh devnet blockhash from QuickNode
-- `POST /api/solana/send-attestation` → accepts only `{ signedTransaction: base64, incidentId: "inc_demo_001" }`. Hard-rejects any payload containing `privateKey`, `secretKey`, or `keypair`. Submits via QuickNode, polls for confirmation, returns `{ signature, explorerUrl, status }`.
+- `POST /api/solana/send-attestation` → accepts only `{ signedTransaction: base64, incidentId: "inc_demo_001" }`. Hard-rejects any payload containing `privateKey`, `secretKey`, or `keypair`. Submits via QuickNode and returns `{ signature, explorerUrl, status }`; confirmation polling and memo parsing use `/api/solana/tx-status`.
 - `POST /api/webhooks/quicknode` → verifies `x-quicknode-secret` when `QUICKNODE_WEBHOOK_SECRET` is set.
 
 ---
@@ -365,7 +365,7 @@ Key gradients:
 - **Radix UI** primitives: `Dialog`, `Tooltip`, `Tabs`
 - **clsx** + **tailwind-merge** + **class-variance-authority** for class composition
 - **Three.js** + **@react-three/fiber** (vendored to keep package surface tight) for hero scene
-- **@solana/web3.js** (vendored stub at `vendor/solana-web3-js`) — slated to be replaced with the real package
+- **@solana/web3.js 1.98.x** from npm — real Solana JavaScript client
 
 ### 12.2 Onchain
 - **Anchor 1.0.2** (avm-managed)
@@ -399,12 +399,11 @@ praetor/
 │   └── UI.tsx, SystemBadge.tsx
 ├── lib/
 │   ├── risk-engine.ts (deterministic scoring)
-│   ├── demo-data.ts (canonical demo incident + protected addresses + flow steps)
 │   └── solana/ (constants.ts, server.ts — QuickNode connection factory + error cleaner)
 ├── solana/praetor_program/  Anchor v1.0 workspace (program + LiteSVM tests + IDL types)
 ├── public/brand/            praetor-mark.svg, praetor-wordmark.svg
 ├── src/                     Shadcn-derived primitives (legacy but in use)
-├── vendor/                  Vendored @solana/web3.js, three, @react-three/fiber
+├── vendor/                  Vendored three and @react-three/fiber
 ├── docs/                    handover.txt, this brief
 ├── README.md
 ├── AGENTS.md (MVP-first project rule)
@@ -532,8 +531,7 @@ Recent commit history (most recent first):
 ## 18. Roadmap (post-hackathon)
 
 Highest-value next tasks (per `docs/handover.txt`):
-1. Replace vendored `@solana/web3.js` stub with the real npm package
-2. Add multiple incident scenarios (treasury / upgrade authority / signer-set change)
+1. Add multiple incident scenarios (treasury / upgrade authority / signer-set change)
 3. Public security profile pages for protected protocols
 4. Live activity feed of attestations
 5. Wire `/app` directly to the Anchor program (record_attestation + submit_guardian_challenge) to replace Memo Program path

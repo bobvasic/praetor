@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
-import { createDemoIncident } from "@/lib/demo-data";
 
-function simulatedIncidentResponse() {
-  return NextResponse.json({
-    ok: true,
-    incident: createDemoIncident(),
-  });
+export const dynamic = "force-dynamic";
+
+function removedSimulationResponse() {
+  return NextResponse.json(
+    {
+      ok: false,
+      error:
+        "Local incident simulation has been removed. Use /api/solana/status and wallet-signed devnet attestations for real Solana devnet data.",
+    },
+    { status: 410 },
+  );
 }
 
-export async function GET() {
-  return simulatedIncidentResponse();
-}
-
-export async function POST() {
-  return simulatedIncidentResponse();
-}
+export const GET = removedSimulationResponse;
+export const POST = removedSimulationResponse;

@@ -87,7 +87,7 @@ Detect → Attest → Challenge → Block
 ## Solana Devnet Workflow
 
 1. User opens `/app` and connects a Solana wallet on devnet.
-2. Praetor simulates a suspicious protocol operation against the DemoDAO Treasury profile.
+2. Praetor stages a deterministic high-risk policy payload against the DemoDAO Treasury profile.
 3. Praetor scores the operation as risk score `91` with risk level `critical`.
 4. User creates a Memo Program devnet attestation.
 5. Wallet signs the transaction client-side.
@@ -141,9 +141,9 @@ QuickNode endpoint secrets must be configured as environment variables and must 
 ## API Routes
 
 - `GET /api/health` returns clean JSON service health.
-- `GET /api/incidents/simulate` and `POST /api/incidents/simulate` return deterministic demo incident data.
+- `GET /api/incidents/simulate` and `POST /api/incidents/simulate` return `410 Gone`; local incident simulation has been removed so Solana-facing screens rely on live devnet RPC and wallet-signed attestations.
 - `POST /api/webhooks/quicknode` accepts QuickNode webhook payloads and verifies `x-quicknode-secret` when `QUICKNODE_WEBHOOK_SECRET` is configured.
-- `GET /api/solana/status` returns QuickNode-backed Solana devnet status, slot, health, and blockhash preview.
+- `GET /api/solana/status` returns QuickNode-backed Solana devnet status, slot, health, blockhash preview, Solana core version, and the live Praetor Anchor program account state.
 - `GET /api/solana/blockhash` returns a fresh Solana devnet blockhash from QuickNode RPC.
 - `POST /api/solana/send-attestation` rejects invalid payloads, rejects private-key shaped payload fields, never signs server-side, and submits the signed transaction bytes through QuickNode RPC.
 
@@ -153,32 +153,7 @@ Example health response:
 { "ok": true, "service": "praetor-api" }
 ```
 
-Example simulated incident response:
-
-```json
-{
-  "ok": true,
-  "incident": {
-    "id": "inc_demo_001",
-    "protocolName": "DemoDAO Treasury",
-    "actionType": "treasury_withdrawal",
-    "amount": "25 SOL",
-    "threshold": "10 SOL",
-    "signer": "Unknown signer",
-    "destination": "Non-allowlisted wallet",
-    "riskScore": 91,
-    "riskLevel": "critical",
-    "status": "detected",
-    "reasons": [
-      "Treasury transfer above threshold",
-      "Unknown signer",
-      "Destination not allowlisted",
-      "Policy mismatch"
-    ],
-    "createdAt": "ISO timestamp"
-  }
-}
-```
+The old simulated incident endpoint intentionally no longer returns fixture incident data.
 
 ## Environment Variables
 

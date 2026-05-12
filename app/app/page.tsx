@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Buffer } from "buffer";
 import { AlertTriangle, Ban, CheckCircle2, ExternalLink, RadioTower, ShieldAlert, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
 import { PublicKey, Transaction, TransactionInstruction } from "@solana/web3.js";
 import { OperationalBadges } from "@/components/OperationalBadges";
@@ -269,7 +270,7 @@ export default function PraetorAppPage() {
         new TransactionInstruction({
           keys: [],
           programId: new PublicKey(SOLANA_MEMO_PROGRAM_ID),
-          data: new TextEncoder().encode(JSON.stringify(payload)),
+          data: Buffer.from(JSON.stringify(payload), "utf8"),
         }),
       );
 
@@ -385,9 +386,9 @@ export default function PraetorAppPage() {
             </GlassPanel>
 
             <GlassPanel className="rounded-xl p-6 md:p-7">
-              <PanelTitle icon={ShieldAlert} kicker="Incident simulation" title="Suspicious protocol operation" />
+              <PanelTitle icon={ShieldAlert} kicker="Attestation payload" title="High-risk protocol operation" />
               <p className="mt-4 text-sm leading-6 text-white/68">
-                25 SOL withdrawal against a 10 SOL threshold from an unknown signer to a non-allowlisted wallet.
+                25 SOL withdrawal policy payload against a 10 SOL threshold. The Solana blockhash, signature, submission, and confirmation are fetched from devnet.
               </p>
               <div className="mt-5 rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
                 <DetailRow label="Action type" value="treasury_withdrawal" />
@@ -395,7 +396,7 @@ export default function PraetorAppPage() {
                 <DetailRow label="Threshold" value="10 SOL" />
                 <DetailRow label="Signer" value="Unknown signer" />
                 <DetailRow label="Destination" value="Non-allowlisted wallet" />
-                <DetailRow label="Result" value={incidentTriggered ? "Risk decision generated" : "Awaiting trigger"} />
+                <DetailRow label="Result" value={incidentTriggered ? "Risk decision staged for signing" : "Awaiting wallet-signed attestation"} />
               </div>
               <PremiumButton
                 className="mt-5 w-full"
@@ -403,7 +404,7 @@ export default function PraetorAppPage() {
                 variant="danger"
                 disabled={incidentTriggered}
               >
-                {incidentTriggered ? "Suspicious Operation Triggered ✓" : "Trigger Suspicious Operation"}
+                {incidentTriggered ? "Policy Payload Staged" : "Stage Attestation Payload"}
               </PremiumButton>
             </GlassPanel>
           </section>

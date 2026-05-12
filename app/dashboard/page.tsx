@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlertTriangle, Ban, Coins, ExternalLink, KeyRound, LockKeyhole, RadioTower, ShieldCheck } from "lucide-react";
+import { Ban, Database, ExternalLink, FileCheck2, RadioTower, ShieldCheck } from "lucide-react";
 import { OperationalBadges } from "@/components/OperationalBadges";
 import { FadeUp, HoverLift } from "@/components/motion/Reveal";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -9,11 +9,20 @@ import { MetricCard } from "@/components/ui/MetricCard";
 import { PremiumButtonLink } from "@/components/ui/PremiumButton";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { demoIncident, protectedAddresses } from "@/lib/demo-data";
-import type { Incident } from "@/lib/risk-engine";
 import { PRAETOR_ANCHOR_PROGRAM_ID, getExplorerAddressUrl } from "@/lib/solana/constants";
 
 const STORAGE_KEY = "praetor.devnet.attestation.inc_demo_001";
+
+type ProgramStatus = {
+  address: string;
+  explorerUrl: string;
+  exists: boolean;
+  executable: boolean;
+  owner: string | null;
+  lamports: number | null;
+  sol: number | null;
+  dataLength: number | null;
+};
 
 type SolanaStatus = {
   ok: boolean;
@@ -22,30 +31,61 @@ type SolanaStatus = {
   slot?: number;
   health?: string;
   blockhashPreview?: string;
+  lastValidBlockHeight?: number;
+  blockHeight?: number;
+  solanaCore?: string;
   explorerCluster?: string;
+  program?: ProgramStatus;
   error?: string;
+};
+
+type PraetorMemoPayload = {
+  app?: string;
+  network?: string;
+  type?: string;
+  incidentId?: string;
+  protocol?: string;
+  riskScore?: number;
+  riskLevel?: string;
+  decision?: string;
+  actionType?: string;
+  timestamp?: string;
 };
 
 type StoredAttestation = {
   signature: string;
   explorerUrl: string;
   status: string;
-  payload?: {
-    protocol?: string;
-    riskScore?: number;
-    decision?: string;
-    timestamp?: string;
-  };
+  verified?: boolean;
+  slot?: number | null;
+  memoPayload?: PraetorMemoPayload | string | null;
 };
 
-const signals = [
-  { label: "Treasury Policy", value: "10 SOL max", icon: Coins },
-  { label: "Upgrade Authority", value: "Guarded", icon: KeyRound },
-  { label: "Guardian Challenge", value: "Required", icon: LockKeyhole },
-];
+type TxStatusResponse = {
+  ok?: boolean;
+  confirmationStatus?: string | null;
+  slot?: number | null;
+  err?: unknown;
+  memoPayload?: unknown;
+};
 
 function shortenSignature(signature: string) {
   return `${signature.slice(0, 10)}…${signature.slice(-10)}`;
+}
+
+function formatNumber(value: number | null | undefined) {
+  return typeof value === "number" ? value.toLocaleString() : "Unavailable";
+}
+
+function formatSol(value: number | null | undefined) {
+  return typeof value === "number" ? `${value.toFixed(6)} SOL` : "Unavailable";
+}
+
+function getMemoPayload(value: unknown): PraetorMemoPayload | string | null {
+  if (!value) return null;
+  if (typeof value === "string") return value;
+  if (typeof value !== "object") return null;
+  return value as PraetorMemoPayload;
 }
 
 function DetailRow({ label, value, href }: { label: string; value: string | number; href?: string }) {
@@ -66,34 +106,49 @@ function DetailRow({ label, value, href }: { label: string; value: string | numb
 export default function DashboardPage() {
   const [status, setStatus] = useState<SolanaStatus | null>(null);
   const [attestation, setAttestation] = useState<StoredAttestation | null>(null);
-  const [incident, setIncident] = useState<Incident>(demoIncident);
 
   useEffect(() => {
+    let cancelled = false;
+    let storedAttestation: StoredAttestation | null = null;
+
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        setAttestation(JSON.parse(stored) as StoredAttestation);
+        storedAttestation = JSON.parse(stored) as StoredAttestation;
       } catch {
         window.localStorage.removeItem(STORAGE_KEY);
       }
     }
 
-    let cancelled = false;
     async function loadReadiness() {
       try {
-        const [statusResponse, incidentResponse] = await Promise.all([
+        const [statusResponse, txStatusResponse] = await Promise.all([
           fetch("/api/solana/status", { cache: "no-store" }),
-          fetch("/api/incidents/simulate", { cache: "no-store" }),
+          storedAttestation
+            ? fetch(`/api/solana/tx-status?signature=${encodeURIComponent(storedAttestation.signature)}`, { cache: "no-store" })
+            : Promise.resolve(null),
         ]);
         const statusBody = (await statusResponse.json()) as SolanaStatus;
-        const incidentBody = (await incidentResponse.json()) as { ok: boolean; incident?: Incident };
+        const txStatusBody = txStatusResponse ? ((await txStatusResponse.json()) as TxStatusResponse) : null;
+
         if (!cancelled) {
           setStatus(statusBody);
-          if (incidentBody.ok && incidentBody.incident) setIncident(incidentBody.incident);
+          if (storedAttestation && txStatusBody?.ok && (txStatusBody.confirmationStatus || txStatusBody.err)) {
+            setAttestation({
+              ...storedAttestation,
+              status: txStatusBody.err ? "failed" : txStatusBody.confirmationStatus ?? "submitted",
+              verified: Boolean(txStatusBody.confirmationStatus) && !txStatusBody.err,
+              slot: txStatusBody.slot ?? null,
+              memoPayload: getMemoPayload(txStatusBody.memoPayload),
+            });
+          } else {
+            setAttestation(null);
+          }
         }
       } catch (error) {
         if (!cancelled) {
           setStatus({ ok: false, error: error instanceof Error ? error.message : "Unable to load devnet status" });
+          setAttestation(null);
         }
       }
     }
@@ -106,11 +161,15 @@ export default function DashboardPage() {
     };
   }, []);
 
+  const program = status?.program;
+  const memoPayload = typeof attestation?.memoPayload === "object" ? attestation.memoPayload : null;
+  const programExplorerUrl = program?.explorerUrl ?? getExplorerAddressUrl(PRAETOR_ANCHOR_PROGRAM_ID);
+
   const metrics = [
-    { label: "Systems", value: status?.ok === false ? "Degraded" : "Online", status: "All systems online", tone: status?.ok === false ? "red" as const : "green" as const },
+    { label: "Systems", value: status?.ok === false ? "Degraded" : "Online", status: status?.ok === false ? status.error ?? "QuickNode unavailable" : "Live from QuickNode devnet RPC", tone: status?.ok === false ? "red" as const : "green" as const },
     { label: "Devnet Slot", value: status?.slot?.toLocaleString() ?? "Loading", status: "Latest from /api/solana/status", tone: "cyan" as const },
-    { label: "Latest Risk", value: incident.riskScore, status: "Critical deterministic decision", tone: "red" as const },
-    { label: "Blocked State", value: "Blocked", status: "Execution denied by policy", tone: "crimson" as const },
+    { label: "Anchor Program", value: program?.executable ? "Executable" : program?.exists ? "Found" : "Loading", status: "Fetched with getAccountInfo on devnet", tone: program?.executable ? "green" as const : "crimson" as const },
+    { label: "Latest Proof", value: attestation?.verified ? "Verified" : attestation ? "Observed" : "None", status: attestation ? "Signature checked against devnet" : "No verified local signature", tone: attestation?.verified ? "green" as const : "crimson" as const },
   ];
 
   return (
@@ -128,7 +187,7 @@ export default function DashboardPage() {
                     Praetor live command center.
                   </h1>
                   <p className="mt-4 max-w-3xl text-base leading-7 text-white/72 md:text-lg">
-                    A devnet-ready operational console for QuickNode RPC health, Solana slot state, latest attestation evidence, protected protocol posture, and blocked execution status.
+                    A devnet-backed operational console for QuickNode RPC health, Solana slot state, Anchor program account state, and wallet-signed attestation evidence.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-end">
@@ -162,8 +221,10 @@ export default function DashboardPage() {
                   <DetailRow label="Network" value={status?.network ?? "Solana Devnet"} />
                   <DetailRow label="RPC provider" value={status?.rpcProvider ?? "QuickNode RPC"} />
                   <DetailRow label="Health" value={status?.health ?? (status?.ok === false ? status.error ?? "Unavailable" : "Checking")} />
-                  <DetailRow label="Latest devnet slot" value={status?.slot ?? "Loading"} />
+                  <DetailRow label="Latest devnet slot" value={formatNumber(status?.slot)} />
+                  <DetailRow label="Block height" value={formatNumber(status?.blockHeight)} />
                   <DetailRow label="Latest blockhash preview" value={status?.blockhashPreview ?? "Loading"} />
+                  <DetailRow label="Solana core" value={status?.solanaCore ?? "Loading"} />
                 </div>
               </GlassPanel>
             </FadeUp>
@@ -175,24 +236,24 @@ export default function DashboardPage() {
                     <p className="praetor-kicker">Onchain attestation</p>
                     <h2 className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">Latest devnet proof</h2>
                   </div>
-                  <StatusBadge tone={attestation ? "online" : "crimson"} pulse={Boolean(attestation)}>{attestation ? "Explorer ready" : "Ready"}</StatusBadge>
+                  <StatusBadge tone={attestation?.verified ? "online" : "crimson"} pulse={Boolean(attestation?.verified)}>{attestation?.verified ? "Verified" : "No proof"}</StatusBadge>
                 </div>
                 {attestation ? (
                   <div className="mt-5 rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
-                    <DetailRow label="Onchain Attestation Ready" value="Yes" />
-                    <DetailRow label="Praetor Anchor Program" value={shortenSignature(PRAETOR_ANCHOR_PROGRAM_ID)} href={getExplorerAddressUrl(PRAETOR_ANCHOR_PROGRAM_ID)} />
-                    <DetailRow label="Latest signature" value={shortenSignature(attestation.signature)} />
-                    <DetailRow label="Confirmation status" value={attestation.status ?? "confirmed"} />
-                    <DetailRow label="Protocol" value={attestation.payload?.protocol ?? demoIncident.protocolName} />
-                    <DetailRow label="Attested risk score" value={attestation.payload?.riskScore ?? incident.riskScore} />
+                    <DetailRow label="Devnet signature" value={shortenSignature(attestation.signature)} />
+                    <DetailRow label="Confirmation status" value={attestation.status} />
+                    <DetailRow label="Confirmed slot" value={formatNumber(attestation.slot)} />
+                    {memoPayload?.protocol && <DetailRow label="Memo protocol" value={memoPayload.protocol} />}
+                    {typeof memoPayload?.riskScore === "number" && <DetailRow label="Memo risk score" value={memoPayload.riskScore} />}
+                    {memoPayload?.decision && <DetailRow label="Memo decision" value={memoPayload.decision} />}
                     {attestation.explorerUrl && <DetailRow label="Solana Explorer" value="Open transaction" href={attestation.explorerUrl} />}
                   </div>
                 ) : (
                   <div className="mt-5 rounded-xl border border-white/10 bg-[#0A0A0A] p-5">
-                    <DetailRow label="Onchain Attestation Ready" value="Yes" />
-                    <DetailRow label="Praetor Anchor Program" value={shortenSignature(PRAETOR_ANCHOR_PROGRAM_ID)} href={getExplorerAddressUrl(PRAETOR_ANCHOR_PROGRAM_ID)} />
+                    <DetailRow label="Onchain Attestation" value="None verified locally" />
+                    <DetailRow label="Praetor Anchor Program" value={shortenSignature(PRAETOR_ANCHOR_PROGRAM_ID)} href={programExplorerUrl} />
                     <p className="mt-4 text-sm leading-6 text-white/70">
-                      No latest attestation yet. Create a devnet attestation in Launch Devnet App.
+                      No wallet-signed devnet attestation has been verified from this browser yet.
                     </p>
                     <PremiumButtonLink href="/app" variant="glass" className="mt-4 w-full">
                       Launch Devnet App
@@ -208,27 +269,28 @@ export default function DashboardPage() {
               <GlassPanel className="min-h-full rounded-xl p-6 md:p-7">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="praetor-kicker">Protected protocol profile</p>
-                    <h2 className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">DemoDAO Treasury posture</h2>
+                    <p className="praetor-kicker">Devnet program account</p>
+                    <h2 className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">Praetor Anchor program</h2>
                   </div>
-                  <StatusBadge tone="online">Armed</StatusBadge>
+                  <StatusBadge tone={program?.executable ? "online" : "crimson"}>{program?.executable ? "Executable" : "Checking"}</StatusBadge>
                 </div>
 
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {protectedAddresses.map((address) => (
-                    <div key={address.label} className="praetor-mini-card rounded-xl p-4 transition duration-200 hover:border-[rgba(255,32,32,0.42)]">
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="text-base font-black text-white">{address.label}</p>
-                        <StatusBadge tone="online">{address.status}</StatusBadge>
-                      </div>
-                      <p className="mt-2.5 break-all font-mono text-[11px] leading-5 text-white/72">{address.address}</p>
-                      <p className="mt-3 text-sm leading-6 text-white/64">{address.policy}</p>
-                    </div>
-                  ))}
+                <div className="mt-5 rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
+                  <DetailRow label="Program ID" value={shortenSignature(program?.address ?? PRAETOR_ANCHOR_PROGRAM_ID)} href={programExplorerUrl} />
+                  <DetailRow label="Account exists" value={program?.exists ? "Yes" : "Checking"} />
+                  <DetailRow label="Executable" value={program?.executable ? "Yes" : "No"} />
+                  <DetailRow label="Owner" value={program?.owner ? shortenSignature(program.owner) : "Loading"} />
+                  <DetailRow label="Lamports" value={formatNumber(program?.lamports)} />
+                  <DetailRow label="Balance" value={formatSol(program?.sol)} />
+                  <DetailRow label="Data length" value={formatNumber(program?.dataLength)} />
                 </div>
 
                 <div className="mt-5 grid gap-3 md:grid-cols-3">
-                  {signals.map((signal) => {
+                  {[
+                    { label: "RPC source", value: "QuickNode", icon: RadioTower },
+                    { label: "Cluster", value: "Devnet", icon: Database },
+                    { label: "Program state", value: program?.executable ? "Live" : "Checking", icon: FileCheck2 },
+                  ].map((signal) => {
                     const Icon = signal.icon;
                     return (
                       <div key={signal.label} className="rounded-xl border border-white/10 bg-[#0A0A0A] p-4">
@@ -247,20 +309,26 @@ export default function DashboardPage() {
                 <GlassPanel className="rounded-xl border-[rgba(255,32,32,0.45)] p-6 md:p-7">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#FF8888]">Latest Incident</p>
-                      <h2 className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">Treasury withdrawal above threshold</h2>
+                      <p className="font-mono text-[10px] font-black uppercase tracking-[0.22em] text-[#FF8888]">Latest verified memo</p>
+                      <h2 className="mt-2 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">
+                        {attestation?.verified ? "Wallet-signed attestation found" : "No verified attestation yet"}
+                      </h2>
                     </div>
-                    <StatusBadge tone="red" pulse>Critical</StatusBadge>
+                    <StatusBadge tone={attestation?.verified ? "online" : "crimson"} pulse={Boolean(attestation?.verified)}>{attestation?.verified ? "Verified" : "Empty"}</StatusBadge>
                   </div>
                   <div className="mt-5 rounded-xl border border-[rgba(255,32,32,0.40)] bg-[rgba(122,7,16,0.16)] p-5">
-                    <div className="flex items-end justify-between gap-4">
-                      <div>
-                        <p className="text-sm text-white/64">{incident.protocolName}</p>
-                        <p className="mt-1.5 text-5xl font-black tabular-nums text-[#FF6B6B]">{incident.riskScore}</p>
-                      </div>
-                      <AlertTriangle className="h-10 w-10 text-[#FF6B6B]" aria-hidden />
-                    </div>
-                    <p className="mt-4 text-sm leading-6 text-white/72">{incident.amount} requested by {incident.signer.toLowerCase()} to a {incident.destination.toLowerCase()}. Unsafe operation is held until guardian review clears the policy risk.</p>
+                    {attestation?.verified ? (
+                      <>
+                        <p className="font-mono text-xs font-black uppercase tracking-[0.20em] text-[#FF8888]">{shortenSignature(attestation.signature)}</p>
+                        <p className="mt-4 text-sm leading-6 text-white/72">
+                          The signature was looked up on Solana devnet through QuickNode. Memo payload values shown here come from the parsed transaction, not from local fixture data.
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-sm leading-6 text-white/72">
+                        Create a wallet-signed devnet attestation in the app. This dashboard stays empty until the signature is observed on devnet.
+                      </p>
+                    )}
                   </div>
                   <PremiumButtonLink href="/app" variant="danger" className="mt-5 w-full">Create Devnet Attestation</PremiumButtonLink>
                 </GlassPanel>
@@ -270,17 +338,17 @@ export default function DashboardPage() {
                 <GlassPanel className="rounded-xl p-6">
                   <div className="flex items-center gap-2.5">
                     <RadioTower className="h-4 w-4 text-[#FF6B6B]" />
-                    <p className="praetor-kicker">Blocked execution state</p>
+                    <p className="praetor-kicker">Live execution state</p>
                   </div>
                   <div className="mt-5 space-y-2.5">
                     {[
-                      ["QuickNode RPC Connected", "OK"],
-                      ["Onchain Attestation Ready", attestation ? "SIGNED" : "READY"],
-                      ["Execution blocked by Praetor policy", "BLOCKED"],
+                      ["QuickNode RPC Connected", status?.ok ? "OK" : "CHECKING"],
+                      ["Anchor Program Executable", program?.executable ? "YES" : "CHECKING"],
+                      ["Latest Attestation Verified", attestation?.verified ? "YES" : "NONE"],
                     ].map(([row, state]) => (
                       <div key={row} className="praetor-mini-card flex items-center justify-between rounded-md px-3.5 py-2.5">
                         <span className="text-sm text-white/72">{row}</span>
-                        <StatusBadge tone={state === "BLOCKED" ? "crimson" : "online"}>{state}</StatusBadge>
+                        <StatusBadge tone={state === "NONE" || state === "CHECKING" ? "crimson" : "online"}>{state}</StatusBadge>
                       </div>
                     ))}
                   </div>
@@ -295,14 +363,14 @@ export default function DashboardPage() {
                 <div>
                   <StatusBadge tone="devnet">Operational assurance</StatusBadge>
                   <h2 className="mt-3 text-2xl font-black tracking-[-0.03em] text-white md:text-3xl">
-                    Detect → Attest → Challenge → Block for devnet treasury and authority events.
+                    Dashboard values are fetched from Solana devnet RPC or verified transaction lookups.
                   </h2>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-3">
                   {[
-                    ["Detect", ShieldCheck],
-                    ["Attest", RadioTower],
-                    ["Block", Ban],
+                    ["Fetch", RadioTower],
+                    ["Verify", ShieldCheck],
+                    ["Attest", Ban],
                   ].map(([item, Icon]) => {
                     const IconComp = Icon as typeof ShieldCheck;
                     return (

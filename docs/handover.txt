@@ -48,7 +48,8 @@ Last updated: 2026-05-10
 - Redeploy after env update
 
 7. Highest-value next tasks
-- Replace the vendored @solana/web3.js stub with the real package
+- DONE 2026-05-12: Replaced the vendored @solana/web3.js stub with the real npm package
+- DONE 2026-05-12: Removed local incident fixture data from dashboard/demo; Solana-facing screens now use QuickNode devnet RPC and verified wallet-signed attestations
 - Add multiple incident scenarios (treasury / upgrade authority / signer set change)
 - Add public security profile pages and live activity feed
 - Record tech demo and pitch videos

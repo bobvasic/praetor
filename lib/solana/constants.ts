@@ -4,6 +4,7 @@ export const SOLANA_EXPLORER_CLUSTER = "devnet";
 export const SOLANA_MEMO_PROGRAM_ID = "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr";
 export const PRAETOR_INCIDENT_ID = "inc_demo_001";
 export const PRAETOR_ANCHOR_PROGRAM_ID =
+  process.env.PRAETOR_PROGRAM_ID ??
   process.env.NEXT_PUBLIC_PRAETOR_PROGRAM_ID ??
   "HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk";
 
