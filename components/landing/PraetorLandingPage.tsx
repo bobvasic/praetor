@@ -54,7 +54,7 @@ const technicalProof = [
   { label: "QuickNode-backed Solana Devnet RPC", icon: Database },
   { label: "Memo Program attestation path", icon: FileLock2 },
   { label: "Anchor Program deployed on devnet", icon: Cpu },
-  { label: "Deterministic risk score: 91 Critical", icon: Activity },
+  { label: "Deterministic rule-based risk decisions", icon: Activity },
 ] as const;
 
 export default function HomePage() {
@@ -312,8 +312,7 @@ export default function HomePage() {
                   Demo Incident
                 </p>
                 <p className="mt-1.5 text-sm font-bold text-white">
-                  treasury_withdrawal · 25 SOL · threshold 10 SOL · risk 91
-                  Critical
+                  treasury_withdrawal · computed rule trace · Devnet memo proof
                 </p>
               </div>
               <PremiumButtonLink href="/app" variant="crimson">

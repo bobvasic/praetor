@@ -87,9 +87,9 @@ Detect → Attest → Challenge → Block
 ## Solana Devnet Workflow
 
 1. User opens `/app` and connects a Solana wallet on devnet.
-2. Praetor stages a deterministic high-risk policy payload against the DemoDAO Treasury profile.
-3. Praetor scores the operation as risk score `91` with risk level `critical`.
-4. User creates a Memo Program devnet attestation.
+2. Praetor stages editable operation inputs against the DemoDAO Treasury profile.
+3. Praetor computes a deterministic rule-based score, risk level, decision, and rule trace.
+4. User creates a Memo Program devnet attestation that commits that computed decision.
 5. Wallet signs the transaction client-side.
 6. QuickNode RPC sends and confirms the signed transaction.
 7. App shows the signature and Solana Explorer devnet link.

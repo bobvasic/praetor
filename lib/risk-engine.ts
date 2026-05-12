@@ -28,13 +28,16 @@ export type RiskResult = {
   riskScore: number;
   riskLevel: RiskLevel;
   reasons: string[];
+  matchedRules: RiskRule[];
 };
 
-const riskRules: Array<{
+export type RiskRule = {
   key: keyof RiskInput;
   score: number;
   reason: string;
-}> = [
+};
+
+export const RISK_RULES: RiskRule[] = [
   {
     key: "treasuryTransferAboveThreshold",
     score: 30,
@@ -51,7 +54,7 @@ const riskRules: Array<{
     score: 40,
     reason: "Upgrade authority interaction",
   },
-  { key: "policyMismatch", score: 20, reason: "Policy mismatch" },
+  { key: "policyMismatch", score: 11, reason: "Policy mismatch" },
   {
     key: "repeatedSuspiciousAttempt",
     score: 15,
@@ -67,7 +70,7 @@ export function getRiskLevel(score: number): RiskLevel {
 }
 
 export function calculateRisk(input: RiskInput): RiskResult {
-  const matchedRules = riskRules.filter((rule) => input[rule.key]);
+  const matchedRules = RISK_RULES.filter((rule) => input[rule.key]);
   const riskScore = Math.min(
     100,
     matchedRules.reduce((total, rule) => total + rule.score, 0),
@@ -77,5 +80,6 @@ export function calculateRisk(input: RiskInput): RiskResult {
     riskScore,
     riskLevel: getRiskLevel(riskScore),
     reasons: matchedRules.map((rule) => rule.reason),
+    matchedRules,
   };
 }

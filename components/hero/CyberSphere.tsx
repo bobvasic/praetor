@@ -277,7 +277,7 @@ export function CyberSphere() {
 // stacking. Hidden on small screens to keep the orb breathing room.
 const FEED_ROWS: Array<{ icon: LucideIcon; label: string; value?: string; valueTone?: string }> = [
   { icon: Radar,       label: "privileged_operation_detected" },
-  { icon: TrendingUp,  label: "risk_score",  value: "91",       valueTone: "text-[#FF6B6B]" },
+  { icon: TrendingUp,  label: "risk_score",  value: "computed", valueTone: "text-[#FF6B6B]" },
   { icon: Ban,         label: "decision",    value: "block",    valueTone: "text-[#FF6B6B]" },
   { icon: ShieldCheck, label: "attestation", value: "recorded", valueTone: "text-[#5DE0BB]" },
   { icon: Activity,    label: "anchor_program", value: "live",  valueTone: "text-[#5DE0BB]" },
