@@ -67,11 +67,11 @@ const technicalProof = [
 
 export default function HomePage() {
   return (
-    <main className="relative overflow-hidden">
+    <main className="relative overflow-hidden" data-praetor-route="landing-cybersphere-v2">
       {/* Hero — premium cyber-defense layout. Left: status pills, kicker,
        *   headline, body, CTAs. Right: animated CyberSphere + telemetry
        *   feed. Bottom: 4-step process strip. Sections below are untouched. */}
-      <SectionShell className="relative isolate overflow-hidden pb-20 pt-12 md:pb-24 md:pt-16 lg:min-h-[860px]">
+      <SectionShell className="relative isolate overflow-hidden pb-20 pt-12 md:pb-24 md:pt-16 lg:min-h-[860px]" data-praetor-hero="cybersphere">
         {/* Atmospheric backdrop: kept the cinematic video but turned down so
          *  the new orb is the focal point. Honeycomb + radial red glows
          *  sit between the video and the content. */}

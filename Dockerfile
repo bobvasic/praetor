@@ -26,7 +26,7 @@ WORKDIR /app
 # DigitalOcean's force-rebuild button cannot accidentally reuse a stale
 # `COPY . .` layer. Bump the date in the default value to force a clean
 # rebuild from this stage onward.
-ARG CACHEBUST=2026-05-12-01
+ARG CACHEBUST=2026-05-12-02
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .

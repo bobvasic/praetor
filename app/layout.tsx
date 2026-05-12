@@ -5,11 +5,12 @@ import { Header } from "@/components/Brand";
 import AgenticHeroBackground from "@/components/background/AgenticHeroBackground";
 import "./globals.css";
 
-// Route Segment Config: keep edge cache short so frontend rebrands and copy
-// changes propagate within ~60s instead of Next.js's default 1-year s-maxage
-// for fully static prerendered pages. Critical for a hackathon-pace pipeline
-// where DigitalOcean redeploys must reach Cloudflare promptly.
-export const revalidate = 60;
+// Route Segment Config: production on DigitalOcean/Cloudflare has repeatedly
+// served stale prerendered root HTML across deploys. Keep the shell dynamic and
+// no-store so `/` cannot be pinned to an old `/app` artifact.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
