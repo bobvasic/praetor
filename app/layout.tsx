@@ -50,6 +50,45 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+function Footer() {
+  return (
+    <footer className="border-t border-white/[0.08] bg-[rgba(5,5,5,0.72)] px-6 py-6 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/48 sm:flex-row sm:items-center sm:gap-3">
+        <p>
+          Built by{" "}
+          <a
+            className="text-white/78 transition hover:text-[#FF2020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(255,32,32,0.6)]"
+            href="https://raptorlabs.dev"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Raptor Labs
+          </a>
+          .
+        </p>
+        <span className="hidden text-white/24 sm:inline" aria-hidden="true">
+          •
+        </span>
+        <p>
+          <span className="sm:hidden" aria-hidden="true">
+            •{" "}
+          </span>
+          Secured by{" "}
+          <a
+            className="text-white/78 transition hover:text-[#FF2020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(255,32,32,0.6)]"
+            href="https://cyberlinksec.com"
+            rel="noreferrer"
+            target="_blank"
+          >
+            CyberLink security
+          </a>
+          .
+        </p>
+      </div>
+    </footer>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
@@ -65,6 +104,7 @@ export default function RootLayout({
         <div className="relative z-10">
           <Header />
           {children}
+          <Footer />
         </div>
         <div
           aria-hidden="true"
