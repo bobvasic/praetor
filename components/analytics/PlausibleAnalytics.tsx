@@ -58,6 +58,31 @@ function sanitizePath(pathname: string) {
   return pathname.replace(/[1-9A-HJ-NP-Za-km-z]{32,}/g, ":id");
 }
 
+function bucketPercent(value: number) {
+  return Math.max(0, Math.min(100, Math.round(value / 5) * 5));
+}
+
+function getInteractionKind(target: Element) {
+  if (target.closest("[data-analytics-event]")) return "tagged";
+  if (target.closest("a[href]")) return "link";
+  if (target.closest("button,[role='button']")) return "button";
+  if (target.closest("input,select,textarea")) return "form_control";
+  return target.tagName.toLowerCase();
+}
+
+function getHeatmapProps(event: MouseEvent, target: Element): PlausibleProperties {
+  const viewportWidth = Math.max(window.innerWidth, 1);
+  const viewportHeight = Math.max(window.innerHeight, 1);
+  const pageHeight = Math.max(document.documentElement.scrollHeight, viewportHeight);
+
+  return {
+    click_x_bucket: bucketPercent((event.clientX / viewportWidth) * 100),
+    click_y_bucket: bucketPercent((event.clientY / viewportHeight) * 100),
+    page_y_bucket: bucketPercent(((window.scrollY + event.clientY) / pageHeight) * 100),
+    interaction_kind: getInteractionKind(target),
+  };
+}
+
 function getPageProps(pathname: string): PlausibleProperties {
   return {
     path: pathname,
@@ -158,18 +183,27 @@ export function PlausibleAnalytics() {
       const target = event.target instanceof Element ? event.target : null;
       if (!target) return;
 
+      trackPlausible("Interaction Heat Point", {
+        ...getPageProps(pathname),
+        ...getHeatmapProps(event, target),
+      });
+
       const tagged = target.closest<HTMLElement>("[data-analytics-event]");
       if (tagged) {
         trackPlausible(tagged.dataset.analyticsEvent ?? "Tagged Interaction", {
           ...getPageProps(pathname),
           label: getText(tagged),
+          ...getHeatmapProps(event, tagged),
         });
         return;
       }
 
       const anchor = target.closest<HTMLAnchorElement>("a[href]");
       if (anchor) {
-        const props = getLinkProps(anchor, pathname);
+        const props = {
+          ...getLinkProps(anchor, pathname),
+          ...getHeatmapProps(event, anchor),
+        };
         trackPlausible(props.link_type === "outbound" ? "Outbound Link Click" : "Internal Link Click", props);
         return;
       }
@@ -179,6 +213,7 @@ export function PlausibleAnalytics() {
         trackPlausible("Button Click", {
           ...getPageProps(pathname),
           label: getText(button) || "unlabeled_button",
+          ...getHeatmapProps(event, button),
         });
       }
     }
