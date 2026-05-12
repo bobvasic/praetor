@@ -24,12 +24,6 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/bobvasic/praetor">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=bobvasic&repo=praetor&theme=dark&bg_color=0A0A0A&border_color=FF2020&title_color=FF2020&icon_color=FF6B6B&text_color=ffffff" alt="bobvasic/praetor on GitHub" />
-  </a>
-</p>
-
 ---
 
 # Praetor
