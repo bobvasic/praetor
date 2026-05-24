@@ -55,7 +55,7 @@ Praetor is live, Solana devnet-enabled, QuickNode-powered, wallet-connectable, a
 - Devnet App: https://praetores.com/app
 - Dashboard: https://praetores.com/dashboard
 - Guided Walkthrough: https://praetores.com/demo
-- GitHub: https://github.com/bobvasic/praetor
+- GitHub: https://github.com/RaptorLabsHQ/praetores.com
 - X: https://x.com/PraetorHQ
 
 ## What It Does
