@@ -5,11 +5,13 @@
 </p>
 
 <p align="center">
+  <a href="https://praetores.com"><img src="https://img.shields.io/badge/praetores.com-live-00DC82?style=for-the-badge&logo=vercel&logoColor=white" alt="praetores.com" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-FF2020.svg?style=for-the-badge" alt="MIT License" /></a>
   <a href="https://explorer.solana.com/address/HKQ5WMoZFuT2zrDJyoKKpQFLQgtVMsuHUhuAM1DcqLbk?cluster=devnet"><img src="https://img.shields.io/badge/Solana-Devnet-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Solana Devnet" /></a>
   <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js 14" /></a>
   <a href="https://www.anchor-lang.com"><img src="https://img.shields.io/badge/Anchor-1.0-E10600?style=for-the-badge&logoColor=white" alt="Anchor 1.0" /></a>
   <a href="https://praetores.com/app"><img src="https://img.shields.io/badge/Status-Live%20on%20Devnet-5DE0BB?style=for-the-badge" alt="Live on Devnet" /></a>
+  <a href="https://x.com/PraetorHQ"><img src="https://img.shields.io/badge/@PraetorHQ-000000?style=for-the-badge&logo=x&logoColor=white" alt="X / Twitter" /></a>
 </p>
 
 <p align="center">
@@ -24,7 +26,16 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://praetores.com"><b>Website</b></a> &nbsp;·&nbsp;
+  <a href="https://praetores.com/app"><b>Devnet App</b></a> &nbsp;·&nbsp;
+  <a href="https://praetores.com/dashboard"><b>Dashboard</b></a> &nbsp;·&nbsp;
+  <a href="https://praetores.com/demo"><b>Guided Demo</b></a> &nbsp;·&nbsp;
+  <a href="https://x.com/PraetorHQ"><b>X / Twitter</b></a>
+</p>
+
 ---
+
 
 # Praetor
 
